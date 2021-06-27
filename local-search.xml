@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>test</title>
+    <link href="/2021/06/27/test/"/>
+    <url>/2021/06/27/test/</url>
+    
+    <content type="html"><![CDATA[<p>asldjasdjalsdjlakjsd</p><span class="label label-primary">text</span><div class="note note-info">            <p>12312312312312</p>          </div>]]></content>
+    
+    
+    <categories>
+      
+      <category>java</category>
+      
+      <category>test</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2021/06/24/hello-world/"/>
     <url>/2021/06/24/hello-world/</url>
