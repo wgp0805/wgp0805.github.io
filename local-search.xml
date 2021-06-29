@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>idea启动前会先build</title>
+    <link href="/2021/06/29/idea-build/"/>
+    <url>/2021/06/29/idea-build/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/img/IDEA/idea-build-a.jpg" alt="在这里插入图片描述"></p><p>这个是将项目构建交给maven，所以启动的时候都是要先build这个操作还是很浪费时间的 ！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>IDE</category>
+      
+      <category>IDEA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>IDEA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>java,charAt的作用 SecureRandom()随机数</title>
     <link href="/2021/06/28/SecureRandom/"/>
     <url>/2021/06/28/SecureRandom/</url>
