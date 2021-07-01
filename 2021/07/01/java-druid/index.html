@@ -18,9 +18,25 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>分类 - WgpNote</title>
+  <title>关于druid使用时是否要添加JDBC依赖的问题 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -48,7 +64,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -159,9 +175,59 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="分类">
+            <span class="h2" id="subtitle" title="关于druid使用时是否要添加JDBC依赖的问题">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      wgp
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-01 08:21" pubdate>
+        2021年7月1日 早上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      346 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      3
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -174,253 +240,122 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-
-
-
-
-
-
-<div class="category-list">
-  
-  
-  
-  
-    
-    
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-93f725a07423fe1c889f448b33d21f46" role="tab" data-toggle="collapse" href="#collapse-93f725a07423fe1c889f448b33d21f46"
-        aria-expanded="false"
-      >
-        java
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/java/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>2</span>
-      </a>
-      <div class="category-collapse">
-        
-        
-          
-          
-  <div id="collapse-93f725a07423fe1c889f448b33d21f46" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-93f725a07423fe1c889f448b33d21f46">
-    
-    
-  </div>
-
-          
-  <div id="collapse-93f725a07423fe1c889f448b33d21f46" class="collapse in " role="tabpanel"
-       aria-labelledby="heading-93f725a07423fe1c889f448b33d21f46">
-    
-  
-  
-    
-    
-    <div class="category-sub row">
-      <a
-        class="category-subitem collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-64663f4646781c9c0110838b905daa23" role="tab" data-toggle="collapse" href="#collapse-64663f4646781c9c0110838b905daa23"
-        aria-expanded="false"
-      >
-        Random
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/java/Random/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse">
-        
-        
-          
-  <div id="collapse-64663f4646781c9c0110838b905daa23" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-64663f4646781c9c0110838b905daa23">
-    
-    
       
-      
-        <a href="/2021/06/28/SecureRandom/" class="list-group-item list-group-item-action">
-          <span class="category-post">java,charAt的作用 SecureRandom()随机数</span>
-        </a>
-      
-    
-  </div>
 
-        
-      </div>
-    </div>
-  
-    
-    
-    <div class="category-sub row">
-      <a
-        class="category-subitem collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-3d650fb8a5df01600281d48c47c9fa60" role="tab" data-toggle="collapse" href="#collapse-3d650fb8a5df01600281d48c47c9fa60"
-        aria-expanded="false"
-      >
-        druid
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/java/druid/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse">
-        
-        
-          
-  <div id="collapse-3d650fb8a5df01600281d48c47c9fa60" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-3d650fb8a5df01600281d48c47c9fa60">
-    
-    
-      
-      
-        <a href="/2021/07/01/java-druid/" class="list-group-item list-group-item-action">
-          <span class="category-post">关于druid使用时是否要添加JDBC依赖的问题</span>
-        </a>
-      
-    
-  </div>
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于druid使用时是否要添加JDBC依赖的问题</h1>
+            
+            <div class="markdown-body">
+              <p>前些天自己在家闲着没事创建个SpringBoot项目想练练手，理想中是想要整合Mybatis和Druid连接池的，可以在写配置文件时发生了一些异常由于配置文件写的不对导致数据源报错，经过多方面排查，发现是配置文件写错了，但是在测试产生了一个疑问，druid是不是依赖于Jdbc的，但是点开pom文件发现，druid的依赖里并没有jdbc的依赖，但是整个pom里边又没有Jdbc的依赖，后来发现jdbc的依赖在mybatis里，由此可见Druid也是依赖于jdbc的，查实资料发现连接池只是对jdbc的操作进行封装，而不是封装了jdbc，以下是一些资料的总结！</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">JDBC</span><span class="hljs-params">(Java DataBase Connectivity)</span></span>是Java和数据库(关系型数据库)之间的一个桥梁。<br><br>是一个规范而不是一个实现，能够执行SQL语句。<br><br>它由一组用Java语言编写的类和接口组成，各种不同类型的数据库都有相应的实现。<br></code></pre></td></tr></table></figure>
+<p>Druid 是一个 JDBC 组件库，包含数据库连接池、SQL Parser 等组件, 被大量业务和技术产品使用或集成，经历过最严苛线上业务场景考验，是你值得信赖的技术产品。</p>
+<ul>
+<li>由此可见Druid 是对jdbc操作的封装</li>
+</ul>
 
-        
-      </div>
-    </div>
-  
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-581d6381f3f35e4f9d77201acf87b364" role="tab" data-toggle="collapse" href="#collapse-581d6381f3f35e4f9d77201acf87b364"
-        aria-expanded="false"
-      >
-        IDE
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/IDE/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse">
-        
-        
-          
-          
-  <div id="collapse-581d6381f3f35e4f9d77201acf87b364" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-581d6381f3f35e4f9d77201acf87b364">
-    
-    
-  </div>
-
-          
-  <div id="collapse-581d6381f3f35e4f9d77201acf87b364" class="collapse in " role="tabpanel"
-       aria-labelledby="heading-581d6381f3f35e4f9d77201acf87b364">
-    
-  
-  
-    
-    
-    <div class="category-sub row">
-      <a
-        class="category-subitem collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-798db05b7c8ac4e09724fd2a87a785a6" role="tab" data-toggle="collapse" href="#collapse-798db05b7c8ac4e09724fd2a87a785a6"
-        aria-expanded="false"
-      >
-        IDEA
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/IDE/IDEA/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse">
-        
-        
-          
-  <div id="collapse-798db05b7c8ac4e09724fd2a87a785a6" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-798db05b7c8ac4e09724fd2a87a785a6">
-    
-    
-      
-      
-        <a href="/2021/06/29/idea-build/" class="list-group-item list-group-item-action">
-          <span class="category-post">idea启动前会先build</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-8ddc11d6b2226421c3206ac4ca415e00" role="tab" data-toggle="collapse" href="#collapse-8ddc11d6b2226421c3206ac4ca415e00"
-        aria-expanded="false"
-      >
-        jfinal
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/jfinal/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse">
-        
-        
-          
-  <div id="collapse-8ddc11d6b2226421c3206ac4ca415e00" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-8ddc11d6b2226421c3206ac4ca415e00">
-    
-    
-      
-      
-        <a href="/2021/06/30/jfinal-enjoy/" class="list-group-item list-group-item-action">
-          <span class="category-post">Jfinal前端enjoy模板</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-</div>
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/categories/java/druid/">druid</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/druid/">druid</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/30/jfinal-enjoy/">
+                        <span class="hidden-mobile">Jfinal前端enjoy模板</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://wgpwaline.vercel.app/","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -524,9 +459,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
 
 
 

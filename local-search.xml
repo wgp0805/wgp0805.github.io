@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>关于druid使用时是否要添加JDBC依赖的问题</title>
+    <link href="/2021/07/01/java-druid/"/>
+    <url>/2021/07/01/java-druid/</url>
+    
+    <content type="html"><![CDATA[<p>前些天自己在家闲着没事创建个SpringBoot项目想练练手，理想中是想要整合Mybatis和Druid连接池的，可以在写配置文件时发生了一些异常由于配置文件写的不对导致数据源报错，经过多方面排查，发现是配置文件写错了，但是在测试产生了一个疑问，druid是不是依赖于Jdbc的，但是点开pom文件发现，druid的依赖里并没有jdbc的依赖，但是整个pom里边又没有Jdbc的依赖，后来发现jdbc的依赖在mybatis里，由此可见Druid也是依赖于jdbc的，查实资料发现连接池只是对jdbc的操作进行封装，而不是封装了jdbc，以下是一些资料的总结！</p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">JDBC</span><span class="hljs-params">(Java DataBase Connectivity)</span></span>是Java和数据库(关系型数据库)之间的一个桥梁。<br><br>是一个规范而不是一个实现，能够执行SQL语句。<br><br>它由一组用Java语言编写的类和接口组成，各种不同类型的数据库都有相应的实现。<br></code></pre></td></tr></table></figure><p>Druid 是一个 JDBC 组件库，包含数据库连接池、SQL Parser 等组件, 被大量业务和技术产品使用或集成，经历过最严苛线上业务场景考验，是你值得信赖的技术产品。</p><ul><li>由此可见Druid 是对jdbc操作的封装</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>java</category>
+      
+      <category>druid</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>druid</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Jfinal前端enjoy模板</title>
     <link href="/2021/06/30/jfinal-enjoy/"/>
     <url>/2021/06/30/jfinal-enjoy/</url>
