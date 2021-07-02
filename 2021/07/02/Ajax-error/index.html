@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>在创建Springboot的项目时报错：org.springframework.dao.DataAccessException - WgpNote</title>
+  <title>Ajax访问后台时返回map报错的问题 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="在创建Springboot的项目时报错：org.springframework.dao.DataAccessException">
+            <span class="h2" id="subtitle" title="Ajax访问后台时返回map报错的问题">
               
             </span>
 
@@ -190,8 +190,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-01 08:27" pubdate>
-        2021年7月1日 早上
+      <time datetime="2021-07-02 08:23" pubdate>
+        2021年7月2日 早上
       </time>
     </span>
   
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      186 字
+      368 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      6
        分钟
     </span>
   
@@ -250,15 +250,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">在创建Springboot的项目时报错：org.springframework.dao.DataAccessException</h1>
+            <h1 style="display: none">Ajax访问后台时返回map报错的问题</h1>
             
             <div class="markdown-body">
-              <p>在创建Springboot的项目时，一定要记得勾选jdbc的包，否则启动项目时会报错<br>Caused by: java.lang.ClassNotFoundException: org.springframework.dao.DataAccessException</p>
-<p>maven报错会是这样的<br>Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.2:test (default-test) on project admin: There are test failures.</p>
-<p>Please refer to D:\project\admin\target\surefire-reports for the individual test results.<br>Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.</p>
-<p>这个问题很不好找，出现这个报错时要去看报错的文件，而不是单单的看这个，控制台的信息</p>
-<p>而如果你用mybatis，直接用mybatis-spring-boot-starter</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.1.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+              <p>今天在写代码的时候，就是用了个ajax去执行，想要获取后台返回的json，但是之前记得在学习的时候后台代码加上@ResponseBody就可以直接返回Json了，但是发现一直在报错！<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">No converter found <span class="hljs-keyword">for</span> <span class="hljs-keyword">return</span> value of type: <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">java</span>.<span class="hljs-title">util</span>.<span class="hljs-title">LinkedHashMap</span></span><br></code></pre></td></tr></table></figure><br>具体也没搞清楚为啥报这个错，然后发现自己有fastJson的包，但是还是报错，然后测试查百度！发现少了一个包，<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jackson-databind<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.9.5<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><br>加上这个包在进行测试发现一切都阳光明媚了<br>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-meta">@RequestMapping(value = &quot;/user&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span> </span>&#123;<br><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/userList&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">userList</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;userList&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/test&quot;)</span><br>    <span class="hljs-meta">@ResponseBody</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span>  Map&lt;String,String&gt; <span class="hljs-title">test</span><span class="hljs-params">(String str)</span></span>&#123;<br>        Map&lt;String,String&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;String,String&gt;();<br>        map.put(<span class="hljs-string">&quot;str&quot;</span>,str);<br>        <span class="hljs-keyword">return</span> map;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs html">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;<br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;$&#123;pageContext.request.contextPath&#125;/js/jquery.js&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="javascript">            $.ajax(&#123;</span><br><span class="javascript">                <span class="hljs-attr">type</span> : <span class="hljs-string">&quot;POST&quot;</span>,</span><br><span class="javascript">                <span class="hljs-attr">url</span> : <span class="hljs-string">&quot;$&#123;pageContext.request.contextPath&#125;/user/test.do&quot;</span>,</span><br><span class="javascript">                <span class="hljs-attr">dataType</span>: <span class="hljs-string">&quot;json&quot;</span>,</span><br><span class="javascript">                <span class="hljs-attr">data</span> : &#123;</span><br><span class="javascript">                    <span class="hljs-string">&quot;str&quot;</span> : <span class="hljs-string">&quot;123&quot;</span></span><br><span class="javascript">                &#125;,</span><br><span class="javascript">                <span class="hljs-attr">success</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>&#123;</span><br><span class="javascript">                    <span class="hljs-built_in">console</span>.log(data);</span><br><span class="javascript">                &#125;</span><br><span class="javascript">            &#125;);</span><br><span class="javascript">        &#125;</span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;test()&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;按钮&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure><br><img src="\img\AJAX\20210422204558342.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 
             </div>
             <hr>
@@ -268,7 +263,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/springboot/">springboot</a>
+                      <a class="hover-with-bg" href="/categories/AJAX/">AJAX</a>
                     
                   </div>
                 
@@ -276,7 +271,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
+                      <a class="hover-with-bg" href="/tags/ajax/">ajax</a>
                     
                   </div>
                 
@@ -293,18 +288,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/02/Ajax-error/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Ajax访问后台时返回map报错的问题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/01/java-druid/">
-                        <span class="hidden-mobile">关于druid使用时是否要添加JDBC依赖的问题</span>
+                      <a href="/2021/07/01/springboot-error-dataAccessException/">
+                        <span class="hidden-mobile">在创建Springboot的项目时报错：org.springframework.dao.DataAccessException</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
