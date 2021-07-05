@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>IDEA中报错java程序org.apache.ibatis.annotations不存在</title>
+    <link href="/2021/07/05/maven-error-1/"/>
+    <url>/2021/07/05/maven-error-1/</url>
+    
+    <content type="html"><![CDATA[<p>执行一句：mvn idea：idea 问题解决了，应该是maven版本不一致导致的错误！</p><ul><li>在，IDEA的2020的版本里自带的maven总会有些莫名其妙的小问题，提示这个包哪个包不存在的情况，但是看到包又明明在那里，这是因为这个版本的maven在下载包的时候始终都是下不全，所以执行下以上的命令就能解决！</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>maven</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>IDEA</tag>
+      
+      <tag>maven</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Ajax访问后台时返回map报错的问题</title>
     <link href="/2021/07/02/Ajax-error/"/>
     <url>/2021/07/02/Ajax-error/</url>
