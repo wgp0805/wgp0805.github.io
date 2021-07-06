@@ -670,6 +670,75 @@ JSON.parse();  //推荐方法ajax
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/07/05/ftpClient/" target="_self">
+          <img src="/img/ftpClient/banner.png" srcset="/img/loading.gif" lazyload alt="FTPClient上传和下载">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/07/05/ftpClient/" target="_self">
+          FTPClient上传和下载
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/07/05/ftpClient/" target="_self">
+          
+          
+            
+          
+          1.需要的包
+org.apache.commons.net.ftp.FTPClient;
+
+2.介绍
+此处使用到了递归的算法，然后去执行下载整个文件夹或者下载单个文件
+程序自动递归下载指定目录下的所有文件及子文件夹，上传时，自动递归创建服务器目录
+此处执行的代码逻辑是先下载图片和xls文件，其他类型的文件不予下载，然后再上传到另一个服务器上，然后再把本地的缓存路径删除！
+
+3. 代码
+测试类
+
+1
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-07-05 17:03" pubdate>
+              2021-07-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/FTPClient/">FTPClient</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/FTPClient/">FTPClient</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/07/05/mybatis-param/" target="_self">
           <img src="/img/mybatis/banner.png" srcset="/img/loading.gif" lazyload alt="mybatis批量插入及@param的作用">
         </a>
@@ -720,68 +789,6 @@ JSON.parse();  //推荐方法ajax
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/mybatis/">mybatis</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/07/05/maven-error-1/" target="_self">
-          <img src="/img/maven/banner.png" srcset="/img/loading.gif" lazyload alt="IDEA中报错java程序org.apache.ibatis.annotations不存在">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/05/maven-error-1/" target="_self">
-          IDEA中报错java程序org.apache.ibatis.annotations不存在
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/05/maven-error-1/" target="_self">
-          
-          
-            
-          
-          执行一句：mvn idea：idea 问题解决了，应该是maven版本不一致导致的错误！
-
-在，IDEA的2020的版本里自带的maven总会有些莫名其妙的小问题，提示这个包哪个包不存在的情况，但是看到包又明明在那里，这是因为这个版本的maven在下载包的时候始终都是下不全，所以执行下以上的命令就能解决！
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-05 14:47" pubdate>
-              2021-07-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/maven/">maven</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/IDEA/">IDEA</a>
-            
-              <a href="/tags/maven/">maven</a>
             
           </div>
         
