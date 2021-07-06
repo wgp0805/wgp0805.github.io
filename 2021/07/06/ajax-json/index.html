@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>IDEA目录折叠问题 - WgpNote</title>
+  <title>Ajax中解析Json的两种方法详解 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="IDEA目录折叠问题">
+            <span class="h2" id="subtitle" title="Ajax中解析Json的两种方法详解">
               
             </span>
 
@@ -190,8 +190,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-06 11:03" pubdate>
-        2021年7月6日 上午
+      <time datetime="2021-07-06 13:45" pubdate>
+        2021年7月6日 下午
       </time>
     </span>
   
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      52 字
+      612 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      6
        分钟
     </span>
   
@@ -250,15 +250,33 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">IDEA目录折叠问题</h1>
+            <h1 style="display: none">Ajax中解析Json的两种方法详解</h1>
             
             <div class="markdown-body">
-              <p>今天在有IDEA的时候发现如果一个文件夹下只有一个目录的话就会出现折叠！</p>
-<p><img src="/img/IDEA/zhedie1.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>这样就是很不方便看！</p>
-<p><img src="/img/IDEA/zhedie2.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>依次点击就可以完美解决</p>
-<p><img src="/img/IDEA/zhedie3/png" srcset="/img/loading.gif" lazyload alt=""></p>
+              <p>eval();  //此方法不推荐</p>
+<p>JSON.parse();  //推荐方法</p>
+<p>一、两种方法的区别</p>
+<p>我们先初始化一个json格式的对象：</p>
+<p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p>
+<p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p>
+<p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p>
+<p>然后在控制台调用：</p>
+<p>　　console.log( jsonObj.name );  // 两种方法都可以正确输入 周星驰</p>
+<p>那么问题来了 两种方法有什么区别呢？（下面我们稍微把代码改动一下，蓝色字体为修改部分）</p>
+<p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p>
+<p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p>
+<p>　　console.log( jsonObj.age );  //会先执行“alert”输出“hello”  然后才输出 23</p>
+<p>换“JSON.parse();”方法：</p>
+<p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p>
+<p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p>
+<p>　　cosole.log( jsonobj.age )  // 报错  这个错误告诉我们这个字符串是不合法的</p>
+<p>小结：“eval();”方法解析的时候不会去判断字符串是否合法，而且json对象中的js方法也会被执行，这是非常危险的；而“JSON.parse();”方法的优点就不用多说了，推荐此方法。（不明白的盆友可以自己在控制台测试一下）</p>
+<p>二、扩展问题</p>
+<p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p>
+<p>大家可以看到在上面测试时一直用红色把包在花括号外面的引号标注了起来，这对引号是很关键却又是常常被忽略的，因为 “eval();” 和 “JSON.parser();” 这两个方法的参数只接受字符串，也就是说只能解析字符串!!</p>
+<p>那我不经会有一个思考，我们在初始化的时候若不加引号对，那么它本身就是对象，js可以直接获取对象本身的属性和方法；为什么还要加引号将它变成字符串之后再用 “eval();” 或者 “JSON.parse();” 解析，这样做不是既不环保又没有效率吗？</p>
+<p>原因很简单：前端提供给后台的只能是字符串数据格式，后台返回给前台的就看返回的是什么数据格式，是字符串就必须解析之后再用。</p>
+<p>（这个小问题一般大家都会忽略掉，不太关注。我之所以好奇的原因也是因为对后台了解的不够，把这个问题抛出来希望对后台不熟的朋友有所帮助，知道是怎么回事后自然而然会加深记忆，在开发过程中就不会漏掉了）</p>
 
             </div>
             <hr>
@@ -268,9 +286,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/IDE/">IDE</a>
-                    
-                      <a class="hover-with-bg" href="/categories/IDE/IDEA/">IDEA</a>
+                      <a class="hover-with-bg" href="/categories/AJAX/">AJAX</a>
                     
                   </div>
                 
@@ -278,7 +294,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/IDEA/">IDEA</a>
+                      <a class="hover-with-bg" href="/tags/ajax/">ajax</a>
+                    
+                      <a class="hover-with-bg" href="/tags/js/">js</a>
                     
                   </div>
                 
@@ -295,18 +313,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/06/ajax-json/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Ajax中解析Json的两种方法详解</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/06/spring-raquestparam/">
-                        <span class="hidden-mobile">RequestParam注解使用详解</span>
+                      <a href="/2021/07/06/idea-zhedie/">
+                        <span class="hidden-mobile">IDEA目录折叠问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

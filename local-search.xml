@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Ajax中解析Json的两种方法详解</title>
+    <link href="/2021/07/06/ajax-json/"/>
+    <url>/2021/07/06/ajax-json/</url>
+    
+    <content type="html"><![CDATA[<p>eval();  //此方法不推荐</p><p>JSON.parse();  //推荐方法</p><p>一、两种方法的区别</p><p>我们先初始化一个json格式的对象：</p><p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p><p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p><p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p><p>然后在控制台调用：</p><p>　　console.log( jsonObj.name );  // 两种方法都可以正确输入 周星驰</p><p>那么问题来了 两种方法有什么区别呢？（下面我们稍微把代码改动一下，蓝色字体为修改部分）</p><p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p><p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p><p>　　console.log( jsonObj.age );  //会先执行“alert”输出“hello”  然后才输出 23</p><p>换“JSON.parse();”方法：</p><p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p><p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p><p>　　cosole.log( jsonobj.age )  // 报错  这个错误告诉我们这个字符串是不合法的</p><p>小结：“eval();”方法解析的时候不会去判断字符串是否合法，而且json对象中的js方法也会被执行，这是非常危险的；而“JSON.parse();”方法的优点就不用多说了，推荐此方法。（不明白的盆友可以自己在控制台测试一下）</p><p>二、扩展问题</p><p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p><p>大家可以看到在上面测试时一直用红色把包在花括号外面的引号标注了起来，这对引号是很关键却又是常常被忽略的，因为 “eval();” 和 “JSON.parser();” 这两个方法的参数只接受字符串，也就是说只能解析字符串!!</p><p>那我不经会有一个思考，我们在初始化的时候若不加引号对，那么它本身就是对象，js可以直接获取对象本身的属性和方法；为什么还要加引号将它变成字符串之后再用 “eval();” 或者 “JSON.parse();” 解析，这样做不是既不环保又没有效率吗？</p><p>原因很简单：前端提供给后台的只能是字符串数据格式，后台返回给前台的就看返回的是什么数据格式，是字符串就必须解析之后再用。</p><p>（这个小问题一般大家都会忽略掉，不太关注。我之所以好奇的原因也是因为对后台了解的不够，把这个问题抛出来希望对后台不熟的朋友有所帮助，知道是怎么回事后自然而然会加深记忆，在开发过程中就不会漏掉了）</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>AJAX</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ajax</tag>
+      
+      <tag>js</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>IDEA目录折叠问题</title>
     <link href="/2021/07/06/idea-zhedie/"/>
     <url>/2021/07/06/idea-zhedie/</url>
