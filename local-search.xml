@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>jfinal框架创建bean的dao方法的解释</title>
+    <link href="/2021/07/06/jfinal-dao/"/>
+    <url>/2021/07/06/jfinal-dao/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登录人的信息</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">()</span></span>&#123;<br>       <span class="hljs-comment">//从前端接收参数</span><br>       String userName = getPara(<span class="hljs-string">&quot;userName&quot;</span>);<br>       Record record = <span class="hljs-keyword">new</span> Record().set(<span class="hljs-string">&quot;userName&quot;</span>,userName);<br>       service.updateAdmin(record);<br>   &#125;<br><br><br><br><br><br>Users dao = <span class="hljs-keyword">new</span> Users().dao();<br><br>   <span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登陆者的个人信息</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> record</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">(Record record)</span></span>&#123;<br>       dao.update();<br>   &#125;<br><br></code></pre></td></tr></table></figure><ul><li>这时点进来发现系统报错，错误信息为<br><img src="/img/jfinal/dao/20201210101617633.png" alt="在这里插入图片描述"></li><li>然后发现这个dao的显示还是有的那就只能选用jfinal的Db方法去执行修改<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 修改登陆者的个人信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> record</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">(Record record)</span></span>&#123;<br>    <span class="hljs-comment">//但是这里需要注意，这里的update方法有很多，需要清除掉的是哪一个</span><br>        Db.update(<span class="hljs-string">&quot;tb_users&quot;</span>,record);<br>    &#125;<br></code></pre></td></tr></table></figure><img src="/img/jfinal/dao/20201210101943873.png" alt="在这里插入图片描述"></li><li>需要确认你调用的具体方法，然后在去执行逻辑，如果此时我还想用bean去执行这段逻辑当然也是可以的<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登录人的信息</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">()</span></span>&#123;<br>       <span class="hljs-comment">//从前端接收参数然后用bean去接收</span><br>       Users userBean = getBean(Users.class);<br>       service.updateAdmin(userBean);<br>   &#125;<br><br><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登陆者的个人信息</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> user</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">(Users user)</span></span>&#123;<br>       user.update();<br>   &#125;<br><br><br><br></code></pre></td></tr></table></figure>这样就可以直接去修改了，jfinal会根据bean里边的内容自动去执行要修改的项</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>jfinal</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+      <tag>jfinal</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>js-notdefined</title>
     <link href="/2021/07/06/js-notdefined/"/>
     <url>/2021/07/06/js-notdefined/</url>

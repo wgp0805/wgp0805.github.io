@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>js-notdefined - WgpNote</title>
+  <title>jfinal框架创建bean的dao方法的解释 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="js-notdefined">
+            <span class="h2" id="subtitle" title="jfinal框架创建bean的dao方法的解释">
               
             </span>
 
@@ -190,7 +190,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-06 13:50" pubdate>
+      <time datetime="2021-07-06 13:53" pubdate>
         2021年7月6日 下午
       </time>
     </span>
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      312 字
+      290 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      3
        分钟
     </span>
   
@@ -250,12 +250,17 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">js-notdefined</h1>
+            <h1 style="display: none">jfinal框架创建bean的dao方法的解释</h1>
             
             <div class="markdown-body">
-              <p><strong>今天在写代码的时候，突然间一个页面报了这样一个错</strong><br><code>$ is not defined</code><br>当时也没注意不知道是怎么回事，然后就去查各种方法，发现大多说的都是语法和代码引用的问题，但是测试发现自己语法和引用都没有问题<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;script&gt;<br>    $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    	<span class="hljs-comment">//这里的&#x27;#(msgTest)&#x27;是jfianl的一个模板语法</span><br>        <span class="hljs-keyword">let</span> msgTest = <span class="hljs-string">&#x27;#(msgTest)&#x27;</span>;<br>        <span class="hljs-keyword">if</span>(msgTest != <span class="hljs-literal">null</span> &amp;&amp; msgTest != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>            alert(msgTest);<br>        &#125;<br>    &#125;)<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;#(ctx)/assets/js/jquery-1.10.2.js&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure><br>引用都没有问题，但是依旧报错，这时突然发现这段js代码时在引用的上边，按照程序的执行顺序从上到下，确实jquery的东西会不知道是什么东西<br>抱着试试的态度调整了下顺序</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;#(ctx)/assets/js/jquery-1.10.2.js&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">    $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;</span><br><span class="javascript">    	<span class="hljs-comment">//这里的&#x27;#(msgTest)&#x27;是jfianl的一个模板语法</span></span><br><span class="javascript">        <span class="hljs-keyword">let</span> msgTest = <span class="hljs-string">&#x27;#(msgTest)&#x27;</span>;</span><br><span class="javascript">        <span class="hljs-keyword">if</span>(msgTest != <span class="hljs-literal">null</span> &amp;&amp; msgTest != <span class="hljs-string">&#x27;&#x27;</span>)&#123;</span><br><span class="javascript">            alert(msgTest);</span><br><span class="javascript">        &#125;</span><br><span class="javascript">    &#125;)</span><br><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<p>结果就好了，所以再出现这个问题的时候一定看看引用的顺序！！！</p>
+              <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登录人的信息</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">()</span></span>&#123;<br>       <span class="hljs-comment">//从前端接收参数</span><br>       String userName = getPara(<span class="hljs-string">&quot;userName&quot;</span>);<br>       Record record = <span class="hljs-keyword">new</span> Record().set(<span class="hljs-string">&quot;userName&quot;</span>,userName);<br>       service.updateAdmin(record);<br>   &#125;<br><br><br><br><br><br>Users dao = <span class="hljs-keyword">new</span> Users().dao();<br><br>   <span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登陆者的个人信息</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> record</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">(Record record)</span></span>&#123;<br>       dao.update();<br>   &#125;<br><br></code></pre></td></tr></table></figure>
+<ul>
+<li>这时点进来发现系统报错，错误信息为<br><img src="/img/jfinal/dao/20201210101617633.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></li>
+<li>然后发现这个dao的显示还是有的那就只能选用jfinal的Db方法去执行修改<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 修改登陆者的个人信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> record</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">(Record record)</span></span>&#123;<br>    	<span class="hljs-comment">//但是这里需要注意，这里的update方法有很多，需要清除掉的是哪一个</span><br>        Db.update(<span class="hljs-string">&quot;tb_users&quot;</span>,record);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<img src="/img/jfinal/dao/20201210101943873.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></li>
+<li>需要确认你调用的具体方法，然后在去执行逻辑，如果此时我还想用bean去执行这段逻辑当然也是可以的<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登录人的信息</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">()</span></span>&#123;<br>       <span class="hljs-comment">//从前端接收参数然后用bean去接收</span><br>       Users userBean = getBean(Users.class);<br>       service.updateAdmin(userBean);<br>   &#125;<br><br><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 修改登陆者的个人信息</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> user</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAdmin</span><span class="hljs-params">(Users user)</span></span>&#123;<br>       user.update();<br>   &#125;<br><br><br><br></code></pre></td></tr></table></figure>
+这样就可以直接去修改了，jfinal会根据bean里边的内容自动去执行要修改的项</li>
+</ul>
 
             </div>
             <hr>
@@ -265,7 +270,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
+                      <a class="hover-with-bg" href="/categories/jfinal/">jfinal</a>
                     
                   </div>
                 
@@ -273,7 +278,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/js/">js</a>
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/jfinal/">jfinal</a>
                     
                   </div>
                 
@@ -290,18 +297,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/06/jfinal-dao/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">jfinal框架创建bean的dao方法的解释</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/06/ajax-json/">
-                        <span class="hidden-mobile">Ajax中解析Json的两种方法详解</span>
+                      <a href="/2021/07/06/js-notdefined/">
+                        <span class="hidden-mobile">js-notdefined</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
