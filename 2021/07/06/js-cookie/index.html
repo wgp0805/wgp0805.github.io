@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>java,charAt的作用 SecureRandom()随机数 - WgpNote</title>
+  <title>js获取cookie对象 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="java,charAt的作用 SecureRandom()随机数">
+            <span class="h2" id="subtitle" title="js获取cookie对象">
               
             </span>
 
@@ -190,8 +190,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-28 15:42" pubdate>
-        2021年6月28日 下午
+      <time datetime="2021-07-06 13:57" pubdate>
+        2021年7月6日 下午
       </time>
     </span>
   
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      856 字
+      219 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      3
        分钟
     </span>
   
@@ -250,28 +250,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">java,charAt的作用 SecureRandom()随机数</h1>
+            <h1 style="display: none">js获取cookie对象</h1>
             
             <div class="markdown-body">
-              <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">random</span><span class="hljs-params">(<span class="hljs-keyword">int</span> count, String key)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (count &lt;= <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (StrKit.isBlank(key)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-comment">//创建指定长度的字符数组</span><br>        <span class="hljs-keyword">char</span>[] buffer = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[count];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; count; i++) &#123;<br>        	<span class="hljs-comment">//charAt()返回的是当前字符串的索引位置对应的当前字符</span><br>            buffer[i] = key.charAt(<br>            <span class="hljs-comment">//new java.security.SecureRandom()安全的随机数</span><br>            <span class="hljs-keyword">new</span> java.security.SecureRandom().nextInt(key.length())<br>            );<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> String(buffer);<br>    &#125;<br></code></pre></td></tr></table></figure>
-<h3 id="Random和SecureRandom区别"><a href="#Random和SecureRandom区别" class="headerlink" title="Random和SecureRandom区别"></a>Random和SecureRandom区别</h3><p>Random<br>Random用来创建伪随机数。所谓伪随机数，是指只要给定一个初始的种子，产生的随机数序列是完全一样的。</p>
-<p>要生成一个随机数，可以使用nextInt()、nextLong()、nextFloat()、nextDouble()：</p>
-<p>Random r = new Random();<br>r.nextInt(); // 2071575453,每次都不一样<br>r.nextInt(10); // 5,生成一个[0,10)之间的int<br>r.nextLong(); // 8811649292570369305,每次都不一样<br>r.nextFloat(); // 0.54335…生成一个[0,1)之间的float<br>r.nextDouble(); // 0.3716…生成一个[0,1)之间的double<br>有朋友会有疑问，每次运行程序，生成的随机数都是不同的，没看出伪随机数的特性来。</p>
-<p>这是因为我们创建Random实例时，如果不给定种子，就使用系统当前时间戳作为种子，因此每次运行时，种子不同，得到的伪随机数序列就不同。</p>
-<p>如果我们在创建Random实例时指定一个种子，就会得到完全确定的随机数序列：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.Random;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Random r = <span class="hljs-keyword">new</span> Random(<span class="hljs-number">12345</span>);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>            System.out.println(r.nextInt(<span class="hljs-number">100</span>));<br>        &#125;<br>        <span class="hljs-comment">// 51, 80, 41, 28, 55...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>前面我们使用的Math.random()实际上内部调用了Random类，所以它也是伪随机数，只是我们无法指定种子。</p>
-<span class="label label-success">SecureRandom</span>
-<p>有伪随机数，就有真随机数。实际上真正的真随机数只能通过量子力学原理来获取，而我们想要的是一个不可预测的安全的随机数，SecureRandom就是用来创建安全的随机数的：</p>
-<div class="note note-success">
-            <p>SecureRandom sr = new SecureRandom();<br>System.out.println(sr.nextInt(100));</p>
-          </div>
-<p>SecureRandom无法指定种子，它使用RNG（random number generator）算法。JDK的SecureRandom实际上有多种不同的底层实现，有的使用安全随机种子加上伪随机数算法来产生安全的随机数，有的使用真正的随机数生成器。实际使用的时候，可以优先获取高强度的安全随机数生成器，如果没有提供，再使用普通等级的安全随机数生成器：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.Arrays;<br><span class="hljs-keyword">import</span> java.security.SecureRandom;<br><span class="hljs-keyword">import</span> java.security.NoSuchAlgorithmException;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SecureRandom sr = <span class="hljs-keyword">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            sr = SecureRandom.getInstanceStrong(); <span class="hljs-comment">// 获取高强度安全随机数生成器</span><br>        &#125; <span class="hljs-keyword">catch</span> (NoSuchAlgorithmException e) &#123;<br>            sr = <span class="hljs-keyword">new</span> SecureRandom(); <span class="hljs-comment">// 获取普通的安全随机数生成器</span><br>        &#125;<br>        <span class="hljs-keyword">byte</span>[] buffer = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">16</span>];<br>        sr.nextBytes(buffer); <span class="hljs-comment">// 用安全随机数填充buffer</span><br>        System.out.println(Arrays.toString(buffer));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>SecureRandom的安全性是通过操作系统提供的安全的随机种子来生成随机数。这个种子是通过CPU的热噪声、读写磁盘的字节、网络流量等各种随机事件产生的“熵”。</p>
-<p>在密码学中，安全的随机数非常重要。如果使用不安全的伪随机数，所有加密体系都将被攻破。因此，时刻牢记必须使用SecureRandom来产生安全的随机数。</p>
-<p>需要使用安全随机数的时候，必须使用SecureRandom，绝不能使用Random！</p>
-
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCookie</span>(<span class="hljs-params">sName</span>)</span>&#123;<br>		<span class="hljs-comment">//获取cookie对象,并按；进行分割</span><br>		<span class="hljs-keyword">let</span> aCookie = <span class="hljs-built_in">document</span>.cookie.split(<span class="hljs-string">&quot;; &quot;</span>);<br>		<span class="hljs-comment">/*</span><br><span class="hljs-comment">		遍历数组根据=遍历出来的每一个元素进行分割因为cookie中的存储形式</span><br><span class="hljs-comment">		是这样的 userName=admin; userPwd=admin 所以在通过等号进行分割</span><br><span class="hljs-comment">		得到长度为2的数字，然后就可以进行取值了</span><br><span class="hljs-comment">		*/</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i &lt; aCookie.length; i++) &#123;<br>			<span class="hljs-keyword">let</span> aCrumb = aCookie[i].split(<span class="hljs-string">&quot;=&quot;</span>);<br>			<span class="hljs-keyword">if</span> (sName == aCrumb[<span class="hljs-number">0</span>])<br>				<span class="hljs-keyword">return</span> <span class="hljs-built_in">unescape</span>(aCrumb[<span class="hljs-number">1</span>]);<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>	&#125;<br>	$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>		<span class="hljs-comment">//调用方法，获得取到的值</span><br>		<span class="hljs-keyword">let</span> userName = getCookie(<span class="hljs-string">&quot;userName&quot;</span>);<br>		<span class="hljs-keyword">let</span> userPwd = getCookie(<span class="hljs-string">&quot;userPwd&quot;</span>);<br>		<span class="hljs-comment">//判断是否勾选一周哦免登录</span><br>		<span class="hljs-keyword">if</span>(userName != <span class="hljs-literal">null</span> &amp;&amp; userName != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>			$(<span class="hljs-string">&#x27;#saveCookie&#x27;</span>).attr(<span class="hljs-string">&quot;checked&quot;</span>,<span class="hljs-literal">true</span>);<br>		&#125;<br>		<span class="hljs-comment">//将得到的用户名和密码进行赋值</span><br>		<span class="hljs-keyword">if</span>(userName != <span class="hljs-literal">null</span> &amp;&amp; userName != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>			$(<span class="hljs-string">&quot;#userName&quot;</span>).val(userName);<br>		&#125;<br>		<span class="hljs-keyword">if</span>(userPwd != <span class="hljs-literal">null</span> &amp;&amp; userPwd != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>			$(<span class="hljs-string">&quot;#userPwd&quot;</span>).val(userPwd);<br>		&#125;<br>	&#125;);<br></code></pre></td></tr></table></figure>
             </div>
             <hr>
             <div>
@@ -280,9 +262,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/Random/">Random</a>
+                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
                     
                   </div>
                 
@@ -290,7 +270,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
                     
                   </div>
                 
@@ -307,15 +287,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/29/idea-build/">
+                      <a href="/2021/07/06/jfinal-Interceptor/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">idea启动前会先build</span>
+                        <span class="hidden-mobile">Jfinal框架全局拦截器</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/07/06/jfinal-dao/">
+                        <span class="hidden-mobile">jfinal框架创建bean的dao方法的解释</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

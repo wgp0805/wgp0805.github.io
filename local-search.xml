@@ -4,6 +4,83 @@
   
   
   <entry>
+    <title>java-time</title>
+    <link href="/2021/07/06/java-time/"/>
+    <url>/2021/07/06/java-time/</url>
+    
+    <content type="html"><![CDATA[<h3 id="java时间的比较"><a href="#java时间的比较" class="headerlink" title="java时间的比较"></a>java时间的比较</h3><pre><code>1. 直接用Date自带方法before()和after()比较</code></pre> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//获取活动开始时间 </span><br>String beginTime = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;2020-12-11 00:00:00&quot;</span>); <br><span class="hljs-comment">//结束时间</span><br>String endTime = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;2020-12-26 00:00:00&quot;</span>);<br></code></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//设置日期格式</span><br>SimpleDateFormat df = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);<br><span class="hljs-comment">//获取活动开始时间和截止时间精确到秒</span><br>Date sd1=df.parse(beginTime);<br>Date sd2=df.parse(endTime);<br><br>.compareTo()方法:前后时间一模一样时返回(前后时间相等时)<span class="hljs-keyword">true</span>,否则返回<span class="hljs-keyword">false</span>.<br>.after()方法:当前面的时间晚于后面的时间时返回<span class="hljs-keyword">true</span>,否则返回<span class="hljs-keyword">false</span>.<br>例如:当前时间beginTime，结束时间endTime<br>此时:beginTime.after(endTime )=<span class="hljs-keyword">true</span><br><br>.before()方法:当前面的时间早于后面的时间时返回<span class="hljs-keyword">true</span>,否则返回<span class="hljs-keyword">false</span>.<br>例如:当前时间beginTime 结束时间endTime<br>此时:beginTime.before(endTime )=<span class="hljs-keyword">true</span><br></code></pre></td></tr></table></figure><ul><li><p>java.util.Date中的before和after方法只会比较到Day，不管你的date是yyyy-MM-dd HH:mm:ss还是yyyy-MM-dd格式的。</p><ul><li>如果不是对上边的函数足够的了解的话，还是建议用gettime（）</li></ul><p>2.用getTime（）去比较时间</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//获取活动开始时间 和 结束时间</span><br>String beginTime = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;2020-12-11 00:00:00&quot;</span>); <br>String endTime = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;2020-12-26 00:00:00&quot;</span>);<br><span class="hljs-comment">//设置日期格式</span><br>SimpleDateFormat df = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);<br><span class="hljs-comment">//获取活动开始时间和截止时间精确到秒</span><br>Date sd1=df.parse(beginTime);<br>Date sd2=df.parse(endTime);<br><span class="hljs-comment">//转换后的开始时间和结束时间</span><br><span class="hljs-keyword">long</span> startTime =sd1.getTime();<br><span class="hljs-keyword">long</span> overTime= sd2.getTime();<br></code></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Jfinal框架全局拦截器</title>
+    <link href="/2021/07/06/jfinal-Interceptor/"/>
+    <url>/2021/07/06/jfinal-Interceptor/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Interceptor</span> </span>&#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 校验是否非法登录</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> inv</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">intercept</span><span class="hljs-params">(Invocation inv)</span> </span>&#123;<br>    <span class="hljs-comment">//获取controller对象拿到session对象</span><br>        Controller c = inv.getController();<br>        Users user = c.getSessionAttr(<span class="hljs-string">&quot;user&quot;</span>);<br>        <span class="hljs-comment">//校验是否为空</span><br>        <span class="hljs-keyword">if</span>(user == <span class="hljs-keyword">null</span>)&#123;<br>            c.setAttr(<span class="hljs-string">&quot;msg&quot;</span>,<span class="hljs-string">&quot;请输入用户名和密码&quot;</span>);<br>            c.render(<span class="hljs-string">&quot;login.html&quot;</span>);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            inv.invoke();<br>        &#125;<br><br>    &#125;<br>&#125;<br><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 配置全局拦截器</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">configInterceptor</span><span class="hljs-params">(Interceptors me)</span> </span>&#123;<br>me.add(<span class="hljs-keyword">new</span> LoginInterceptor());<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>jfinal</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+      <tag>jfinal</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>js获取cookie对象</title>
+    <link href="/2021/07/06/js-cookie/"/>
+    <url>/2021/07/06/js-cookie/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCookie</span>(<span class="hljs-params">sName</span>)</span>&#123;<br><span class="hljs-comment">//获取cookie对象,并按；进行分割</span><br><span class="hljs-keyword">let</span> aCookie = <span class="hljs-built_in">document</span>.cookie.split(<span class="hljs-string">&quot;; &quot;</span>);<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">遍历数组根据=遍历出来的每一个元素进行分割因为cookie中的存储形式</span><br><span class="hljs-comment">是这样的 userName=admin; userPwd=admin 所以在通过等号进行分割</span><br><span class="hljs-comment">得到长度为2的数字，然后就可以进行取值了</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i &lt; aCookie.length; i++) &#123;<br><span class="hljs-keyword">let</span> aCrumb = aCookie[i].split(<span class="hljs-string">&quot;=&quot;</span>);<br><span class="hljs-keyword">if</span> (sName == aCrumb[<span class="hljs-number">0</span>])<br><span class="hljs-keyword">return</span> <span class="hljs-built_in">unescape</span>(aCrumb[<span class="hljs-number">1</span>]);<br>&#125;<br><span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>&#125;<br>$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br><span class="hljs-comment">//调用方法，获得取到的值</span><br><span class="hljs-keyword">let</span> userName = getCookie(<span class="hljs-string">&quot;userName&quot;</span>);<br><span class="hljs-keyword">let</span> userPwd = getCookie(<span class="hljs-string">&quot;userPwd&quot;</span>);<br><span class="hljs-comment">//判断是否勾选一周哦免登录</span><br><span class="hljs-keyword">if</span>(userName != <span class="hljs-literal">null</span> &amp;&amp; userName != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>$(<span class="hljs-string">&#x27;#saveCookie&#x27;</span>).attr(<span class="hljs-string">&quot;checked&quot;</span>,<span class="hljs-literal">true</span>);<br>&#125;<br><span class="hljs-comment">//将得到的用户名和密码进行赋值</span><br><span class="hljs-keyword">if</span>(userName != <span class="hljs-literal">null</span> &amp;&amp; userName != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>$(<span class="hljs-string">&quot;#userName&quot;</span>).val(userName);<br>&#125;<br><span class="hljs-keyword">if</span>(userPwd != <span class="hljs-literal">null</span> &amp;&amp; userPwd != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>$(<span class="hljs-string">&quot;#userPwd&quot;</span>).val(userPwd);<br>&#125;<br>&#125;);<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>JavaScript</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JavaScript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>jfinal框架创建bean的dao方法的解释</title>
     <link href="/2021/07/06/jfinal-dao/"/>
     <url>/2021/07/06/jfinal-dao/</url>
@@ -47,7 +124,7 @@
     
     <tags>
       
-      <tag>js</tag>
+      <tag>JavaScript</tag>
       
     </tags>
     
@@ -60,7 +137,7 @@
     <link href="/2021/07/06/ajax-json/"/>
     <url>/2021/07/06/ajax-json/</url>
     
-    <content type="html"><![CDATA[<p>eval();  //此方法不推荐</p><p>JSON.parse();  //推荐方法</p><p>一、两种方法的区别</p><p>我们先初始化一个json格式的对象：</p><p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p><p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p><p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p><p>然后在控制台调用：</p><p>　　console.log( jsonObj.name );  // 两种方法都可以正确输入 周星驰</p><p>那么问题来了 两种方法有什么区别呢？（下面我们稍微把代码改动一下，蓝色字体为修改部分）</p><p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p><p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p><p>　　console.log( jsonObj.age );  //会先执行“alert”输出“hello”  然后才输出 23</p><p>换“JSON.parse();”方法：</p><p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p><p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p><p>　　cosole.log( jsonobj.age )  // 报错  这个错误告诉我们这个字符串是不合法的</p><p>小结：“eval();”方法解析的时候不会去判断字符串是否合法，而且json对象中的js方法也会被执行，这是非常危险的；而“JSON.parse();”方法的优点就不用多说了，推荐此方法。（不明白的盆友可以自己在控制台测试一下）</p><p>二、扩展问题</p><p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p><p>大家可以看到在上面测试时一直用红色把包在花括号外面的引号标注了起来，这对引号是很关键却又是常常被忽略的，因为 “eval();” 和 “JSON.parser();” 这两个方法的参数只接受字符串，也就是说只能解析字符串!!</p><p>那我不经会有一个思考，我们在初始化的时候若不加引号对，那么它本身就是对象，js可以直接获取对象本身的属性和方法；为什么还要加引号将它变成字符串之后再用 “eval();” 或者 “JSON.parse();” 解析，这样做不是既不环保又没有效率吗？</p><p>原因很简单：前端提供给后台的只能是字符串数据格式，后台返回给前台的就看返回的是什么数据格式，是字符串就必须解析之后再用。</p><p>（这个小问题一般大家都会忽略掉，不太关注。我之所以好奇的原因也是因为对后台了解的不够，把这个问题抛出来希望对后台不熟的朋友有所帮助，知道是怎么回事后自然而然会加深记忆，在开发过程中就不会漏掉了）</p>]]></content>
+    <content type="html"><![CDATA[<p>eval();  //此方法不推荐</p><p>JSON.parse();  //推荐方法ajax</p><p>一、两种方法的区别</p><p>我们先初始化一个json格式的对象：</p><p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p><p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p><p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p><p>然后在控制台调用：</p><p>　　console.log( jsonObj.name );  // 两种方法都可以正确输入 周星驰</p><p>那么问题来了 两种方法有什么区别呢？（下面我们稍微把代码改动一下，蓝色字体为修改部分）</p><p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p><p>　　var jsonObj = eval( ‘(‘ + jsonDate + ‘)’ );  // eval();方法</p><p>　　console.log( jsonObj.age );  //会先执行“alert”输出“hello”  然后才输出 23</p><p>换“JSON.parse();”方法：</p><p>　　var jsonDate = ‘{ “name”:alert(“hello”),”age”:23 }’</p><p>　　var jsonObj = JSON.parse( jsonDate );  // JSON.parse(); 方法</p><p>　　cosole.log( jsonobj.age )  // 报错  这个错误告诉我们这个字符串是不合法的</p><p>小结：“eval();”方法解析的时候不会去判断字符串是否合法，而且json对象中的js方法也会被执行，这是非常危险的；而“JSON.parse();”方法的优点就不用多说了，推荐此方法。（不明白的盆友可以自己在控制台测试一下）</p><p>二、扩展问题</p><p>　　var jsonDate = ‘{ “name”:”周星驰”,”age”:23 }’</p><p>大家可以看到在上面测试时一直用红色把包在花括号外面的引号标注了起来，这对引号是很关键却又是常常被忽略的，因为 “eval();” 和 “JSON.parser();” 这两个方法的参数只接受字符串，也就是说只能解析字符串!!</p><p>那我不经会有一个思考，我们在初始化的时候若不加引号对，那么它本身就是对象，js可以直接获取对象本身的属性和方法；为什么还要加引号将它变成字符串之后再用 “eval();” 或者 “JSON.parse();” 解析，这样做不是既不环保又没有效率吗？</p><p>原因很简单：前端提供给后台的只能是字符串数据格式，后台返回给前台的就看返回的是什么数据格式，是字符串就必须解析之后再用。</p><p>（这个小问题一般大家都会忽略掉，不太关注。我之所以好奇的原因也是因为对后台了解的不够，把这个问题抛出来希望对后台不熟的朋友有所帮助，知道是怎么回事后自然而然会加深记忆，在开发过程中就不会漏掉了）</p>]]></content>
     
     
     <categories>
@@ -270,12 +347,12 @@
     <link href="/2021/07/01/java-druid/"/>
     <url>/2021/07/01/java-druid/</url>
     
-    <content type="html"><![CDATA[<p>前些天自己在家闲着没事创建个SpringBoot项目想练练手，理想中是想要整合Mybatis和Druid连接池的，可以在写配置文件时发生了一些异常由于配置文件写的不对导致数据源报错，经过多方面排查，发现是配置文件写错了，但是在测试产生了一个疑问，druid是不是依赖于Jdbc的，但是点开pom文件发现，druid的依赖里并没有jdbc的依赖，但是整个pom里边又没有Jdbc的依赖，后来发现jdbc的依赖在mybatis里，由此可见Druid也是依赖于jdbc的，查实资料发现连接池只是对jdbc的操作进行封装，而不是封装了jdbc，以下是一些资料的总结！</p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">JDBC</span><span class="hljs-params">(Java DataBase Connectivity)</span></span>是Java和数据库(关系型数据库)之间的一个桥梁。<br><br>是一个规范而不是一个实现，能够执行SQL语句。<br><br>它由一组用Java语言编写的类和接口组成，各种不同类型的数据库都有相应的实现。<br></code></pre></td></tr></table></figure><p>Druid 是一个 JDBC 组件库，包含数据库连接池、SQL Parser 等组件, 被大量业务和技术产品使用或集成，经历过最严苛线上业务场景考验，是你值得信赖的技术产品。</p><ul><li>由此可见Druid 是对jdbc操作的封装</li></ul>]]></content>
+    <content type="html"><![CDATA[<p>前些天自己在家闲着Java没事创建个SpringBoot项目想练练手，理想中是想要整合Mybatis和Druid连接池的，可以在写配置文件时发生了一些异常由于配置文件写的不对导致数据源报错，经过多方面排查，发现是配置文件写错了，但是在测试产生了一个疑问，druid是不是依赖于Jdbc的，但是点开pom文件发现，druid的依赖里并没有jdbc的依赖，但是整个pom里边又没有Jdbc的依赖，后来发现jdbc的依赖在mybatis里，由此可见Druid也是依赖于jdbc的，查实资料发现连接池只是对jdbc的操作进行封装，而不是封装了jdbc，以下是一些资料的总结！</p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">JDBC</span><span class="hljs-params">(Java DataBase Connectivity)</span></span>是Java和数据库(关系型数据库)之间的一个桥梁。<br><br>是一个规范而不是一个实现，能够执行SQL语句。<br><br>它由一组用Java语言编写的类和接口组成，各种不同类型的数据库都有相应的实现。<br></code></pre></td></tr></table></figure><p>Druid 是一个 JDBC 组件库，包含数据库连接池、SQL Parser 等组件, 被大量业务和技术产品使用或集成，经历过最严苛线上业务场景考验，是你值得信赖的技术产品。</p><ul><li>由此可见Druid 是对jdbc操作的封装</li></ul>]]></content>
     
     
     <categories>
       
-      <category>java</category>
+      <category>Java</category>
       
       <category>druid</category>
       
@@ -302,7 +379,7 @@
     
     <categories>
       
-      <category>jfinal</category>
+      <category>Jfinal</category>
       
     </categories>
     
@@ -354,7 +431,7 @@
     
     <categories>
       
-      <category>java</category>
+      <category>Java</category>
       
       <category>Random</category>
       
