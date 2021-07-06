@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>IDEA目录折叠问题</title>
+    <link href="/2021/07/06/idea-zhedie/"/>
+    <url>/2021/07/06/idea-zhedie/</url>
+    
+    <content type="html"><![CDATA[<p>今天在有IDEA的时候发现如果一个文件夹下只有一个目录的话就会出现折叠！</p><p><img src="/img/IDEA/zhedie1.png" alt=""></p><p>这样就是很不方便看！</p><p><img src="/img/IDEA/zhedie2.png" alt=""></p><p>依次点击就可以完美解决</p><p><img src="/img/IDEA/zhedie3/png" alt=""></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>IDE</category>
+      
+      <category>IDEA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>IDEA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>RequestParam注解使用详解</title>
     <link href="/2021/07/06/spring-raquestparam/"/>
     <url>/2021/07/06/spring-raquestparam/</url>
