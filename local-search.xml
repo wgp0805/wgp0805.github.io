@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>js-notdefined</title>
+    <link href="/2021/07/06/js-notdefined/"/>
+    <url>/2021/07/06/js-notdefined/</url>
+    
+    <content type="html"><![CDATA[<p><strong>今天在写代码的时候，突然间一个页面报了这样一个错</strong><br><code>$ is not defined</code><br>当时也没注意不知道是怎么回事，然后就去查各种方法，发现大多说的都是语法和代码引用的问题，但是测试发现自己语法和引用都没有问题<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;script&gt;<br>    $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-comment">//这里的&#x27;#(msgTest)&#x27;是jfianl的一个模板语法</span><br>        <span class="hljs-keyword">let</span> msgTest = <span class="hljs-string">&#x27;#(msgTest)&#x27;</span>;<br>        <span class="hljs-keyword">if</span>(msgTest != <span class="hljs-literal">null</span> &amp;&amp; msgTest != <span class="hljs-string">&#x27;&#x27;</span>)&#123;<br>            alert(msgTest);<br>        &#125;<br>    &#125;)<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;#(ctx)/assets/js/jquery-1.10.2.js&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure><br>引用都没有问题，但是依旧报错，这时突然发现这段js代码时在引用的上边，按照程序的执行顺序从上到下，确实jquery的东西会不知道是什么东西<br>抱着试试的态度调整了下顺序</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;#(ctx)/assets/js/jquery-1.10.2.js&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">    $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;</span><br><span class="javascript">    <span class="hljs-comment">//这里的&#x27;#(msgTest)&#x27;是jfianl的一个模板语法</span></span><br><span class="javascript">        <span class="hljs-keyword">let</span> msgTest = <span class="hljs-string">&#x27;#(msgTest)&#x27;</span>;</span><br><span class="javascript">        <span class="hljs-keyword">if</span>(msgTest != <span class="hljs-literal">null</span> &amp;&amp; msgTest != <span class="hljs-string">&#x27;&#x27;</span>)&#123;</span><br><span class="javascript">            alert(msgTest);</span><br><span class="javascript">        &#125;</span><br><span class="javascript">    &#125;)</span><br><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure><p>结果就好了，所以再出现这个问题的时候一定看看引用的顺序！！！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>JavaScript</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>js</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Ajax中解析Json的两种方法详解</title>
     <link href="/2021/07/06/ajax-json/"/>
     <url>/2021/07/06/ajax-json/</url>
