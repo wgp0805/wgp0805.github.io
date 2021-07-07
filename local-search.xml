@@ -4,6 +4,62 @@
   
   
   <entry>
+    <title>idea-svn</title>
+    <link href="/2021/07/07/idea-svn/"/>
+    <url>/2021/07/07/idea-svn/</url>
+    
+    <content type="html"><![CDATA[<h1 id="1，安装svn"><a href="#1，安装svn" class="headerlink" title="1，安装svn"></a>1，安装svn</h1><p>首先，使用的时候，自己得先在电脑上安装个小乌龟。也就是svn啦。一路next安装即可<br>如上图箭头所示，在安装 TortoiseSVN 的时候，默认 command line client tools，是不安装的，这里建议勾选上。<br>这个我不确定我当时选没选，不过呢，你给安装上，也是没问题的。</p><p><img src="/img/IDEA/svn/idea-svn1.png" alt=""></p><h1 id="2，配置Idea"><a href="#2，配置Idea" class="headerlink" title="2，配置Idea"></a>2，配置Idea</h1><p>我目前使用的svn是idea2020.1的版本。配置svn</p><p><img src="/img/IDEA/svn/idea-svn2.png" alt=""></p><p>点击setting-&gt;Version Control-&gt;subversion</p><p><img src="/img/IDEA/svn/idea-svn3.png" alt=""></p><p>找到安装的svn的目录下的bin目录下的svn.exe文件然后点击OK</p><p><img src="/img/IDEA/svn/idea-svn4.png" alt=""></p><p>然后依次点击</p><p><img src="/img/IDEA/svn/idea-svn5.png" alt=""></p><p>然后就可以使用svn了<br>由于新老版本的原因没有这个cjheckoout的选项配置至此就可以去使用了</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>IDE</category>
+      
+      <category>IDEA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>idea</tag>
+      
+      <tag>svn</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>解决 Errors running builder &#39;DeploymentBuilder&#39; on project &#39;</title>
+    <link href="/2021/07/07/myecplice-bliud/"/>
+    <url>/2021/07/07/myecplice-bliud/</url>
+    
+    <content type="html"><![CDATA[<p>此问题一般发生在Myeclipse 保存文件并自动部署时候。</p><p>Errors occurred during the build.</p><p>Errors running builder ‘DeploymentBuilder’ on project ‘项目名’.</p><p>java.lang.NullPointerException</p><p>有一种产生此错误的原因是因为此项目不不是由myeclipse创建的。</p><p>所以你需要检查.project 文件。</p><p>并且添加</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">nature</span>&gt;</span>com.genuitec.eclipse.j2eedt.core.webnature<span class="hljs-tag">&lt;/<span class="hljs-name">nature</span>&gt;</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>MyEcplice</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>IDE</tag>
+      
+      <tag>Myecplice</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>java-time</title>
     <link href="/2021/07/06/java-time/"/>
     <url>/2021/07/06/java-time/</url>
@@ -164,7 +220,7 @@
     <link href="/2021/07/06/idea-zhedie/"/>
     <url>/2021/07/06/idea-zhedie/</url>
     
-    <content type="html"><![CDATA[<p>今天在有IDEA的时候发现如果一个文件夹下只有一个目录的话就会出现折叠！</p><p><img src="/img/IDEA/zhedie1.png" alt=""></p><p>这样就是很不方便看！</p><p><img src="/img/IDEA/zhedie2.png" alt=""></p><p>依次点击就可以完美解决</p><p><img src="/img/IDEA/zhedie3.png" alt=""></p>]]></content>
+    <content type="html"><![CDATA[<p>今天在有IDEA的时候发现如果一个文件夹下只有一个目录的话就会出现折叠！</p><p><img src="/img/IDEA/zhedie/zhedie1.png" alt=""></p><p>这样就是很不方便看！</p><p><img src="/img/IDEA/zhedie/zhedie2.png" alt=""></p><p>依次点击就可以完美解决</p><p><img src="/img/IDEA/zhedie/zhedie3.png" alt=""></p>]]></content>
     
     
     <categories>
@@ -178,7 +234,7 @@
     
     <tags>
       
-      <tag>IDEA</tag>
+      <tag>idea</tag>
       
     </tags>
     
