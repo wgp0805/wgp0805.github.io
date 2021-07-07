@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Mybatis报错java.sql.SQLSyntaxErrorExceptionORA-00911无效字符</title>
+    <link href="/2021/07/07/mybatis-error/"/>
+    <url>/2021/07/07/mybatis-error/</url>
+    
+    <content type="html"><![CDATA[<p>写mybatis的sql的时候发现一直再报这个错误：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">### The error may involve defaultParameterMap<br>### The error occurred <span class="hljs-keyword">while</span> setting parameters<br>### SQL: <span class="hljs-function">INSERT INTO <span class="hljs-title">T_BH_ORDER_TIME</span><span class="hljs-params">(ORDER_ID,INSERT_TIME)</span> <span class="hljs-title">VALUES</span><span class="hljs-params">(?,sysdate)</span></span>;<br>### Cause: java.sql.SQLSyntaxErrorException: ORA-00911: 无效字符<br><br>; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: ORA-00911: 无效字符<br>] with root cause<br>java.sql.SQLSyntaxErrorException: ORA-00911: 无效字符<br></code></pre></td></tr></table></figure><p>但是这个句sql拿到plsql上去执行的时候发现病不会报错</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">T_BH_ORDER_TIME(ORDER_ID,INSERT_TIME) <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;123&#x27;</span>,sysdate);<br></code></pre></td></tr></table></figure><p>百思不得其解的时候发现再mybatis的文件的时候发现只有这句sql后边加了个”;”去掉后发现好使了，最终发现mybatis里面的sql末尾是不能加；的，正确的写法如下</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">insert</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;insertOrderTime&quot;</span>&gt;</span><br>INSERT INTO T_BH_ORDER_TIME(ORDER_ID,INSERT_TIME) VALUES(#&#123;orderId,jdbcType=VARCHAR&#125;,sysdate);<br><span class="hljs-tag">&lt;/<span class="hljs-name">insert</span>&gt;</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>MyBatis</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>mybatis</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>JS谷歌浏览器断点调试</title>
     <link href="/2021/07/07/js-chrome/"/>
     <url>/2021/07/07/js-chrome/</url>
