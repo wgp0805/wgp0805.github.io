@@ -4,6 +4,58 @@
   
   
   <entry>
+    <title>JS谷歌浏览器断点调试</title>
+    <link href="/2021/07/07/js-chrome/"/>
+    <url>/2021/07/07/js-chrome/</url>
+    
+    <content type="html"><![CDATA[<p>JS谷歌浏览器断点调试<br>目录</p><p>1、找到对应的文件<br>1.1、如何找到webpack打包后的文件<br>2、打断点<br>3、进行调试<br>4、谷歌浏览器调试的其他选项功能<br>4.1、禁用缓存<br>5、IE 浏览器的断点调试</p><p>回到顶部<br>1、找到对应的文件<br>按F12打开网页调试工具，默认打开的是Elements，显示的是网页标签元素。选择Source，在左侧找到对应的js代码文件（这里是在page标签上找到的）</p><p>1.1、如何找到webpack打包后的文件<br>用 webpack 打包过后的项目，在本地服务器上运行时，它在 source 上隐藏得比较深，你可以在 top -&gt; webpack://  目录下找到原代码文件，名字和你自己命名的文件名相同。</p><p>如上图，在 webpack:// 的目录下可以找到原代码文件（注意，不是在src目录下，而是在 webpack:// 根目录下）</p><p> 或者：</p><p>你也可以通过在代码文件上写 debugger 语句来打断点，代码会执行到该语句而停止，相当于在该文件的该位置上手动打了断点，并且 source 会自动定位出该文件。</p><p>参考：<a href="https://blog.csdn.net/feinifi/article/details/86513705">https://blog.csdn.net/feinifi/article/details/86513705</a></p><p>2、打断点<br>在需要打断的代码上打断点（打断点时代码会执行到这个位置为止，但不会执行这段代码，比如下图在53行打断点，就不会执行53行的代码，此时的strArr为undefined）</p><p>也可以在 JS 文件上手动加上 debugger 语句，相当于在该语句的位置上打了断点，刷新浏览器或者触发到该语句就会进行调试模式。</p><p>3、进行调试<br>刷新浏览器或者点击触发事件就能执行代码，开始调试</p><p>鼠标停留在某一变量上可以看到变量在执行到该断点时的值。</p><p>在最右侧的状态栏中，scope上可以看到执行到该断点时的各个变量的值</p><p>执行断点时可以选中观察到红箭头指向的几个按钮。当你设置好断点开始运行的时候，<br>第一个按钮（F8）就会变成一个三角形。点击运行至下一个断点，若下面没有断点，它就会自动运行至结束。<br>第二个按钮（F10）是逐行执行，如果这一行调用了一个函数，会一次性执行函数得到结果，而不会跳转到函数内部去执行函数的过程<br>第三个按钮（F11）是逐过程执行，一行一行地执行，只是当这一行是一个函数的时候，他会自动跳转到函数内部的<br>第四个按钮（shift + F11）是跳出该函数<br>第五个按钮，是忽略所有断点，自动执行至结束。</p><p>清除所有断点方法：</p><p>4、谷歌浏览器调试的其他选项功能<br>4.1、禁用缓存<br>打开 network，勾选 disable cache，这样每次刷新页面都不会通过缓存来获取数据，而是每次都会重新发出请求。</p><p>如下图，勾选前可以看到某些请求返回的是 304。勾选禁用缓存后，每个请求返回的都是 200，可以看到没有请求是通过缓存来获取数据的了。</p><p>禁用前：</p><p>禁用后：</p><p>5、IE 浏览器的断点调试<br>IE浏览器的断点调试跟在谷歌浏览器上进行调试差不多一样，只不过是一些按钮和菜单不一样而已。</p><p>下面是以 IE 11 进行调试举例</p><p>从上图可以看到，在调试程序菜单中进行断点调试，在网络菜单栏中可以看到接口的返回上送数据等。</p><p>第一个按钮（F11）是逐过程执行，一行一行地执行，只是当这一行是一个函数的时候，他会自动跳转到函数内部的</p><p>第二个按钮（F10）是逐行执行，如果这一行调用了一个函数，会一次性执行函数得到结果，而不会跳转到函数内部去执行函数的过程 </p><p>第三个按钮（shift + F11）是跳出该函数 </p><p>在右边你可以监听到一些变量的值，也可以在搜索栏中对网站代码进行文本搜索。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>JavaScript</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>js</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>SpringBoot整合jsp</title>
+    <link href="/2021/07/07/springboot-jsp/"/>
+    <url>/2021/07/07/springboot-jsp/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>SpringBoot本身是内置的tomcat，所以无需再去外部配置tomcat，直接就可以调用，但是springboot默认支持的是thymeleaf这个模板，所以在使用jsp模板时就要去添加tomcat对jsp的支持<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- servlet相关jar包  --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javax.servlet-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-comment">&lt;!-- jstl相关jar包  --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jstl<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-comment">&lt;!-- tomcat对于jsp的支持  --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.tomcat<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>tomcat-jsp-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><br>配置 application.yml<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span>     <span class="hljs-comment"># 配置端口号</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">mvc:</span><br>    <span class="hljs-comment"># 配置视图解析器</span><br>    <span class="hljs-attr">view:</span><br>      <span class="hljs-attr">prefix:</span> <span class="hljs-string">/</span><br>      <span class="hljs-attr">suffix:</span> <span class="hljs-string">.jsp</span><br></code></pre></td></tr></table></figure><br>配置完成后在webapp/WEB-INF/jsp文件夹下放jsp文件(必须有webapp/WEB-INF这个包，否则访问不到)</p></blockquote><p>下面是我的项目目录</p><p><img src="/img/springboot/jsp/springboot-jsp1.png" alt=""></p><p>解决在Intellij Idea项目中无法新建jsp文件问题<br>点击File-Project Structrue，选择Modules，展开项目下的web，如下图</p><p><img src="/img/springboot/jsp/springboot-jsp2.png" alt=""></p><p>点击右下的+号，在弹出的窗口指定你的项目资源路径，这里直接点确定就好了</p><p><img src="/img/springboot/jsp/springboot-jsp3.png" alt=""></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SpringBoot</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>springboot</tag>
+      
+      <tag>jsp</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>idea-svn</title>
     <link href="/2021/07/07/idea-svn/"/>
     <url>/2021/07/07/idea-svn/</url>

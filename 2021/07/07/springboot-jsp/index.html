@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>idea-svn - WgpNote</title>
+  <title>SpringBoot整合jsp - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="idea-svn">
+            <span class="h2" id="subtitle" title="SpringBoot整合jsp">
               
             </span>
 
@@ -190,7 +190,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-07 08:11" pubdate>
+      <time datetime="2021-07-07 08:21" pubdate>
         2021年7月7日 早上
       </time>
     </span>
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      185 字
+      298 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      4
        分钟
     </span>
   
@@ -250,20 +250,18 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">idea-svn</h1>
+            <h1 style="display: none">SpringBoot整合jsp</h1>
             
             <div class="markdown-body">
-              <h1 id="1，安装svn"><a href="#1，安装svn" class="headerlink" title="1，安装svn"></a>1，安装svn</h1><p>首先，使用的时候，自己得先在电脑上安装个小乌龟。也就是svn啦。一路next安装即可<br>如上图箭头所示，在安装 TortoiseSVN 的时候，默认 command line client tools，是不安装的，这里建议勾选上。<br>这个我不确定我当时选没选，不过呢，你给安装上，也是没问题的。</p>
-<p><img src="/img/IDEA/svn/idea-svn1.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h1 id="2，配置Idea"><a href="#2，配置Idea" class="headerlink" title="2，配置Idea"></a>2，配置Idea</h1><p>我目前使用的svn是idea2020.1的版本。配置svn</p>
-<p><img src="/img/IDEA/svn/idea-svn2.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>点击setting-&gt;Version Control-&gt;subversion</p>
-<p><img src="/img/IDEA/svn/idea-svn3.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>找到安装的svn的目录下的bin目录下的svn.exe文件然后点击OK</p>
-<p><img src="/img/IDEA/svn/idea-svn4.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>然后依次点击</p>
-<p><img src="/img/IDEA/svn/idea-svn5.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>然后就可以使用svn了<br>由于新老版本的原因没有这个cjheckoout的选项配置至此就可以去使用了</p>
+              <blockquote>
+<p>SpringBoot本身是内置的tomcat，所以无需再去外部配置tomcat，直接就可以调用，但是springboot默认支持的是thymeleaf这个模板，所以在使用jsp模板时就要去添加tomcat对jsp的支持<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- servlet相关jar包  --&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javax.servlet-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-comment">&lt;!-- jstl相关jar包  --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jstl<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-comment">&lt;!-- tomcat对于jsp的支持  --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.tomcat<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>tomcat-jsp-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  	<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><br>配置 application.yml<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span>     <span class="hljs-comment"># 配置端口号</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">mvc:</span><br>    <span class="hljs-comment"># 配置视图解析器</span><br>    <span class="hljs-attr">view:</span><br>      <span class="hljs-attr">prefix:</span> <span class="hljs-string">/</span><br>      <span class="hljs-attr">suffix:</span> <span class="hljs-string">.jsp</span><br></code></pre></td></tr></table></figure><br>配置完成后在webapp/WEB-INF/jsp文件夹下放jsp文件(必须有webapp/WEB-INF这个包，否则访问不到)</p>
+</blockquote>
+<p>下面是我的项目目录</p>
+<p><img src="/img/springboot/jsp/springboot-jsp1.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>解决在Intellij Idea项目中无法新建jsp文件问题<br>点击File-Project Structrue，选择Modules，展开项目下的web，如下图</p>
+<p><img src="/img/springboot/jsp/springboot-jsp2.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>点击右下的+号，在弹出的窗口指定你的项目资源路径，这里直接点确定就好了</p>
+<p><img src="/img/springboot/jsp/springboot-jsp3.png" srcset="/img/loading.gif" lazyload alt=""></p>
 
             </div>
             <hr>
@@ -273,9 +271,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/IDE/">IDE</a>
-                    
-                      <a class="hover-with-bg" href="/categories/IDE/IDEA/">IDEA</a>
+                      <a class="hover-with-bg" href="/categories/SpringBoot/">SpringBoot</a>
                     
                   </div>
                 
@@ -283,9 +279,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/idea/">idea</a>
+                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
                     
-                      <a class="hover-with-bg" href="/tags/svn/">svn</a>
+                      <a class="hover-with-bg" href="/tags/jsp/">jsp</a>
                     
                   </div>
                 
@@ -302,9 +298,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/07/springboot-jsp/">
+                      <a href="/2021/07/07/js-chrome/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">SpringBoot整合jsp</span>
+                        <span class="hidden-mobile">JS谷歌浏览器断点调试</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -312,8 +308,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/07/myecplice-bliud/">
-                        <span class="hidden-mobile">解决 Errors running builder 'DeploymentBuilder' on project '</span>
+                      <a href="/2021/07/07/idea-svn/">
+                        <span class="hidden-mobile">idea-svn</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
