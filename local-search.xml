@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Oracle中的to_date()和to_char()函数 详解及应用</title>
+    <link href="/2021/07/08/orcale-todate/"/>
+    <url>/2021/07/08/orcale-todate/</url>
+    
+    <content type="html"><![CDATA[<p><strong>1、to_date() 函数 （俗称：日期转换函数）</strong></p><p><strong>1.1 格式</strong></p><p>　　to_date(“要转换的字符串”,”转换的格式”)  //两个参数的格式必须匹配，否则会报错。即按照第二个参数的格式解释第一个参数。</p><p><strong>1.2 例子</strong></p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 根据时间查询</span><br><span class="hljs-keyword">select</span> to_date(<span class="hljs-string">&#x27;2005-12-25,13:25:59&#x27;</span>,<span class="hljs-string">&#x27;yyyy-mm-dd,hh24:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual  <br><span class="hljs-comment">-- 返回结果：2005-12-25 13:25:59  //hh24表示:时间是24小时制的  </span><br><br><br><span class="hljs-keyword">select</span> to_date(<span class="hljs-string">&#x27;2005-12-25,13:25:59&#x27;</span>,<span class="hljs-string">&#x27;yyyy-mm-dd,hh:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual  <br><span class="hljs-comment">-- 返回结果：2005-12-25 01:25:59  //去掉24的结果</span><br><br><br><span class="hljs-comment">-- 查询当前系统时间。 sysdate：系统时间 </span><br><span class="hljs-keyword">select</span> to_date(sysdate,<span class="hljs-string">&#x27;yyyy-mm-dd,hh24:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual  <br><span class="hljs-comment">-- 返回结果：2018-04-10 12:30：50</span><br></code></pre></td></tr></table></figure><p><strong>说明:</strong></p><ol><li>表示year的：<strong>y</strong>  表示年的最后一位 <strong>yy</strong> 表示年的最后2位 <strong>yyy</strong> 表示年的最后3位 <strong>yyyy</strong> 用4位数表示年 </li><li>表示month的：<strong>mm</strong> 用2位数字表示月； — MySQL 月份用<strong>大 MM</strong> 表示 </li><li>表示day的：<strong>dd</strong> 表示当月第几天；ddd表示当年第几天；dy 当周第几天  </li><li>表示hour的：<strong>hh</strong> 2位数表示小时 12进制； hh24 2位数表示小时 24小时  — MySQL 小时用大 HH 表示 </li><li>表示minute的：<strong>mi</strong> 2位数表示分钟   — MySQL 分钟用 <strong>mm</strong> 表示 </li><li>表示second的：<strong>ss</strong> 2位数表示秒 60进制 表示季度的：<strong>q</strong> 一位数 表示季度 （<strong>1</strong>-<strong>4</strong>） 另外还有 <strong>ww</strong> 用来表示当年第几周 w用来表示当月第几周。</li></ol><p><strong>2、 to_char() 函数 （俗称：字符串转换函数）</strong></p><p> <strong>2.1 格式</strong></p><p>　　to_char(日期,”转换格式” )  //即把给定的日期按照“转换格式”转换。</p><p> <strong>2.2 例子</strong></p><p>1 — 查询当前系统时间</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> to_char(sysdate,<span class="hljs-string">&#x27;yy-mm-dd hh24:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual   <br><span class="hljs-comment">-- 返回结果：18-04-10 13:22:42 //这个结果表示的是一串 字符串,并不是时间.</span><br></code></pre></td></tr></table></figure><p><strong>3、实例</strong></p><p><strong>1、在数据库中，根据 “时间” 查询数据</strong></p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> MATERIAL t <span class="hljs-keyword">WHERE</span> t.insert_date <span class="hljs-operator">=</span> to_date(<span class="hljs-string">&#x27;2018-04-10 10:30:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH24:mi:ss&#x27;</span>);<br></code></pre></td></tr></table></figure><p><strong>查询结果:</strong></p><p><img src="/img/orcale/todate/todate1.png" alt="img"></p><p> <strong>2、在数据库中，插入与“时间”相关的数据</strong></p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> student(name,birthday,age,phone,email)       <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;zhangsan&#x27;</span>,to_date(<span class="hljs-string">&#x27;2018-01-10 19:55:45&#x27;</span>,<span class="hljs-string">&#x27;yyyy-MM-dd hh24:mi:ss&#x27;</span>),<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;13510086110&#x27;</span>,<span class="hljs-string">&#x27;123456789@qq.com&#x27;</span>);  <br><span class="hljs-comment">-- 插入数据</span><br></code></pre></td></tr></table></figure><p><strong>查询结果：</strong></p><p><img src="/img/orcale/todate/todate2.png" alt="img"></p><p><strong>4. 附录</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs mysql">-- 当前时间减去7分钟的时间  <br>select sysdate,sysdate - interval &#x27;7&#x27; MINUTE from dual  <br>-- 当前时间减去7小时的时间  <br>select sysdate - interval &#x27;7&#x27; hour from dual  <br>-- 当前时间减去7天的时间  <br>select sysdate - interval &#x27;7&#x27; day from dual  <br>-- 当前时间减去7月的时间  <br>select sysdate,sysdate - interval &#x27;7&#x27; month from dual  <br>-- 当前时间减去7年的时间  <br>select sysdate,sysdate - interval &#x27;7&#x27; year from dual <br><br>-- 时间间隔乘以一个数字  <br>select sysdate,sysdate - **8***interval &#x27;7&#x27; hour from dual <br>-- 在当前时间加一月 或 一年 <br>select sysdate,add_months(sysdate,**12**) from dual;   -- 加1年 <br>select sysdate,add_months(sysdate,**1**) from dual;  -- 加1月 <br>-- 在当前时间加一天 或 一小时 <br>select sysdate+N from dual;-- sysdate+1  加一天；  sysdate+1/24  加1小时；<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Orcale</category>
+      
+      <category>to_date</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>orcale</tag>
+      
+      <tag>to_date</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>JSONArray与JSONObject的区别</title>
     <link href="/2021/07/08/jsonobject/"/>
     <url>/2021/07/08/jsonobject/</url>

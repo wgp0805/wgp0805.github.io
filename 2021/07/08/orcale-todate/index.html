@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>JSONArray与JSONObject的区别 - WgpNote</title>
+  <title>Oracle中的to_date()和to_char()函数 详解及应用 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="JSONArray与JSONObject的区别">
+            <span class="h2" id="subtitle" title="Oracle中的to_date()和to_char()函数 详解及应用">
               
             </span>
 
@@ -190,7 +190,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-08 08:09" pubdate>
+      <time datetime="2021-07-08 08:16" pubdate>
         2021年7月8日 早上
       </time>
     </span>
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      395 字
+      771 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      10
        分钟
     </span>
   
@@ -250,53 +250,40 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">JSONArray与JSONObject的区别</h1>
+            <h1 style="display: none">Oracle中的to_date()和to_char()函数 详解及应用</h1>
             
             <div class="markdown-body">
-              <p>一、JSONObject和JSONArray的数据表示形式</p>
-<p>JSONObject的数据是用 {  } 来表示的，</p>
-<pre><code>    例如：   &#123; &quot;id&quot; : &quot;123&quot;, &quot;age&quot; : &quot;12&quot;, &quot;name&quot; : &quot;博客园&quot;, &quot;time&quot; : 2020-06-06&#125;  
-</code></pre><p>而JSONArray，顾名思义是由JSONObject构成的数组，用  [ { } , { } , ……  , { } ]  来表示</p>
-<pre><code>   例如：   [ &#123;  &quot;id&quot; : &quot;123&quot;, &quot;age&quot; : &quot;12&quot;, &quot;name&quot; : &quot;博客园&quot; &#125;  , &#123;  &quot;id&quot; : &#39;&#39;321&quot;, &quot;age&quot; : &#39;&#39;12&quot;,&quot;name&quot;:&quot;csdn&quot; &#125; ] ； 
-
-    表示了包含2个JSONObject的JSONArray。
-</code></pre><p>可以看到一个很明显的区别，一个用的是 {  }  ，一个最外面用的是 [  ]  ；JsonArray包含多个JsonObject</p>
-<p>二、如何从字符串String获得JSONObject对象和JSONArray对象</p>
-<pre><code>      JSONObject  jsonObject  = new JSONObject ( String  str);
-
-     JSONArray jsonArray = new JSONArray(String    str  ) ;
-</code></pre><p>三、如何从JSONArray中获得JSONObject对象（俩种）</p>
-<pre><code>   大家可以把JSONArray当成一般的数组来对待，只是获取的数据内数据的方法不一样
-
-   for(int i=0;i&lt;jsonArray .length;i++)&#123;
-
-               JSONObject   jsonObject = (JSONObject)jsonArray.get(i);
-
-               JSONObject   jsonObject  =  jsonArray.getJSONObject(i) ;  
-
-   &#125;
-</code></pre><p>  两者都可。第一种注意转换 </p>
-<p>四、获取JSON内的数据（俩种）</p>
-<pre><code>  int   id= jsonObject.getInt ( &quot;id&quot; ) ;    //  这里的jid得到的数据就是123.
-
-  String  age=jsonObject.getString( &quot; age&quot;) ;   // 这里的age得到的数据就是12
-
- Strirng age= jsonObject.get(&quot;age&quot;).toString();
-</code></pre><p> 五、一般地 为键值对</p>
-<pre><code>                    eg:&#123;  name:&quot;xm&quot;, value:&quot;张三&quot;&#125;
-
-                     String jname = null;
-
-                     if(jsonObject.get(&quot;name&quot;).equals(&quot;xm&quot;))&#123;
-
-                      jname=jsonObject.get(&quot;value&quot;).toString();
-
-                    &#125;
-</code></pre><p>​                    </p>
-<p> 六、 JSON.parse( str )    —&gt; 把字符串转为JSON对象</p>
-<pre><code>     JSON.stringify( obj ) --&gt;把对象解析为字符串
-</code></pre><p>七、使用</p>
-<p>fastjson，gson，jackson，进行序列化与反序列化</p>
+              <p><strong>1、to_date() 函数 （俗称：日期转换函数）</strong></p>
+<p><strong>1.1 格式</strong></p>
+<p>　　to_date(“要转换的字符串”,”转换的格式”)  //两个参数的格式必须匹配，否则会报错。即按照第二个参数的格式解释第一个参数。</p>
+<p><strong>1.2 例子</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 根据时间查询</span><br><span class="hljs-keyword">select</span> to_date(<span class="hljs-string">&#x27;2005-12-25,13:25:59&#x27;</span>,<span class="hljs-string">&#x27;yyyy-mm-dd,hh24:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual  <br><span class="hljs-comment">-- 返回结果：2005-12-25 13:25:59  //hh24表示:时间是24小时制的  </span><br><br><br><span class="hljs-keyword">select</span> to_date(<span class="hljs-string">&#x27;2005-12-25,13:25:59&#x27;</span>,<span class="hljs-string">&#x27;yyyy-mm-dd,hh:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual  <br><span class="hljs-comment">-- 返回结果：2005-12-25 01:25:59  //去掉24的结果</span><br><br><br><span class="hljs-comment">-- 查询当前系统时间。 sysdate：系统时间 </span><br><span class="hljs-keyword">select</span> to_date(sysdate,<span class="hljs-string">&#x27;yyyy-mm-dd,hh24:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual  <br><span class="hljs-comment">-- 返回结果：2018-04-10 12:30：50</span><br></code></pre></td></tr></table></figure>
+<p><strong>说明:</strong></p>
+<ol>
+<li>表示year的：<strong>y</strong>  表示年的最后一位 <strong>yy</strong> 表示年的最后2位 <strong>yyy</strong> 表示年的最后3位 <strong>yyyy</strong> 用4位数表示年 </li>
+<li>表示month的：<strong>mm</strong> 用2位数字表示月； — MySQL 月份用<strong>大 MM</strong> 表示 </li>
+<li>表示day的：<strong>dd</strong> 表示当月第几天；ddd表示当年第几天；dy 当周第几天  </li>
+<li>表示hour的：<strong>hh</strong> 2位数表示小时 12进制； hh24 2位数表示小时 24小时  — MySQL 小时用大 HH 表示 </li>
+<li>表示minute的：<strong>mi</strong> 2位数表示分钟   — MySQL 分钟用 <strong>mm</strong> 表示 </li>
+<li>表示second的：<strong>ss</strong> 2位数表示秒 60进制 表示季度的：<strong>q</strong> 一位数 表示季度 （<strong>1</strong>-<strong>4</strong>） 另外还有 <strong>ww</strong> 用来表示当年第几周 w用来表示当月第几周。</li>
+</ol>
+<p><strong>2、 to_char() 函数 （俗称：字符串转换函数）</strong></p>
+<p> <strong>2.1 格式</strong></p>
+<p>　　to_char(日期,”转换格式” )  //即把给定的日期按照“转换格式”转换。</p>
+<p> <strong>2.2 例子</strong></p>
+<p>1 — 查询当前系统时间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> to_char(sysdate,<span class="hljs-string">&#x27;yy-mm-dd hh24:mi:ss&#x27;</span>) <span class="hljs-keyword">from</span> dual   <br><span class="hljs-comment">-- 返回结果：18-04-10 13:22:42 //这个结果表示的是一串 字符串,并不是时间.</span><br></code></pre></td></tr></table></figure>
+<p><strong>3、实例</strong></p>
+<p><strong>1、在数据库中，根据 “时间” 查询数据</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> MATERIAL t <span class="hljs-keyword">WHERE</span> t.insert_date <span class="hljs-operator">=</span> to_date(<span class="hljs-string">&#x27;2018-04-10 10:30:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH24:mi:ss&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<p><strong>查询结果:</strong></p>
+<p><img src="/img/orcale/todate/todate1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> <strong>2、在数据库中，插入与“时间”相关的数据</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> student(name,birthday,age,phone,email)       <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;zhangsan&#x27;</span>,to_date(<span class="hljs-string">&#x27;2018-01-10 19:55:45&#x27;</span>,<span class="hljs-string">&#x27;yyyy-MM-dd hh24:mi:ss&#x27;</span>),<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;13510086110&#x27;</span>,<span class="hljs-string">&#x27;123456789@qq.com&#x27;</span>);  <br><span class="hljs-comment">-- 插入数据</span><br></code></pre></td></tr></table></figure>
+<p><strong>查询结果：</strong></p>
+<p><img src="/img/orcale/todate/todate2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>4. 附录</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs mysql">-- 当前时间减去7分钟的时间  <br>select sysdate,sysdate - interval &#x27;7&#x27; MINUTE from dual  <br>-- 当前时间减去7小时的时间  <br>select sysdate - interval &#x27;7&#x27; hour from dual  <br>-- 当前时间减去7天的时间  <br>select sysdate - interval &#x27;7&#x27; day from dual  <br>-- 当前时间减去7月的时间  <br>select sysdate,sysdate - interval &#x27;7&#x27; month from dual  <br>-- 当前时间减去7年的时间  <br>select sysdate,sysdate - interval &#x27;7&#x27; year from dual <br><br>-- 时间间隔乘以一个数字  <br>select sysdate,sysdate - **8***interval &#x27;7&#x27; hour from dual <br>-- 在当前时间加一月 或 一年 <br>select sysdate,add_months(sysdate,**12**) from dual;   -- 加1年 <br>select sysdate,add_months(sysdate,**1**) from dual;  -- 加1月 <br>-- 在当前时间加一天 或 一小时 <br>select sysdate+N from dual;-- sysdate+1  加一天；  sysdate+1/24  加1小时；<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -306,7 +293,9 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Json/">Json</a>
+                      <a class="hover-with-bg" href="/categories/Orcale/">Orcale</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Orcale/to-date/">to_date</a>
                     
                   </div>
                 
@@ -314,7 +303,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/json/">json</a>
+                      <a class="hover-with-bg" href="/tags/orcale/">orcale</a>
+                    
+                      <a class="hover-with-bg" href="/tags/to-date/">to_date</a>
                     
                   </div>
                 
@@ -331,18 +322,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/08/orcale-todate/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Oracle中的to_date()和to_char()函数 详解及应用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/08/java-httpgetpost/">
-                        <span class="hidden-mobile">http中post和get的使用场景</span>
+                      <a href="/2021/07/08/jsonobject/">
+                        <span class="hidden-mobile">JSONArray与JSONObject的区别</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
