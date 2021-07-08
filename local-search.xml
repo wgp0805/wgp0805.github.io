@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>freemaker常用语法</title>
+    <link href="/2021/07/09/freemaker/"/>
+    <url>/2021/07/09/freemaker/</url>
+    
+    <content type="html"><![CDATA[<p>在公司新接到一个模块的开发需求，当时睡页面用的freemaker，当时也是头顶一蒙啊，同事说和jstl的用法差不多，但是在常用的东西上的写法确实还是不会，所以在这总结些常用的语法！望指正！<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- 此时name的值就是后台传过来的值直接填写就可以--&gt;</span><br>&lt;#if name = 0&gt;<br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span> =<span class="hljs-string">&quot;idCard&quot;</span>&gt;</span><br>&lt;/#if&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--接收参数采用$&#123;&#125;的方式去接收--&gt;</span><br><span class="hljs-comment">&lt;!--这里的??表示可以为空--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span> =<span class="hljs-string">&quot;idCard&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;user??&#125;&quot;</span>&gt;</span><br>=================================================================<br><span class="hljs-comment">&lt;!--list就等同于for循环，userlist表示为后台传过来的集合，as 后的user表示遍历时的临时变量--&gt;</span><br>&lt;#list userlist as user&gt;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list-box&quot;</span>&gt;</span> <br>            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>机主姓名:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>$&#123;user.userName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  &lt;/#list&gt;<br>=================================================================<br>&lt;#list userlist as user&gt;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list-box&quot;</span>&gt;</span> <br>            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>机主姓名:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>$&#123;user.userName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  &lt;/#list&gt;<br>  <span class="hljs-comment">&lt;!--这里的user——index是下标序号--&gt;</span><br>  &lt;#if user_index = 0&gt;<br>  checked=&quot;checked&quot;<br>  &lt;/#if&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--遍历map--&gt;</span><br>&lt;#list map?keys as k&gt;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;k&#125;&quot;</span>&gt;</span>$&#123;map[k]&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>&lt;/#list&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--取LIST中第i个元素的值--&gt;</span><br>$&#123;list[i]&#125; <br><span class="hljs-comment">&lt;!--嵌套时前面要有括号，如下，将字符串变成list，然后取第i个元素的值--&gt;</span><br>$&#123;(str?split(&quot;,&quot;))[i]&#125; <br>=================================================================<br><span class="hljs-comment">&lt;!--list排序：--&gt;</span><br>升序 .sort_by()<br>&lt;#list list?sort_by(&quot;字段&quot;) as x&gt;<br>&lt;/#list&gt;<br>降序 .sort_by()?reverse<br>&lt;#list list?sort_by(&quot;字段&quot;)?reverse as x&gt; <br>&lt;/#list&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--item_has_next,size使用：--&gt;</span><br>&lt;#list userList as user&gt;<br>  &lt;#if !user_has_next&gt;<br>   共有$&#123;userList?size&#125;最后一个用户是:$&#123;user.userName&#125;<br>  &lt;/#if&gt;<br>&lt;/#list&gt;<br></code></pre></td></tr></table></figure></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Freemaker</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>freemaker</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Oracle中的to_date()和to_char()函数 详解及应用</title>
     <link href="/2021/07/08/orcale-todate/"/>
     <url>/2021/07/08/orcale-todate/</url>
@@ -390,9 +415,9 @@
     
     <tags>
       
-      <tag>ajax</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>ajax</tag>
       
     </tags>
     
