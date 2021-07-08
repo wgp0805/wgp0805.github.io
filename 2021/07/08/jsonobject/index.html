@@ -18,9 +18,25 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>归档 - WgpNote</title>
+  <title>JSONArray与JSONObject的区别 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -48,7 +64,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -159,9 +175,59 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="JSONArray与JSONObject的区别">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      wgp
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-08 08:09" pubdate>
+        2021年7月8日 早上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      395 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      5
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -174,100 +240,158 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 25 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/07/06/js-cookie/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">js获取cookie对象</span>
-      <time style="float: right;">07-06</time>
-    </a>
-  
-    
-    <a href="/2021/07/06/jfinal-dao/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">jfinal框架创建bean的dao方法的解释</span>
-      <time style="float: right;">07-06</time>
-    </a>
-  
-    
-    <a href="/2021/07/06/js-notdefined/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">js-notdefined</span>
-      <time style="float: right;">07-06</time>
-    </a>
-  
-    
-    <a href="/2021/07/06/ajax-json/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Ajax中解析Json的两种方法详解</span>
-      <time style="float: right;">07-06</time>
-    </a>
-  
-    
-    <a href="/2021/07/06/idea-zhedie/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">IDEA目录折叠问题</span>
-      <time style="float: right;">07-06</time>
-    </a>
-  
-    
-    <a href="/2021/07/06/spring-raquestparam/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">RequestParam注解使用详解</span>
-      <time style="float: right;">07-06</time>
-    </a>
-  
-    
-    <a href="/2021/07/05/ftpClient/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">FTPClient上传和下载</span>
-      <time style="float: right;">07-05</time>
-    </a>
-  
-    
-    <a href="/2021/07/05/mybatis-param/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">mybatis批量插入及@param的作用</span>
-      <time style="float: right;">07-05</time>
-    </a>
-  
-    
-    <a href="/2021/07/05/maven-error-1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">IDEA中报错java程序org.apache.ibatis.annotations不存在</span>
-      <time style="float: right;">07-05</time>
-    </a>
-  
-    
-    <a href="/2021/07/02/Ajax-error/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Ajax访问后台时返回map报错的问题</span>
-      <time style="float: right;">07-02</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JSONArray与JSONObject的区别</h1>
+            
+            <div class="markdown-body">
+              <p>一、JSONObject和JSONArray的数据表示形式</p>
+<p>JSONObject的数据是用 {  } 来表示的，</p>
+<pre><code>    例如：   &#123; &quot;id&quot; : &quot;123&quot;, &quot;age&quot; : &quot;12&quot;, &quot;name&quot; : &quot;博客园&quot;, &quot;time&quot; : 2020-06-06&#125;  
+</code></pre><p>而JSONArray，顾名思义是由JSONObject构成的数组，用  [ { } , { } , ……  , { } ]  来表示</p>
+<pre><code>   例如：   [ &#123;  &quot;id&quot; : &quot;123&quot;, &quot;age&quot; : &quot;12&quot;, &quot;name&quot; : &quot;博客园&quot; &#125;  , &#123;  &quot;id&quot; : &#39;&#39;321&quot;, &quot;age&quot; : &#39;&#39;12&quot;,&quot;name&quot;:&quot;csdn&quot; &#125; ] ； 
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/2021/07/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/2021/07/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2021/07/page/3/#board">3</a><a class="extend next" rel="next" href="/archives/2021/07/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
+    表示了包含2个JSONObject的JSONArray。
+</code></pre><p>可以看到一个很明显的区别，一个用的是 {  }  ，一个最外面用的是 [  ]  ；JsonArray包含多个JsonObject</p>
+<p>二、如何从字符串String获得JSONObject对象和JSONArray对象</p>
+<pre><code>      JSONObject  jsonObject  = new JSONObject ( String  str);
 
+     JSONArray jsonArray = new JSONArray(String    str  ) ;
+</code></pre><p>三、如何从JSONArray中获得JSONObject对象（俩种）</p>
+<pre><code>   大家可以把JSONArray当成一般的数组来对待，只是获取的数据内数据的方法不一样
 
+   for(int i=0;i&lt;jsonArray .length;i++)&#123;
 
+               JSONObject   jsonObject = (JSONObject)jsonArray.get(i);
 
-              </div>
+               JSONObject   jsonObject  =  jsonArray.getJSONObject(i) ;  
+
+   &#125;
+</code></pre><p>  两者都可。第一种注意转换 </p>
+<p>四、获取JSON内的数据（俩种）</p>
+<pre><code>  int   id= jsonObject.getInt ( &quot;id&quot; ) ;    //  这里的jid得到的数据就是123.
+
+  String  age=jsonObject.getString( &quot; age&quot;) ;   // 这里的age得到的数据就是12
+
+ Strirng age= jsonObject.get(&quot;age&quot;).toString();
+</code></pre><p> 五、一般地 为键值对</p>
+<pre><code>                    eg:&#123;  name:&quot;xm&quot;, value:&quot;张三&quot;&#125;
+
+                     String jname = null;
+
+                     if(jsonObject.get(&quot;name&quot;).equals(&quot;xm&quot;))&#123;
+
+                      jname=jsonObject.get(&quot;value&quot;).toString();
+
+                    &#125;
+</code></pre><p>​                    </p>
+<p> 六、 JSON.parse( str )    —&gt; 把字符串转为JSON对象</p>
+<pre><code>     JSON.stringify( obj ) --&gt;把对象解析为字符串
+</code></pre><p>七、使用</p>
+<p>fastjson，gson，jackson，进行序列化与反序列化</p>
+
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Json/">Json</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/json/">json</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/08/java-httpgetpost/">
+                        <span class="hidden-mobile">http中post和get的使用场景</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://wgpwaline-1217310848-qqcom.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -371,9 +495,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
 
 
 

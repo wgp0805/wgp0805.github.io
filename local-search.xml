@@ -4,6 +4,83 @@
   
   
   <entry>
+    <title>JSONArray与JSONObject的区别</title>
+    <link href="/2021/07/08/jsonobject/"/>
+    <url>/2021/07/08/jsonobject/</url>
+    
+    <content type="html"><![CDATA[<p>一、JSONObject和JSONArray的数据表示形式</p><p>JSONObject的数据是用 {  } 来表示的，</p><pre><code>    例如：   &#123; &quot;id&quot; : &quot;123&quot;, &quot;age&quot; : &quot;12&quot;, &quot;name&quot; : &quot;博客园&quot;, &quot;time&quot; : 2020-06-06&#125;  </code></pre><p>而JSONArray，顾名思义是由JSONObject构成的数组，用  [ { } , { } , ……  , { } ]  来表示</p><pre><code>   例如：   [ &#123;  &quot;id&quot; : &quot;123&quot;, &quot;age&quot; : &quot;12&quot;, &quot;name&quot; : &quot;博客园&quot; &#125;  , &#123;  &quot;id&quot; : &#39;&#39;321&quot;, &quot;age&quot; : &#39;&#39;12&quot;,&quot;name&quot;:&quot;csdn&quot; &#125; ] ；     表示了包含2个JSONObject的JSONArray。</code></pre><p>可以看到一个很明显的区别，一个用的是 {  }  ，一个最外面用的是 [  ]  ；JsonArray包含多个JsonObject</p><p>二、如何从字符串String获得JSONObject对象和JSONArray对象</p><pre><code>      JSONObject  jsonObject  = new JSONObject ( String  str);     JSONArray jsonArray = new JSONArray(String    str  ) ;</code></pre><p>三、如何从JSONArray中获得JSONObject对象（俩种）</p><pre><code>   大家可以把JSONArray当成一般的数组来对待，只是获取的数据内数据的方法不一样   for(int i=0;i&lt;jsonArray .length;i++)&#123;               JSONObject   jsonObject = (JSONObject)jsonArray.get(i);               JSONObject   jsonObject  =  jsonArray.getJSONObject(i) ;     &#125;</code></pre><p>  两者都可。第一种注意转换 </p><p>四、获取JSON内的数据（俩种）</p><pre><code>  int   id= jsonObject.getInt ( &quot;id&quot; ) ;    //  这里的jid得到的数据就是123.  String  age=jsonObject.getString( &quot; age&quot;) ;   // 这里的age得到的数据就是12 Strirng age= jsonObject.get(&quot;age&quot;).toString();</code></pre><p> 五、一般地 为键值对</p><pre><code>                    eg:&#123;  name:&quot;xm&quot;, value:&quot;张三&quot;&#125;                     String jname = null;                     if(jsonObject.get(&quot;name&quot;).equals(&quot;xm&quot;))&#123;                      jname=jsonObject.get(&quot;value&quot;).toString();                    &#125;</code></pre><p>​                    </p><p> 六、 JSON.parse( str )    —&gt; 把字符串转为JSON对象</p><pre><code>     JSON.stringify( obj ) --&gt;把对象解析为字符串</code></pre><p>七、使用</p><p>fastjson，gson，jackson，进行序列化与反序列化</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Json</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>json</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>http中post和get的使用场景</title>
+    <link href="/2021/07/08/java-httpgetpost/"/>
+    <url>/2021/07/08/java-httpgetpost/</url>
+    
+    <content type="html"><![CDATA[<p>POST用于创建资源，资源的内容会被编入HTTP请示的内容中。例如，处理订货表单、在数据库中加入新数据行等。</p><p>当请求无副作用时（如进行搜索），便可使用GET方法；当请求有副作用时（如添加数据行），则用POST方法。一个比较实际的问题是：GET方法可能会产生很长的URL，或许会超过某些浏览器与服务器对URL长度的限制。</p><p>若符合下列任一情况，则用POST方法：</p><ul><li>请求的结果有持续性的副作用，例如，数据库内添加新的数据行。</li><li>若使用GET方法，则表单上收集的数据可能让URL过长。</li><li>要传送的数据不是采用7位的ASCII编码。</li></ul><p>若符合下列任一情况，则用GET方法：</p><ul><li>请求是为了查找资源，HTML表单数据仅用来帮助搜索。</li><li>请求结果无持续性的副作用。</li><li>收集的数据及HTML表单内的输入字段名称的总长不超过1024个字符</li></ul><div class="table-container"><table><thead><tr><th>操作方式</th><th>数据位置</th><th>明文密文</th><th>数据安全</th><th>长度限制</th><th>应用场景</th></tr></thead><tbody><tr><td>GET</td><td>HTTP包头</td><td>明文</td><td>不安全</td><td>长度较小</td><td>查询数据</td></tr><tr><td>POST</td><td>HTTP正文</td><td>可明可密</td><td>安全</td><td>支持较大数据传输</td><td>修改数据</td></tr></tbody></table></div><p>get是用来查询数据，post是用来修改数据。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>http</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>http</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>orcale创建表时dafault和notnull顺序</title>
+    <link href="/2021/07/08/orcale-notnull/"/>
+    <url>/2021/07/08/orcale-notnull/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/img/orcale/notnull/notnull.png" alt=""></p><p>注意dafault在前，not null 在后！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Orcale</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>orcale</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Mybatis报错java.sql.SQLSyntaxErrorExceptionORA-00911无效字符</title>
     <link href="/2021/07/07/mybatis-error/"/>
     <url>/2021/07/07/mybatis-error/</url>
@@ -147,6 +224,8 @@
     <categories>
       
       <category>Java</category>
+      
+      <category>Date</category>
       
     </categories>
     
