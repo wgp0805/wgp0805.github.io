@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>freemaker常用语法 - WgpNote</title>
+  <title>Orcale的concat()函数的使用 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="freemaker常用语法">
+            <span class="h2" id="subtitle" title="Orcale的concat()函数的使用">
               
             </span>
 
@@ -190,7 +190,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-09 07:56" pubdate>
+      <time datetime="2021-07-09 08:05" pubdate>
         2021年7月9日 早上
       </time>
     </span>
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      495 字
+      576 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      6
        分钟
     </span>
   
@@ -250,10 +250,16 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">freemaker常用语法</h1>
+            <h1 style="display: none">Orcale的concat()函数的使用</h1>
             
             <div class="markdown-body">
-              <p>在公司新接到一个模块的开发需求，当时睡页面用的freemaker，当时也是头顶一蒙啊，同事说和jstl的用法差不多，但是在常用的东西上的写法确实还是不会，所以在这总结些常用的语法！望指正！<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- 此时name的值就是后台传过来的值直接填写就可以--&gt;</span><br>&lt;#if name = 0&gt;<br>	<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span> =<span class="hljs-string">&quot;idCard&quot;</span>&gt;</span><br>&lt;/#if&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--接收参数采用$&#123;&#125;的方式去接收--&gt;</span><br><span class="hljs-comment">&lt;!--这里的??表示可以为空--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span> =<span class="hljs-string">&quot;idCard&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;user??&#125;&quot;</span>&gt;</span><br>=================================================================<br><span class="hljs-comment">&lt;!--list就等同于for循环，userlist表示为后台传过来的集合，as 后的user表示遍历时的临时变量--&gt;</span><br>&lt;#list userlist as user&gt;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list-box&quot;</span>&gt;</span> <br>            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>机主姓名:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>$&#123;user.userName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  &lt;/#list&gt;<br>=================================================================<br>&lt;#list userlist as user&gt;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list-box&quot;</span>&gt;</span> <br>            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>机主姓名:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>$&#123;user.userName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  &lt;/#list&gt;<br>  <span class="hljs-comment">&lt;!--这里的user——index是下标序号--&gt;</span><br>  &lt;#if user_index = 0&gt;<br>  	checked=&quot;checked&quot;<br>  &lt;/#if&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--遍历map--&gt;</span><br>&lt;#list map?keys as k&gt;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;k&#125;&quot;</span>&gt;</span>$&#123;map[k]&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>&lt;/#list&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--取LIST中第i个元素的值--&gt;</span><br>$&#123;list[i]&#125; <br><span class="hljs-comment">&lt;!--嵌套时前面要有括号，如下，将字符串变成list，然后取第i个元素的值--&gt;</span><br>$&#123;(str?split(&quot;,&quot;))[i]&#125; <br>=================================================================<br><span class="hljs-comment">&lt;!--list排序：--&gt;</span><br>升序 .sort_by()<br>&lt;#list list?sort_by(&quot;字段&quot;) as x&gt;<br>&lt;/#list&gt;<br>降序 .sort_by()?reverse<br>&lt;#list list?sort_by(&quot;字段&quot;)?reverse as x&gt; <br>&lt;/#list&gt;<br>=================================================================<br><span class="hljs-comment">&lt;!--item_has_next,size使用：--&gt;</span><br>&lt;#list userList as user&gt;<br>  &lt;#if !user_has_next&gt;<br>   共有$&#123;userList?size&#125;最后一个用户是:$&#123;user.userName&#125;<br>  &lt;/#if&gt;<br>&lt;/#list&gt;<br></code></pre></td></tr></table></figure></p>
+              <p><em>前些天去写一个需求，当时使用了了模糊查询，需求的描述是实现手机号的模糊查询，但是怎么想这个手机号的模糊查询没想象中的那么简单，但是经过尝试和面向百多的编程最终解决！因为之前学习的都是mysql的数据库，orcale数据库接触的比较少，以为语法上应该是一样的！</em><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">&lt;</span>if test<span class="hljs-operator">=</span>&quot;contactPhone != null and contactPhone != &#x27;&#x27;&quot;<span class="hljs-operator">&gt;</span><br>	<span class="hljs-keyword">AND</span> cust.CONTACT_PHONE <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%&#x27;</span>#&#123;contactPhone&#125;<span class="hljs-string">&#x27;%&#x27;</span><br><span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>if<span class="hljs-operator">&gt;</span><br></code></pre></td></tr></table></figure><br>以为应该是这样去处理，但是发现这个结果并不好使，但是后来想起来这样应该是有问题简单查了才知道这种应该是要用concat（）处理，但是并没有把文章看全简单扫了一眼就去尝试<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">&lt;</span>if test<span class="hljs-operator">=</span>&quot;contactPhone != null and contactPhone != &#x27;&#x27;&quot;<span class="hljs-operator">&gt;</span>concat(<span class="hljs-string">&#x27;%&#x27;</span>,concat(#&#123;contactPhone&#125;,<span class="hljs-string">&#x27;%&#x27;</span>))<br>		<span class="hljs-keyword">AND</span> cust.CONTACT_PHONE <span class="hljs-keyword">like</span> concat(<span class="hljs-string">&#x27;%&#x27;</span>,#&#123;contactPhone&#125;,<span class="hljs-string">&#x27;%&#x27;</span>)<br><span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>if<span class="hljs-operator">&gt;</span><br></code></pre></td></tr></table></figure><br>结果就是这样了，然后还是报错，当时并没有感觉是自己没有认真看人家的文章，而是认为他的方法有问题，最终同事过来看一眼，concat（）函数里边只能放两个值，你这弄啥呢 ！尝试了下同事的方法！</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">&lt;</span>if test<span class="hljs-operator">=</span>&quot;contactPhone != null and contactPhone != &#x27;&#x27;&quot;<span class="hljs-operator">&gt;</span><br>		<span class="hljs-keyword">AND</span> cust.CONTACT_PHONE <span class="hljs-keyword">like</span> concat(<span class="hljs-string">&#x27;%&#x27;</span>,concat(#&#123;contactPhone&#125;,<span class="hljs-string">&#x27;%&#x27;</span>))<br><span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>if<span class="hljs-operator">&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这才是正确的结果，马虎害死人啊，但是我总感觉这种嵌套还是有些麻烦，之后又请教了以前的同学是个大神，大神的解答是<br><strong><em>可以用 instr 函数替代 like 这样就不需要 concat 了</em></strong></p>
+<p>1、instr()函数的格式  （俗称：字符查找函数）<br>格式一：instr( string1, string2 )    // instr(源字符串, 目标字符串)</p>
+<p>格式二：instr( string1, string2 [, start_position [, nth_appearance ] ] )   // instr(源字符串, 目标字符串, 起始位置, 匹配序号)</p>
+<p>解析：string2 的值要在string1中查找，是从start_position给出的数值（即：位置）开始在string1检索，检索第nth_appearance（几）次出现string2。</p>
+<p>  注：在Oracle/PLSQL中，instr函数返回要截取的字符串在源字符串中的位置。只检索一次，也就是说从字符的开始到字符的结尾就结束。<br>  <img src="/img/orcale/concat/concat1.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>呈现得效果一样！</p>
 
             </div>
             <hr>
@@ -263,7 +269,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Freemaker/">Freemaker</a>
+                      <a class="hover-with-bg" href="/categories/Orcale/">Orcale</a>
                     
                   </div>
                 
@@ -271,7 +277,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/freemaker/">freemaker</a>
+                      <a class="hover-with-bg" href="/tags/orcale/">orcale</a>
                     
                   </div>
                 
@@ -288,18 +294,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/09/jquery-input/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">jquery-input</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/08/orcale-todate/">
-                        <span class="hidden-mobile">Oracle中的to_date()和to_char()函数 详解及应用</span>
+                      <a href="/2021/07/09/java-enum/">
+                        <span class="hidden-mobile">java enum 枚举的几种用法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
