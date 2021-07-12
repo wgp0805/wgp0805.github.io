@@ -253,19 +253,20 @@
             <h1 style="display: none">Mybatis中的&#34;${}&#34;和&#34;#{}&#34;的区别</h1>
             
             <div class="markdown-body">
-              <p>在mybatis中写sql的过程中需要接参数，这时我们就需要用到${}或者是#{}这两个东西，但是有什么区别这个就需要去探讨下了！<br>在电话号码位置同样输入13，不同呈现结果</p>
-<p><img src="/img/mybatis/pinjie/pinjie1.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+              <p>在mybatis中写sql的过程中需要接参数，这时我们就需要用到”${}”或者是”#{}”这两个东西，但是有什么区别这个就需要去探讨下了！<br>在电话号码位置同样输入13，不同呈现结果</p>
+<p><img src="/img/mybatis/pinjie/pinjie1.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <ul>
-<li><h1 id="为参数占位符-，即sql-预编译，-：动态解析-gt-预编译-gt-执行"><a href="#为参数占位符-，即sql-预编译，-：动态解析-gt-预编译-gt-执行" class="headerlink" title="{} 为参数占位符 ?，即sql 预编译，#{}：动态解析 -&gt; 预编译 -&gt; 执行"></a>{} 为参数占位符 ?，即sql 预编译，#{}：动态解析 -&gt; 预编译 -&gt; 执行</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">AND</span> cust.CONTACT_PHONE <span class="hljs-keyword">like</span> concat(<span class="hljs-string">&#x27;%&#x27;</span>,concat(#&#123;contactPhone&#125;,<span class="hljs-string">&#x27;%&#x27;</span>))<br></code></pre></td></tr></table></figure>
+<li><p>“#{}”为参数占位符 ?，即sql 预编译，”#{}”：动态解析 -&gt; 预编译 -&gt; 执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">AND</span> cust.CONTACT_PHONE <span class="hljs-keyword">like</span> concat(<span class="hljs-string">&#x27;%&#x27;</span>,concat(#&#123;contactPhone&#125;,<span class="hljs-string">&#x27;%&#x27;</span>))<br></code></pre></td></tr></table></figure>
 <p>呈现效果<br><img src="/img/mybatis/pinjie/pinjie2.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 </li>
-<li><p>${} 为字符串替换，即 sql 拼接  ， ${}：动态解析 -&gt; 编译 -&gt; 执行</p>
+<li><p>“${}” 为字符串替换，即 sql 拼接  ， “${}”：动态解析 -&gt; 编译 -&gt; 执行</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">AND</span> cust.CONTACT_PHONE <span class="hljs-keyword">like</span> concat(<span class="hljs-string">&#x27;%&#x27;</span>,concat($&#123;contactPhone&#125;,<span class="hljs-string">&#x27;%&#x27;</span>))<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 <p><img src="/img/mybatis/pinjie/pinjie3.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <ul>
-<li><h1 id="方式能够很大程度防止sql注入-方式无法防止Sql注入-方式一般用于传入数据库对象，例如传入表名"><a href="#方式能够很大程度防止sql注入-方式无法防止Sql注入-方式一般用于传入数据库对象，例如传入表名" class="headerlink" title="{}方式能够很大程度防止sql注入 $ 方式无法防止Sql注入  $ 方式一般用于传入数据库对象，例如传入表名"></a>{}方式能够很大程度防止sql注入 $ 方式无法防止Sql注入  $ 方式一般用于传入数据库对象，例如传入表名</h1>一般能用#的就别用$.</li>
+<li>“#{}”方式能够很大程度防止sql注入 $ 方式无法防止Sql注入  $ 方式一般用于传入数据库对象，例如传入表名<br>一般能用#的就别用$.</li>
 </ul>
 
             </div>
