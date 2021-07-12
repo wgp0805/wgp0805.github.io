@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>\@Resource注入跟\@Autuwired的区别</title>
+    <link href="/2021/07/12/spring-resouce/"/>
+    <url>/2021/07/12/spring-resouce/</url>
+    
+    <content type="html"><![CDATA[<p>@Resource注入跟@Autuwired<br>相同点：<br>都是做bean的注入</p><p>不同点：<br>注入方式：@Autowired只按照byType 注入；@Resource默认按byName自动注入，也提供按照byType 注入；</p><p>属性：</p><pre><code> @Autowired按类型装配依赖对象，默认情况下它要求依赖对象必须存在，如果允许null值，可以设置它required属性为false。如果我们想使用按名称装配，可以结合@Qualifier注解一起使用。 @Resource有两个中重要的属性：name和type。name属性指定byName，如果没有指定name属性，当注解标注在字段上，即默认取字段的名称作为bean名称寻找依赖对象，当注解标注在属性的setter方法上，即默认取属性名作为bean名称寻找依赖对象。需要注意的是，@Resource如果没有指定name属性，并且按照默认的名称仍然找不到依赖对象时， @Resource注解会回退到按类型装配。但一旦指定了name属性，就只能按名称装配了。</code></pre><p>例子：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//初始化时候 会先根据test名称查找bean的名称</span><br><span class="hljs-comment">//没有的话再根据接口Itest寻找其实现类</span><br><span class="hljs-meta">@Resource</span><br>ITest test;<br><span class="hljs-comment">//只会根据接口ITest去寻找实现类</span><br><span class="hljs-comment">//如果有多个实现类 需要配置注解@Qualifier bean的名称寻找对应的bean 否则会报错</span><br><span class="hljs-meta">@Autuwired</span><br>ITest test;<br></code></pre></td></tr></table></figure><p>按ByType注入的用法扩展：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//多个bean存在时使用 注入</span><br><span class="hljs-comment">//key为bean的name</span><br><span class="hljs-meta">@Resource</span><br>Map&lt;String,&lt;注入的bean&gt;&gt; map;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Spring</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Spring</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>时光札记</title>
     <link href="/2021/07/10/zhaji1/"/>
     <url>/2021/07/10/zhaji1/</url>
