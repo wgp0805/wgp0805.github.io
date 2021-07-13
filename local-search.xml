@@ -633,6 +633,8 @@
     
     <categories>
       
+      <category>JavaScript</category>
+      
       <category>AJAX</category>
       
     </categories>
@@ -641,8 +643,6 @@
     <tags>
       
       <tag>ajax</tag>
-      
-      <tag>JavaScript</tag>
       
     </tags>
     
@@ -687,7 +687,7 @@
     
     <categories>
       
-      <category>spring</category>
+      <category>Spring</category>
       
     </categories>
     
@@ -792,6 +792,8 @@
     
     
     <categories>
+      
+      <category>JavaScript</category>
       
       <category>AJAX</category>
       
