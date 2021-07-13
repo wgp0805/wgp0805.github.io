@@ -183,7 +183,7 @@
   
   
   <entry>
-    <title>java-valueof</title>
+    <title>valueof()的使用</title>
     <link href="/2021/07/09/java-valueof/"/>
     <url>/2021/07/09/java-valueof/</url>
     
@@ -322,8 +322,6 @@
     <categories>
       
       <category>Java</category>
-      
-      <category>http</category>
       
     </categories>
     
@@ -507,8 +505,6 @@
     <categories>
       
       <category>Java</category>
-      
-      <category>Date</category>
       
     </categories>
     
@@ -849,8 +845,6 @@
       
       <category>Java</category>
       
-      <category>druid</category>
-      
     </categories>
     
     
@@ -927,8 +921,6 @@
     <categories>
       
       <category>Java</category>
-      
-      <category>Random</category>
       
     </categories>
     
