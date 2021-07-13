@@ -477,6 +477,8 @@
     
     <categories>
       
+      <category>IDE</category>
+      
       <category>MyEcplice</category>
       
     </categories>
@@ -484,9 +486,7 @@
     
     <tags>
       
-      <tag>IDE</tag>
-      
-      <tag>Myecplice</tag>
+      <tag>myEcplice</tag>
       
     </tags>
     
@@ -820,7 +820,7 @@
     
     <categories>
       
-      <category>springboot</category>
+      <category>Springboot</category>
       
     </categories>
     
