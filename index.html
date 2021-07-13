@@ -255,6 +255,71 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/07/13/tomcat-postsize/" target="_self">
+          <img src="/img/tomcat/banner.png" srcset="/img/loading.gif" lazyload alt="Ajax参数长度上限">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/07/13/tomcat-postsize/" target="_self">
+          Ajax参数长度上限
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/07/13/tomcat-postsize/" target="_self">
+          
+          
+            
+          
+          今天再写项目的时候，设计到做活体检测，但是出于偷懒的想法，再前端的时候就把视频直接转换成base64的码，之后发现再提交后台之后后台的所有的参数都收不到。后来考虑应该是再上传的时候这个参数长度太长了，然后修改了一个参数问题得以解决，但是不同的toncat再设置参数的时候这个值也是不一样的
+
+打开tomcat路径下的/tomcat/conf/server.xml
+
+
+tomcat 7 
+
+12345
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-07-13 11:16" pubdate>
+              2021-07-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Tomcat/">Tomcat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ajax/">ajax</a>
+            
+              <a href="/tags/tomcat/">tomcat</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/07/12/mybatis-pinjie/" target="_self">
           <img src="/img/mybatis/banner.png" srcset="/img/loading.gif" lazyload alt="Mybatis中的&#34;${}&#34;和&#34;#{}&#34;的区别">
         </a>
@@ -716,64 +781,6 @@ html的代码1234567891011121314151617181920212223&lt;form action=&quot;$&#123;c
               <a href="/tags/orcale/">orcale</a>
             
               <a href="/tags/to-date/">to_date</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/07/08/jsonobject/" target="_self">
-          <img src="/img/json/banner.png" srcset="/img/loading.gif" lazyload alt="JSONArray与JSONObject的区别">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/08/jsonobject/" target="_self">
-          JSONArray与JSONObject的区别
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/08/jsonobject/" target="_self">
-          
-          
-            
-          
-          一、JSONObject和JSONArray的数据表示形式
-JSONObject的数据是用 {  } 来表示的，
-    例如：   &#123; &quot;id&quot; : &quot;123&quot;, &quot;age&quot; : &quot;12&quot;, &quot;name&quot; : &quot;博客园&quot;, &quot;time&quot; : 202
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-08 08:09" pubdate>
-              2021-07-08
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Json/">Json</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/json/">json</a>
             
           </div>
         
