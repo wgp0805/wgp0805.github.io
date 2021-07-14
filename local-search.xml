@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>HttpClient的简单使用</title>
+    <link href="/2021/07/14/java-httpclient/"/>
+    <url>/2021/07/14/java-httpclient/</url>
+    
+    <content type="html"><![CDATA[<p>​        java发送http请求有三种方式，除了原生连接方式HttpURLConnection，还有另外两种方式：HTTPClient和CloseableHttpClient</p><p>​        <strong>org.apache.commons.httpclient.HttpClient与org.apache.http.client.HttpClient的区别</strong></p><p>​        Commons的HttpClient项目现在是生命的尽头，不再被开发, 已被Apache HttpComponents项目HttpClient和HttpCore 模组取代，提供更好的性能和更大的灵活性。     </p><p>​        HTTP 协议可能是现在 Internet 上使用得最多、最重要的协议了，越来越多的 Java 应用程序需要直接通过 HTTP 协议来访问网络资源。虽然在 JDK 的 java net包中已经提供了访问 HTTP 协议的基本功能，但是对于大部分应用程序来说，JDK 库本身提供的功能还不够丰富和灵活。HttpClient 是 Apache Jakarta Common 下的子项目，用来提供高效的、最新的、功能丰富的支持 HTTP 协议的客户端编程工具包，并且它支持 HTTP 协议最新的版本和建议。</p><p>​        HTTP和浏览器有点像，但却不是浏览器。很多人觉得既然HttpClient是一个HTTP客户端编程工具，很多人把他当做浏览器来理解，但是其实HttpClient不是浏览器，它是一个HTTP通信库，因此它只提供一个通用浏览器应用程序所期望的功能子集，最根本的区别是HttpClient中没有用户界面，浏览器需要一个渲染引擎来显示页面，并解释用户输入，例如鼠标点击显示页面上的某处，有一个布局引擎，计算如何显示HTML页面，包括级联样式表和图像。javascript解释器运行嵌入HTML页面或从HTML页面引用的javascript代码。来自用户界面的事件被传递到javascript解释器进行处理。除此之外，还有用于插件的接口，可以处理Applet，嵌入式媒体对象（如pdf文件，Quicktime电影和Flash动画）或ActiveX控件（可以执行任何操作）。HttpClient只能以编程的方式通过其API用于传输和接受HTTP消息。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- commons-httpclient 现在这个版本已经不再开发了，但是还有很多人在使用--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>commons-httpclient<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-httpclient<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- org.apache.httpcomponents/httpclient --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>httpclient<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.5.12<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>httpClient</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>java-BigInteger</title>
     <link href="/2021/07/13/java-BigInteger/"/>
     <url>/2021/07/13/java-BigInteger/</url>
@@ -739,14 +764,12 @@
     
     <categories>
       
-      <category>FTPClient</category>
+      <category>java</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>java</tag>
       
       <tag>FTPClient</tag>
       
@@ -915,7 +938,7 @@
     <link href="/2021/06/29/idea-build/"/>
     <url>/2021/06/29/idea-build/</url>
     
-    <content type="html"><![CDATA[<p><img src="/img/IDEA/idea-build-a.jpg" alt="在这里插入图片描述"></p><p>这个是将项目构建交给maven，所以启动的时候都是要先build这个操作还是很浪费时间的 ！</p>]]></content>
+    <content type="html"><![CDATA[<p><img src="/img/IDEA/build/build.png" alt="在这里插入图片描述"></p><p>这个是将项目构建交给maven，所以启动的时候都是要先build这个操作还是很浪费时间的 ！</p>]]></content>
     
     
     <categories>
