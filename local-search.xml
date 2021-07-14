@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Java遍历取出Map集合key-value数据的4种方法</title>
+    <link href="/2021/07/14/java-map-iterator/"/>
+    <url>/2021/07/14/java-map-iterator/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    Map&lt;String,Object&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>    map.put(<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-string">&quot;张三&quot;</span>);<br>    map.put(<span class="hljs-string">&quot;sex&quot;</span>,<span class="hljs-string">&quot;男&quot;</span>);<br>    map.put(<span class="hljs-string">&quot;age&quot;</span>,<span class="hljs-string">&quot;15&quot;</span>);<br>    <span class="hljs-comment">//利用map.entrySet 循环可以直接拿到 每一个元素的key  value</span><br>    <span class="hljs-keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : map.entrySet()) &#123;<br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ entry.getKey() + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + entry.getValue());<br>    &#125;<br><br><br>    <span class="hljs-comment">//通过获得map.keySet()获取map中key的集合，然后遍历key就可以取出value</span><br>    <span class="hljs-keyword">for</span> (String s : map.keySet()) &#123;<br>        <span class="hljs-comment">//key直接遍历出来，然后用map.get(key)可以取出value</span><br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ s + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + map.get(s));<br>    &#125;<br><br><br>    <span class="hljs-comment">//Iterator遍历，通过keySet获取迭代器</span><br>    Iterator&lt;String&gt; iterator = map.keySet().iterator();<br>    <span class="hljs-keyword">while</span> (iterator.hasNext())&#123;<br>        <span class="hljs-comment">//通过每次迭代获取key值，然后获取value</span><br>        String s = iterator.next();<br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ s + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + map.get(s));<br>    &#125;<br><br><br>    <span class="hljs-comment">//[Iterator循环遍历]通过EntrySet取出map数据</span><br>    <span class="hljs-comment">//map.entrySet()得到的是set集合，可以使用迭代器遍历</span><br>    Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; iterator1 = map.entrySet().iterator();<br>    <span class="hljs-keyword">while</span> (iterator1.hasNext())&#123;<br>        Map.Entry&lt;String, Object&gt; entry = iterator1.next();<br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ entry.getKey() + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + entry.getValue());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>Map</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>SpringBoot接收参数的几种常用方式</title>
     <link href="/2021/07/14/springboot-param/"/>
     <url>/2021/07/14/springboot-param/</url>

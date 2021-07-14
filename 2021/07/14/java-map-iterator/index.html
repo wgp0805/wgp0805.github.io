@@ -18,7 +18,7 @@
   <meta name="author" content="wgp">
   <meta name="keywords" content="">
   
-  <title>SpringBoot接收参数的几种常用方式 - WgpNote</title>
+  <title>Java遍历取出Map集合key-value数据的4种方法 - WgpNote</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="SpringBoot接收参数的几种常用方式">
+            <span class="h2" id="subtitle" title="Java遍历取出Map集合key-value数据的4种方法">
               
             </span>
 
@@ -190,7 +190,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-14 17:07" pubdate>
+      <time datetime="2021-07-14 17:18" pubdate>
         2021年7月14日 下午
       </time>
     </span>
@@ -202,7 +202,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      395 字
+      283 字
     </span>
   
 
@@ -212,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      4
        分钟
     </span>
   
@@ -250,29 +250,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">SpringBoot接收参数的几种常用方式</h1>
+            <h1 style="display: none">Java遍历取出Map集合key-value数据的4种方法</h1>
             
             <div class="markdown-body">
-              <h1 id="第一类：请求路径参数"><a href="#第一类：请求路径参数" class="headerlink" title="第一类：请求路径参数"></a>第一类：请求路径参数</h1><h2 id="1、-PathVariable"><a href="#1、-PathVariable" class="headerlink" title="1、@PathVariable"></a>1、@PathVariable</h2><p>获取路径参数。即<em>url/{id}</em>这种形式。</p>
-<h2 id="2、-RequestParam"><a href="#2、-RequestParam" class="headerlink" title="2、@RequestParam"></a>2、@RequestParam</h2><p>获取查询参数。即<em>url?name=</em>这种形式</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>GET<br><a target="_blank" rel="noopener" href="http://localhost:8080/demo/123?name=suki_rong">http://localhost:8080/demo/123?name=suki_rong</a><br>对应的java代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/demo/&#123;id&#125;&quot;)</span><br><span class="hljs-comment">//使用@PathVariable下边必须要配合@RequestParam 去使用</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">demo</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(name = &quot;id&quot;)</span> String id, <span class="hljs-meta">@RequestParam(name = &quot;name&quot;)</span> String name)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;id=&quot;</span>+id);<br>    System.out.println(<span class="hljs-string">&quot;name=&quot;</span>+name);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>输出结果：<br>id=123<br>name=suki_rong</p>
-<h1 id="第二类：Body参数"><a href="#第二类：Body参数" class="headerlink" title="第二类：Body参数"></a>第二类：Body参数</h1><p>因为是POST请求，这里用Postman的截图结合代码说明</p>
-<h2 id="1、-RequestBody"><a href="#1、-RequestBody" class="headerlink" title="1、@RequestBody"></a>1、@RequestBody</h2><h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p>对应的java代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(path = &quot;/demo1&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">demo1</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> Person person)</span> </span>&#123;<br>    System.out.println(person.toString());<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>输出结果：<br>name:suki_rong;age=18;hobby:programing</p>
-<p>也可以是这样</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(path = &quot;/demo1&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">demo1</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> Map&lt;String, String&gt; person)</span> </span>&#123;<br>    System.out.println(person.get(<span class="hljs-string">&quot;name&quot;</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>输出结果：<br>suki_rong</p>
-<h2 id="2、无注解"><a href="#2、无注解" class="headerlink" title="2、无注解"></a>2、无注解</h2><h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><p>对应的java代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(path = &quot;/demo2&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">demo2</span><span class="hljs-params">(Person person)</span> </span>&#123;<br>    System.out.println(person.toString());<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>输出结果：<br>name:suki_rong;age=18;hobby:programing</p>
-<h2 id="Person类"><a href="#Person类" class="headerlink" title="Person类"></a>Person类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">long</span> id;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;<br>    <span class="hljs-keyword">private</span> String hobby;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;name:&quot;</span>+name+<span class="hljs-string">&quot;;age=&quot;</span>+age+<span class="hljs-string">&quot;;hobby:&quot;</span>+hobby;<br>    &#125;<br><br>    <span class="hljs-comment">// getters and setters</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<h1 id="第三类：请求头参数以及Cookie"><a href="#第三类：请求头参数以及Cookie" class="headerlink" title="第三类：请求头参数以及Cookie"></a>第三类：请求头参数以及Cookie</h1><h2 id="1、-RequestHeader"><a href="#1、-RequestHeader" class="headerlink" title="1、@RequestHeader"></a>1、@RequestHeader</h2><h2 id="2、-CookieValue"><a href="#2、-CookieValue" class="headerlink" title="2、@CookieValue"></a>2、@CookieValue</h2><h3 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h3><p>java代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/demo3&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">demo3</span><span class="hljs-params">(<span class="hljs-meta">@RequestHeader(name = &quot;myHeader&quot;)</span> String myHeader,</span></span><br><span class="hljs-params"><span class="hljs-function">        <span class="hljs-meta">@CookieValue(name = &quot;myCookie&quot;)</span> String myCookie)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;myHeader=&quot;</span> + myHeader);<br>    System.out.println(<span class="hljs-string">&quot;myCookie=&quot;</span> + myCookie);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>也可以这样</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/demo3&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">demo3</span><span class="hljs-params">(HttpServletRequest request)</span> </span>&#123;<br>    System.out.println(request.getHeader(<span class="hljs-string">&quot;myHeader&quot;</span>));<br>    <span class="hljs-keyword">for</span> (Cookie cookie : request.getCookies()) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;myCookie&quot;</span>.equals(cookie.getName())) &#123;<br>            System.out.println(cookie.getValue());<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+              <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    Map&lt;String,Object&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>    map.put(<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-string">&quot;张三&quot;</span>);<br>    map.put(<span class="hljs-string">&quot;sex&quot;</span>,<span class="hljs-string">&quot;男&quot;</span>);<br>    map.put(<span class="hljs-string">&quot;age&quot;</span>,<span class="hljs-string">&quot;15&quot;</span>);<br>    <span class="hljs-comment">//利用map.entrySet 循环可以直接拿到 每一个元素的key  value</span><br>    <span class="hljs-keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : map.entrySet()) &#123;<br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ entry.getKey() + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + entry.getValue());<br>    &#125;<br><br><br>    <span class="hljs-comment">//通过获得map.keySet()获取map中key的集合，然后遍历key就可以取出value</span><br>    <span class="hljs-keyword">for</span> (String s : map.keySet()) &#123;<br>        <span class="hljs-comment">//key直接遍历出来，然后用map.get(key)可以取出value</span><br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ s + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + map.get(s));<br>    &#125;<br><br><br>    <span class="hljs-comment">//Iterator遍历，通过keySet获取迭代器</span><br>    Iterator&lt;String&gt; iterator = map.keySet().iterator();<br>    <span class="hljs-keyword">while</span> (iterator.hasNext())&#123;<br>        <span class="hljs-comment">//通过每次迭代获取key值，然后获取value</span><br>        String s = iterator.next();<br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ s + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + map.get(s));<br>    &#125;<br><br><br>    <span class="hljs-comment">//[Iterator循环遍历]通过EntrySet取出map数据</span><br>    <span class="hljs-comment">//map.entrySet()得到的是set集合，可以使用迭代器遍历</span><br>    Iterator&lt;Map.Entry&lt;String, Object&gt;&gt; iterator1 = map.entrySet().iterator();<br>    <span class="hljs-keyword">while</span> (iterator1.hasNext())&#123;<br>        Map.Entry&lt;String, Object&gt; entry = iterator1.next();<br>        System.out.println(<span class="hljs-string">&quot;key:&quot;</span>+ entry.getKey() + <span class="hljs-string">&quot;---------&quot;</span> + <span class="hljs-string">&quot;value:&quot;</span> + entry.getValue());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -282,7 +263,9 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/SpringBoot/">SpringBoot</a>
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/Map/">Map</a>
                     
                   </div>
                 
@@ -290,7 +273,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
                     
                   </div>
                 
@@ -307,18 +290,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/14/java-map-iterator/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java遍历取出Map集合key-value数据的4种方法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/14/java-httpclient/">
-                        <span class="hidden-mobile">HttpClient的简单使用</span>
+                      <a href="/2021/07/14/springboot-param/">
+                        <span class="hidden-mobile">SpringBoot接收参数的几种常用方式</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
