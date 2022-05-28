@@ -16,22 +16,22 @@
   <meta name="author" content="汪广平">
   <meta name="keywords" content="">
   
-    <meta name="description" content="用于截取时间或者数值，返回指定的值             1、截取时间123456select  trunc(to_date(&amp;#x27;2018-02-01 1:00:00&amp;#x27;,&amp;#x27;YYYY-MM-DD HH:MI:SS&amp;#x27;),&amp;#x27;yyyy&amp;#x27;) from   dual ;--返回当年第一天select  trunc(to_da">
+    <meta name="description" content="第一类：请求路径参数1、@PathVariable获取路径参数。即*url&#x2F;{id}*这种形式。 2、@RequestParam获取查询参数。即*url?name&#x3D;*这种形式 例子GEThttp:&#x2F;&#x2F;localhost:8080&#x2F;demo&#x2F;123?name&#x3D;suki_rong对应的java代码： 1234567@GetMapping(&quot;&#x2F;demo&#x2F;&amp;#123;id&amp;#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="trunc函数用法">
-<meta property="og:url" content="http://example.com/2022/05/28/trunc%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="SpringBoot接收参数的几种常用方式">
+<meta property="og:url" content="http://example.com/2022/05/28/SpringBoot%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E5%B8%B8%E7%94%A8%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="WgpBlog">
-<meta property="og:description" content="用于截取时间或者数值，返回指定的值             1、截取时间123456select  trunc(to_date(&amp;#x27;2018-02-01 1:00:00&amp;#x27;,&amp;#x27;YYYY-MM-DD HH:MI:SS&amp;#x27;),&amp;#x27;yyyy&amp;#x27;) from   dual ;--返回当年第一天select  trunc(to_da">
+<meta property="og:description" content="第一类：请求路径参数1、@PathVariable获取路径参数。即*url&#x2F;{id}*这种形式。 2、@RequestParam获取查询参数。即*url?name&#x3D;*这种形式 例子GEThttp:&#x2F;&#x2F;localhost:8080&#x2F;demo&#x2F;123?name&#x3D;suki_rong对应的java代码： 1234567@GetMapping(&quot;&#x2F;demo&#x2F;&amp;#123;id&amp;#">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-05-28T09:48:16.000Z">
-<meta property="article:modified_time" content="2022-05-28T09:49:35.719Z">
+<meta property="article:published_time" content="2022-05-28T10:57:06.000Z">
+<meta property="article:modified_time" content="2022-05-28T10:57:35.606Z">
 <meta property="article:author" content="汪广平">
-<meta property="article:tag" content="Orcale">
+<meta property="article:tag" content="SpringBoot">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>trunc函数用法 - WgpBlog</title>
+  <title>SpringBoot接收参数的几种常用方式 - WgpBlog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -194,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="trunc函数用法"></span>
+            <span id="subtitle" data-typed-text="SpringBoot接收参数的几种常用方式"></span>
           
         </div>
 
@@ -205,8 +205,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-05-28 17:48" pubdate>
-          2022年5月28日 下午
+        <time datetime="2022-05-28 18:57" pubdate>
+          2022年5月28日 晚上
         </time>
       </span>
     
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          911 字
+          2k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          8 分钟
+          17 分钟
         
       </span>
     
@@ -266,16 +266,36 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">trunc函数用法</h1>
+            <h1 style="display: none">SpringBoot接收参数的几种常用方式</h1>
             
             <div class="markdown-body">
               
-              <div class="note note-success">
-            <p>用于截取时间或者数值，返回指定的值 </p>
-          </div>
-<h3 id="1、截取时间"><a href="#1、截取时间" class="headerlink" title="1、截取时间"></a>1、截取时间</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;yyyy&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当年第一天</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;mm&#x27;</span>) <span class="hljs-keyword">from</span>   dual ; <span class="hljs-comment">--返回当月第一天</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;dd&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当前年月</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;d&#x27;</span>) <span class="hljs-keyword">from</span>   dual ; <span class="hljs-comment">--返回当前星期的第一天(星期日) </span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:12:12&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;hh&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当前日期截取到小时,分秒补0</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:12:12&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;mi&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当前日期截取到分,秒补0</span><br></code></pre></td></tr></table></figure>
-<h3 id="2、截取数值"><a href="#2、截取数值" class="headerlink" title="2、截取数值"></a>2、截取数值</h3><p>语法：trunc(number,decimals)<br>number:指需要截取的数字</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  trunc(<span class="hljs-number">122.555</span>) <span class="hljs-keyword">from</span>  dual t; <span class="hljs-comment">--默认取整</span><br><span class="hljs-keyword">select</span>  trunc(<span class="hljs-number">122.555</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">from</span>  dual t;<br><span class="hljs-keyword">select</span>  trunc(<span class="hljs-number">122.555</span>,<span class="hljs-number">-2</span>) <span class="hljs-keyword">from</span>  dual t;<span class="hljs-comment">--负数表示从小数点左边开始截取2位</span><br></code></pre></td></tr></table></figure>
+              <h1 id="第一类：请求路径参数"><a href="#第一类：请求路径参数" class="headerlink" title="第一类：请求路径参数"></a>第一类：请求路径参数</h1><h2 id="1、-PathVariable"><a href="#1、-PathVariable" class="headerlink" title="1、@PathVariable"></a>1、@PathVariable</h2><p>获取路径参数。即*url&#x2F;{id}*这种形式。</p>
+<h2 id="2、-RequestParam"><a href="#2、-RequestParam" class="headerlink" title="2、@RequestParam"></a>2、@RequestParam</h2><p>获取查询参数。即*url?name&#x3D;*这种形式</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>GET<br><a target="_blank" rel="noopener" href="http://localhost:8080/demo/123?name=suki_rong">http://localhost:8080/demo/123?name=suki_rong</a><br>对应的java代码：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@GetMapping</span>(<span class="hljs-string">&quot;/demo/&#123;id&#125;&quot;</span>)<br><span class="hljs-comment">//使用@PathVariable下边必须要配合@RequestParam 去使用</span><br>public void demo(<span class="hljs-variable">@PathVariable</span>(name = <span class="hljs-string">&quot;id&quot;</span>) String id, <span class="hljs-variable">@RequestParam</span>(name = <span class="hljs-string">&quot;name&quot;</span>) String name) &#123;<br>    <span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;id=&quot;</span>+id);<br>    <span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;name=&quot;</span>+name);<br>&#125;<br><span class="hljs-selector-tag">Copy</span><br></code></pre></td></tr></table></figure>
+
+<p>输出结果：<br>id&#x3D;123<br>name&#x3D;suki_rong</p>
+<h1 id="第二类：Body参数"><a href="#第二类：Body参数" class="headerlink" title="第二类：Body参数"></a>第二类：Body参数</h1><p>因为是POST请求，这里用Postman的截图结合代码说明</p>
+<h2 id="1、-RequestBody"><a href="#1、-RequestBody" class="headerlink" title="1、@RequestBody"></a>1、@RequestBody</h2><h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p>对应的java代码：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@PostMapping</span>(path = <span class="hljs-string">&quot;/demo1&quot;</span>)<br>public void demo1(<span class="hljs-variable">@RequestBody</span> Person person) &#123;<br>    <span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(person.toString());<br>&#125;<br><span class="hljs-selector-tag">Copy</span><br></code></pre></td></tr></table></figure>
+
+<p>输出结果：<br>name:suki_rong;age&#x3D;18;hobby:programing</p>
+<p>也可以是这样</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@PostMapping</span>(path = <span class="hljs-string">&quot;/demo1&quot;</span>)<br>public void demo1(<span class="hljs-variable">@RequestBody</span> Map&lt;String, String&gt; person) &#123;<br>    <span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(person.get(<span class="hljs-string">&quot;name&quot;</span>));<br>&#125;<br><span class="hljs-selector-tag">Copy</span><br></code></pre></td></tr></table></figure>
+
+<p>输出结果：<br>suki_rong</p>
+<h2 id="2、无注解"><a href="#2、无注解" class="headerlink" title="2、无注解"></a>2、无注解</h2><h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><p>对应的java代码：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">@PostMapping(<span class="hljs-type">path</span> = &quot;/demo2&quot;)<br><span class="hljs-built_in">public</span> <span class="hljs-type">void</span> demo2(Person person) &#123;<br>    <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(person.toString());<br>&#125;<br><span class="hljs-keyword">Copy</span><br></code></pre></td></tr></table></figure>
+
+<p>输出结果：<br>name:suki_rong;age&#x3D;18;hobby:programing</p>
+<h2 id="Person类"><a href="#Person类" class="headerlink" title="Person类"></a>Person类</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">long</span> id;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">String</span> name;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">String</span> hobby;<br><br>    @<span class="hljs-function">Override</span><br><span class="hljs-function">    <span class="hljs-keyword">public</span> <span class="hljs-type">String</span> <span class="hljs-title">toString</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;name:&quot;</span>+name+<span class="hljs-string">&quot;;age=&quot;</span>+age+<span class="hljs-string">&quot;;hobby:&quot;</span>+hobby;<br>    &#125;<br><br>    <span class="hljs-comment">// getters and setters</span><br>&#125;<br>Copy<br></code></pre></td></tr></table></figure>
+
+<h1 id="第三类：请求头参数以及Cookie"><a href="#第三类：请求头参数以及Cookie" class="headerlink" title="第三类：请求头参数以及Cookie"></a>第三类：请求头参数以及Cookie</h1><h2 id="1、-RequestHeader"><a href="#1、-RequestHeader" class="headerlink" title="1、@RequestHeader"></a>1、@RequestHeader</h2><h2 id="2、-CookieValue"><a href="#2、-CookieValue" class="headerlink" title="2、@CookieValue"></a>2、@CookieValue</h2><h3 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h3><p>java代码：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@GetMapping</span>(<span class="hljs-string">&quot;/demo3&quot;</span>)<br>public void demo3(<span class="hljs-variable">@RequestHeader</span>(name = <span class="hljs-string">&quot;myHeader&quot;</span>) String myHeader,<br>        <span class="hljs-variable">@CookieValue</span>(name = <span class="hljs-string">&quot;myCookie&quot;</span>) String myCookie) &#123;<br>    <span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;myHeader=&quot;</span> + myHeader);<br>    <span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;myCookie=&quot;</span> + myCookie);<br>&#125;<br><span class="hljs-selector-tag">Copy</span><br></code></pre></td></tr></table></figure>
+
+<p>也可以这样</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">@<span class="hljs-constructor">GetMapping(<span class="hljs-string">&quot;/demo3&quot;</span>)</span><br>public void demo3(HttpServletRequest request) &#123;<br>    <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(request.get<span class="hljs-constructor">Header(<span class="hljs-string">&quot;myHeader&quot;</span>)</span>);<br>    <span class="hljs-keyword">for</span> (Cookie cookie : request.get<span class="hljs-constructor">Cookies()</span>) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;myCookie&quot;</span>.equals(cookie.get<span class="hljs-constructor">Name()</span>)) &#123;<br>            <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(cookie.get<span class="hljs-constructor">Value()</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
               
             </div>
             <hr/>
@@ -292,7 +312,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Orcale/" class="category-chain-item">Orcale</a>
+  <a href="/categories/Spring/" class="category-chain-item">Spring</a>
   
   
 
@@ -307,7 +327,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Orcale/">#Orcale</a>
+        <a href="/tags/SpringBoot/">#SpringBoot</a>
       
     </div>
   
@@ -319,8 +339,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>trunc函数用法</div>
-      <div>http://example.com/2022/05/28/trunc函数用法/</div>
+      <div>SpringBoot接收参数的几种常用方式</div>
+      <div>http://example.com/2022/05/28/SpringBoot接收参数的几种常用方式/</div>
     </div>
     <div class="license-meta">
       
@@ -362,9 +382,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/28/FTPClient%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/" title="FTPClient上传和下载">
+                      <a href="/2022/05/28/HttpClient%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" title="HttpClient的简单使用">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">FTPClient上传和下载</span>
+                        <span class="hidden-mobile">HttpClient的简单使用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -372,8 +392,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/28/Orcale%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%92%8C%E8%A1%A8%E7%A9%BA%E9%97%B4%E6%8E%88%E6%9D%83%E8%BF%87%E7%A8%8B/" title="Orcale创建用户和表空间授权过程">
-                        <span class="hidden-mobile">Orcale创建用户和表空间授权过程</span>
+                      <a href="/2022/05/28/jdk8%E2%80%94LocalDateTime%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2/" title="jdk8—LocalDateTime时间戳转换">
+                        <span class="hidden-mobile">jdk8—LocalDateTime时间戳转换</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

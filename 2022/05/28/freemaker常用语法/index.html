@@ -16,22 +16,22 @@
   <meta name="author" content="汪广平">
   <meta name="keywords" content="">
   
-    <meta name="description" content="用于截取时间或者数值，返回指定的值             1、截取时间123456select  trunc(to_date(&amp;#x27;2018-02-01 1:00:00&amp;#x27;,&amp;#x27;YYYY-MM-DD HH:MI:SS&amp;#x27;),&amp;#x27;yyyy&amp;#x27;) from   dual ;--返回当年第一天select  trunc(to_da">
+    <meta name="description" content="在公司新接到一个模块的开发需求，当时睡页面用的freemaker，当时也是头顶一蒙啊，同事说和jstl的用法差不多，但是在常用的东西上的写法确实还是不会，所以在这总结些常用的语法！望指正！ 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556&amp;l">
 <meta property="og:type" content="article">
-<meta property="og:title" content="trunc函数用法">
-<meta property="og:url" content="http://example.com/2022/05/28/trunc%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="freemaker常用语法">
+<meta property="og:url" content="http://example.com/2022/05/28/freemaker%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/index.html">
 <meta property="og:site_name" content="WgpBlog">
-<meta property="og:description" content="用于截取时间或者数值，返回指定的值             1、截取时间123456select  trunc(to_date(&amp;#x27;2018-02-01 1:00:00&amp;#x27;,&amp;#x27;YYYY-MM-DD HH:MI:SS&amp;#x27;),&amp;#x27;yyyy&amp;#x27;) from   dual ;--返回当年第一天select  trunc(to_da">
+<meta property="og:description" content="在公司新接到一个模块的开发需求，当时睡页面用的freemaker，当时也是头顶一蒙啊，同事说和jstl的用法差不多，但是在常用的东西上的写法确实还是不会，所以在这总结些常用的语法！望指正！ 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556&amp;l">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-05-28T09:48:16.000Z">
-<meta property="article:modified_time" content="2022-05-28T09:49:35.719Z">
+<meta property="article:published_time" content="2022-05-28T10:59:42.000Z">
+<meta property="article:modified_time" content="2022-05-28T11:00:04.096Z">
 <meta property="article:author" content="汪广平">
-<meta property="article:tag" content="Orcale">
+<meta property="article:tag" content="freemaker">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>trunc函数用法 - WgpBlog</title>
+  <title>freemaker常用语法 - WgpBlog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -194,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="trunc函数用法"></span>
+            <span id="subtitle" data-typed-text="freemaker常用语法"></span>
           
         </div>
 
@@ -205,8 +205,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-05-28 17:48" pubdate>
-          2022年5月28日 下午
+        <time datetime="2022-05-28 18:59" pubdate>
+          2022年5月28日 晚上
         </time>
       </span>
     
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          911 字
+          2.2k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          8 分钟
+          19 分钟
         
       </span>
     
@@ -266,16 +266,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">trunc函数用法</h1>
+            <h1 style="display: none">freemaker常用语法</h1>
             
             <div class="markdown-body">
               
-              <div class="note note-success">
-            <p>用于截取时间或者数值，返回指定的值 </p>
-          </div>
-<h3 id="1、截取时间"><a href="#1、截取时间" class="headerlink" title="1、截取时间"></a>1、截取时间</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;yyyy&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当年第一天</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;mm&#x27;</span>) <span class="hljs-keyword">from</span>   dual ; <span class="hljs-comment">--返回当月第一天</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;dd&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当前年月</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:00:00&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;d&#x27;</span>) <span class="hljs-keyword">from</span>   dual ; <span class="hljs-comment">--返回当前星期的第一天(星期日) </span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:12:12&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;hh&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当前日期截取到小时,分秒补0</span><br><span class="hljs-keyword">select</span>  trunc(to_date(<span class="hljs-string">&#x27;2018-02-01 1:12:12&#x27;</span>,<span class="hljs-string">&#x27;YYYY-MM-DD HH:MI:SS&#x27;</span>),<span class="hljs-string">&#x27;mi&#x27;</span>) <span class="hljs-keyword">from</span>   dual ;<span class="hljs-comment">--返回当前日期截取到分,秒补0</span><br></code></pre></td></tr></table></figure>
-<h3 id="2、截取数值"><a href="#2、截取数值" class="headerlink" title="2、截取数值"></a>2、截取数值</h3><p>语法：trunc(number,decimals)<br>number:指需要截取的数字</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  trunc(<span class="hljs-number">122.555</span>) <span class="hljs-keyword">from</span>  dual t; <span class="hljs-comment">--默认取整</span><br><span class="hljs-keyword">select</span>  trunc(<span class="hljs-number">122.555</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">from</span>  dual t;<br><span class="hljs-keyword">select</span>  trunc(<span class="hljs-number">122.555</span>,<span class="hljs-number">-2</span>) <span class="hljs-keyword">from</span>  dual t;<span class="hljs-comment">--负数表示从小数点左边开始截取2位</span><br></code></pre></td></tr></table></figure>
+              <p>在公司新接到一个模块的开发需求，当时睡页面用的freemaker，当时也是头顶一蒙啊，同事说和jstl的用法差不多，但是在常用的东西上的写法确实还是不会，所以在这总结些常用的语法！望指正！</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-comment">&lt;!-- 此时name的值就是后台传过来的值直接填写就可以--&gt;</span></span><br><span class="language-xml">&lt;#if name = 0&gt;</span><br><span class="language-xml">	<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span> =<span class="hljs-string">&quot;idCard&quot;</span>&gt;</span></span><br><span class="language-xml">&lt;/#if&gt;</span><br><span class="language-xml">=================================================================</span><br><span class="language-xml"><span class="hljs-comment">&lt;!--接收参数采用$</span></span><span class="hljs-template-variable">&#123;&#125;</span><span class="language-xml"><span class="hljs-comment">的方式去接收--&gt;</span></span><br><span class="language-xml"><span class="hljs-comment">&lt;!--这里的??表示可以为空--&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span> =<span class="hljs-string">&quot;idCard&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;user??&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span></span><br><span class="language-xml">=================================================================</span><br><span class="language-xml"><span class="hljs-comment">&lt;!--list就等同于for循环，userlist表示为后台传过来的集合，as 后的user表示遍历时的临时变量--&gt;</span></span><br><span class="language-xml">&lt;#list userlist as user&gt;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list-box&quot;</span>&gt;</span> </span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list&quot;</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>机主姓名:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;user.userName&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">  &lt;/#list&gt;</span><br><span class="language-xml">=================================================================</span><br><span class="language-xml">&lt;#list userlist as user&gt;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list-box&quot;</span>&gt;</span> </span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;u-list&quot;</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>机主姓名:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;user.userName&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">  &lt;/#list&gt;</span><br><span class="language-xml">  <span class="hljs-comment">&lt;!--这里的user——index是下标序号--&gt;</span></span><br><span class="language-xml">  &lt;#if user_index = 0&gt;</span><br><span class="language-xml">  	checked=&quot;checked&quot;</span><br><span class="language-xml">  &lt;/#if&gt;</span><br><span class="language-xml">=================================================================</span><br><span class="language-xml"><span class="hljs-comment">&lt;!--遍历map--&gt;</span></span><br><span class="language-xml">&lt;#list map?keys as k&gt;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;k&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span>$</span><span class="hljs-template-variable">&#123;map[k]&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="language-xml">&lt;/#list&gt;</span><br><span class="language-xml">=================================================================</span><br><span class="language-xml"><span class="hljs-comment">&lt;!--取LIST中第i个元素的值--&gt;</span></span><br><span class="language-xml">$</span><span class="hljs-template-variable">&#123;list[i]&#125;</span><span class="language-xml"> </span><br><span class="language-xml"><span class="hljs-comment">&lt;!--嵌套时前面要有括号，如下，将字符串变成list，然后取第i个元素的值--&gt;</span></span><br><span class="language-xml">$</span><span class="hljs-template-variable">&#123;(str?split(&quot;,&quot;))[i]&#125;</span><span class="language-xml"> </span><br><span class="language-xml">=================================================================</span><br><span class="language-xml"><span class="hljs-comment">&lt;!--list排序：--&gt;</span></span><br><span class="language-xml">升序 .sort_by()</span><br><span class="language-xml">&lt;#list list?sort_by(&quot;字段&quot;) as x&gt;</span><br><span class="language-xml">&lt;/#list&gt;</span><br><span class="language-xml">降序 .sort_by()?reverse</span><br><span class="language-xml">&lt;#list list?sort_by(&quot;字段&quot;)?reverse as x&gt; </span><br><span class="language-xml">&lt;/#list&gt;</span><br><span class="language-xml">=================================================================</span><br><span class="language-xml"><span class="hljs-comment">&lt;!--item_has_next,size使用：--&gt;</span></span><br><span class="language-xml">&lt;#list userList as user&gt;</span><br><span class="language-xml">  &lt;#if !user_has_next&gt;</span><br><span class="language-xml">   共有$</span><span class="hljs-template-variable">&#123;userList?size&#125;</span><span class="language-xml">最后一个用户是:$</span><span class="hljs-template-variable">&#123;user.userName&#125;</span><span class="language-xml"></span><br><span class="language-xml">  &lt;/#if&gt;</span><br><span class="language-xml">&lt;/#list&gt;</span><br></code></pre></td></tr></table></figure>
               
             </div>
             <hr/>
@@ -292,7 +288,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Orcale/" class="category-chain-item">Orcale</a>
+  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
   
   
 
@@ -307,7 +303,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Orcale/">#Orcale</a>
+        <a href="/tags/freemaker/">#freemaker</a>
       
     </div>
   
@@ -319,8 +315,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>trunc函数用法</div>
-      <div>http://example.com/2022/05/28/trunc函数用法/</div>
+      <div>freemaker常用语法</div>
+      <div>http://example.com/2022/05/28/freemaker常用语法/</div>
     </div>
     <div class="license-meta">
       
@@ -362,18 +358,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/28/FTPClient%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/" title="FTPClient上传和下载">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">FTPClient上传和下载</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/28/Orcale%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%92%8C%E8%A1%A8%E7%A9%BA%E9%97%B4%E6%8E%88%E6%9D%83%E8%BF%87%E7%A8%8B/" title="Orcale创建用户和表空间授权过程">
-                        <span class="hidden-mobile">Orcale创建用户和表空间授权过程</span>
+                      <a href="/2022/05/28/MessageDigest%E7%AE%80%E4%BB%8B%E5%8F%8A%E5%BA%94%E7%94%A8/" title="MessageDigest简介及应用">
+                        <span class="hidden-mobile">MessageDigest简介及应用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
