@@ -16,22 +16,22 @@
   <meta name="author" content="汪广平">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Liunx命令目录说明12345678910111213bin  (binaries)存放二进制可执行文件 sbin  (super user binaries)存放二进制可执行文件，只有root才能访问 etc (etcetera)存放系统配置文件 usr  (unix shared resources)用于存放共享的系统资源 home 存放用户文件的根目录 root  超级用户目录 dev (">
+    <meta name="description" content="liunx链接Ftp以前操作远程ftp上的文件和文件夹都是通过ftp工具去实现的，但是一直没尝试过再liunx上实现过操作ftp，直到今天接到了处理ftp上一些文件的任务才发现这东西操作起来还和其他系统上有点不一样，接下来见到记录下ftp相关的命令操作， 链接Ftp服务器再网上看到了好多都说链接ftp的格式如下 1ftp [主机名称| IP -地址]  但是这个格式实际上用的比较多的就是ip，使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Liunx常用命令">
-<meta property="og:url" content="http://example.com/2022/05/29/Liunx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="liunx链接Ftp">
+<meta property="og:url" content="http://example.com/2022/06/20/liunx%E9%93%BE%E6%8E%A5Ftp/index.html">
 <meta property="og:site_name" content="WgpBlog">
-<meta property="og:description" content="Liunx命令目录说明12345678910111213bin  (binaries)存放二进制可执行文件 sbin  (super user binaries)存放二进制可执行文件，只有root才能访问 etc (etcetera)存放系统配置文件 usr  (unix shared resources)用于存放共享的系统资源 home 存放用户文件的根目录 root  超级用户目录 dev (">
+<meta property="og:description" content="liunx链接Ftp以前操作远程ftp上的文件和文件夹都是通过ftp工具去实现的，但是一直没尝试过再liunx上实现过操作ftp，直到今天接到了处理ftp上一些文件的任务才发现这东西操作起来还和其他系统上有点不一样，接下来见到记录下ftp相关的命令操作， 链接Ftp服务器再网上看到了好多都说链接ftp的格式如下 1ftp [主机名称| IP -地址]  但是这个格式实际上用的比较多的就是ip，使用">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-05-29T03:10:53.000Z">
-<meta property="article:modified_time" content="2022-05-29T03:11:22.887Z">
+<meta property="article:published_time" content="2022-06-20T12:14:29.000Z">
+<meta property="article:modified_time" content="2022-06-20T12:15:08.965Z">
 <meta property="article:author" content="汪广平">
 <meta property="article:tag" content="liunx">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Liunx常用命令 - WgpBlog</title>
+  <title>liunx链接Ftp - WgpBlog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -194,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Liunx常用命令"></span>
+            <span id="subtitle" data-typed-text="liunx链接Ftp"></span>
           
         </div>
 
@@ -205,8 +205,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-05-29 11:10" pubdate>
-          2022年5月29日 上午
+        <time datetime="2022-06-20 20:14" pubdate>
+          2022年6月20日 晚上
         </time>
       </span>
     
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          1.9k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          21 分钟
+          17 分钟
         
       </span>
     
@@ -266,24 +266,113 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Liunx常用命令</h1>
+            <h1 style="display: none">liunx链接Ftp</h1>
             
             <div class="markdown-body">
               
-              <h1 id="Liunx命令"><a href="#Liunx命令" class="headerlink" title="Liunx命令"></a>Liunx命令</h1><h3 id="目录说明"><a href="#目录说明" class="headerlink" title="目录说明"></a>目录说明</h3><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs erlang"><span class="hljs-function"><span class="hljs-title">bin</span>  <span class="hljs-params">(binaries)</span>存放二进制可执行文件 </span><br><span class="hljs-function"><span class="hljs-title">sbin</span>  <span class="hljs-params">(super user binaries)</span>存放二进制可执行文件，只有<span class="hljs-title">root</span>才能访问 </span><br><span class="hljs-function"><span class="hljs-title">etc</span> <span class="hljs-params">(etcetera)</span>存放系统配置文件 </span><br><span class="hljs-function"><span class="hljs-title">usr</span>  <span class="hljs-params">(unix shared resources)</span>用于存放共享的系统资源 </span><br><span class="hljs-function"><span class="hljs-title">home</span> 存放用户文件的根目录 </span><br><span class="hljs-function"><span class="hljs-title">root</span>  超级用户目录 </span><br><span class="hljs-function"><span class="hljs-title">dev</span> <span class="hljs-params">(devices)</span>用于存放设备文件 </span><br><span class="hljs-function"><span class="hljs-title">lib</span>  <span class="hljs-params">(library)</span>存放跟文件系统中的程序运行所需要的共享库及内核模块 </span><br><span class="hljs-function"><span class="hljs-title">mnt</span>  <span class="hljs-params">(mount)</span>系统管理员安装临时文件系统的安装点 </span><br><span class="hljs-function"><span class="hljs-title">boot</span> 存放用于系统引导时使用的各种文件 </span><br><span class="hljs-function"><span class="hljs-title">tmp</span>  <span class="hljs-params">(temporary)</span>用于存放各种临时文件 </span><br><span class="hljs-function"><span class="hljs-title">var</span>  <span class="hljs-params">(variable)</span>用于存放运行时需要改变数据的文件 </span><br><span class="hljs-function"></span><br></code></pre></td></tr></table></figure>
+              <h1 id="liunx链接Ftp"><a href="#liunx链接Ftp" class="headerlink" title="liunx链接Ftp"></a>liunx链接Ftp</h1><p>以前操作远程ftp上的文件和文件夹都是通过ftp工具去实现的，但是一直没尝试过再liunx上实现过操作ftp，直到今天接到了处理ftp上一些文件的任务才发现这东西操作起来还和其他系统上有点不一样，接下来见到记录下ftp相关的命令操作，</p>
+<h3 id="链接Ftp服务器"><a href="#链接Ftp服务器" class="headerlink" title="链接Ftp服务器"></a>链接Ftp服务器</h3><p>再网上看到了好多都说链接ftp的格式如下</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">ftp [主机名称<span class="hljs-string">| IP -地址]</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> : 查看当前文件夹下的目录<br><span class="hljs-built_in">pwd</span>: 查看当前所处的目录<br>ip addr ：ip地址 <br><span class="hljs-built_in">cd</span>: 进入文件夹<br><span class="hljs-built_in">touch</span>: 创建文件<br><span class="hljs-built_in">mkdir</span>: 创建文件夹<br>clear : 清屏   快捷键 Ctrl+L<br><br><span class="hljs-built_in">command</span>  [-options]  [parameter1] ：命令格式<br><span class="hljs-built_in">ls</span> /: 显示根目录文件<br><span class="hljs-built_in">ls</span>  -a : 显示全部文件<br>	-l ：显示文件列表<br>	-h ：显示文件大小<br>	-a -l -h<br>	-alh<br>xx --<span class="hljs-built_in">help</span>: 查看帮助	<br>tab: 自动补全<br><span class="hljs-built_in">cat</span> : 查看文件内容<br><span class="hljs-built_in">history</span>： 历史命令<br><span class="hljs-built_in">ls</span> 2*/?/[x,x,x,x,x] : 通配符<br><span class="hljs-built_in">ls</span> &gt;/&gt;&gt; xxx.txt : 重定向保存内容，&gt;覆盖  &gt;&gt;追加<br>more xx.txt : 分页     空格:下一页 B:上一页<br><span class="hljs-built_in">ls</span> -alh / | more ：管道<br><span class="hljs-built_in">cd</span>.. : 返回上级目录<br><span class="hljs-built_in">cd</span> - : 后退<br><span class="hljs-built_in">cd</span> ~ ：家目录<br>tree : 查看目录结构树<br><span class="hljs-built_in">mkdir</span> A/B/C/D -p : 层级创建目录<br><span class="hljs-built_in">rmdir</span> 目录：删除目录（空）<br><span class="hljs-built_in">rm</span> 文件：删除文件<br><span class="hljs-built_in">rm</span> 目录 -r : 删除目录（任意）<br><span class="hljs-built_in">ln</span> -s 源文件 新文件： 软连接<br><span class="hljs-built_in">ln</span> 源文件 新文件 ： 硬链接<br>grep [-选项] ‘搜索内容串’ 文件名 ：搜索<br><span class="hljs-built_in">mv</span> 源文件 新文件：重命名<br><span class="hljs-built_in">mv</span> 源文件 目录/：移动文件<br><br><span class="hljs-built_in">cp</span> 源文件 目录/ -r：拷贝文件<br><br></code></pre></td></tr></table></figure>
+<p>但是这个格式实际上用的比较多的就是ip，使用地市名称感觉还是用的比较少</p>
+<p><code>ftp 192.168.0.1 </code> 然后回车就会让你输入用户名和密码，然后直接输入对应的用户名密码就可以进入对应的ftp页面,验证通过后就会出现如下的操作行</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lasso">ftp&gt;  <span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="压缩命令"><a href="#压缩命令" class="headerlink" title="压缩命令"></a>压缩命令</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus">tar -cvf 压缩包名称<span class="hljs-selector-class">.tar</span> *<span class="hljs-selector-class">.txt</span>   : 打包*<span class="hljs-selector-class">.txt</span><br>tar -xvf 压缩包名称<span class="hljs-selector-class">.tar</span>         : 解包*<span class="hljs-selector-class">.txt</span><br><br>tar -zcvf 压缩包名称<span class="hljs-selector-class">.tar</span><span class="hljs-selector-class">.gz</span> *<span class="hljs-selector-class">.txt</span> : 打包并压缩*<span class="hljs-selector-class">.txt</span><br>tar -zxvf 压缩包名称<span class="hljs-selector-class">.tar</span><span class="hljs-selector-class">.gz</span>       : 解包*<span class="hljs-selector-class">.txt</span><br><br>tar -jcvf 压缩包名称<span class="hljs-selector-class">.tar</span><span class="hljs-selector-class">.bz2</span> *<span class="hljs-selector-class">.txt</span> : 打包*<span class="hljs-selector-class">.txt</span><br>tar -jxvf 压缩包名称<span class="hljs-selector-class">.tar</span><span class="hljs-selector-class">.bz2</span> 	   : 解包*.txt<br></code></pre></td></tr></table></figure>
+<h3 id="查看文件列表和切换目录"><a href="#查看文件列表和切换目录" class="headerlink" title="查看文件列表和切换目录"></a>查看文件列表和切换目录</h3><p><code>cd</code> 切换目录命令 </p>
+<p><code>ls</code> 展示目录上的所有内容</p>
+<p>我在我的ftp上操作时发现每次操作下边都会显示一个状态码和一些描述，不知道是不是我的ftp就这样</p>
+<h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h3><p>要下载文件，通常使用两个命令： get和mget。</p>
+<blockquote>
+<p>get</p>
+</blockquote>
+<p>格式： <code>get [远程- file ] [ local-file ]</code></p>
+<p>将文件从远程主机传输到本地主机。</p>
+<p>要获取远程服务器上的&#x2F;usr&#x2F;your&#x2F;test.txt，</p>
+<p>操作如下 </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ftp&gt; get <span class="hljs-regexp">/usr/y</span>our/test.txt test.txt(回车)<br></code></pre></td></tr></table></figure>
 
-<h3 id="用户权限"><a href="#用户权限" class="headerlink" title="用户权限"></a>用户权限</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs awk">用户：<br>whoami ：查看当前用户<br>sudo useradd zhangsan -m : 添加账户<br>sudo passwd zhangsan  : 添加账户密码<br>su 账户: 切换用户<br><span class="hljs-keyword">exit</span> : 切换回之前的账户<br>sudo userdel -r zhangsan ：删除账户<br>sudo usermod zhangsan -a -G adm   ：添加sudo权限<br><br>sudo usermod zhangsan -a -G sudo  ：添加sudo权限<br><br>权限：<br>chmod u<span class="hljs-regexp">/g/</span>o<span class="hljs-regexp">/a +/</span>-/=rwx ：修改文件的权限（字母法）<br>chmod <span class="hljs-number">777</span> <span class="hljs-number">11</span>.txt ： 修改文件的权限（数字法）<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>mget</p>
+</blockquote>
+<p>格式： <code>mget [远程- files ]</code></p>
+<p>从远程主机向本地主机接收文件批处理。</p>
+<p>要获取服务器上&#x2F;usr&#x2F;your&#x2F;下的所有文件，请</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">ftp&gt; </span><span class="language-bash"><span class="hljs-built_in">cd</span> /usr/your/</span><br><span class="hljs-meta prompt_">ftp&gt; </span><span class="language-bash">mget *.* (回车)</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h3><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig">防火墙操作<br>启动：<span class="hljs-string">systemctl</span> <span class="hljs-string">start</span> <span class="hljs-string">firewalld</span><br>停止：<span class="hljs-string">systemctl</span> <span class="hljs-string">stop</span> <span class="hljs-string">firewalld</span><br>重启：<span class="hljs-string">systemctl</span> <span class="hljs-string">restart</span> <span class="hljs-string">firewalld</span>.<span class="hljs-string">service</span><br>查看状态：<span class="hljs-string">systemctl</span> <span class="hljs-string">status</span> <span class="hljs-string">firewalld</span><br>开机启动：<span class="hljs-string">systemctl</span> <span class="hljs-string">enable</span> <span class="hljs-string">firewalld</span>.<span class="hljs-string">service</span><br>开机禁用：<span class="hljs-string">systemctl</span> <span class="hljs-string">disable</span> <span class="hljs-string">firewalld</span><br>查看服务是否开机启动：<span class="hljs-string">systemctl</span> <span class="hljs-string">is-enabled</span> <span class="hljs-string">firewalld</span>.<span class="hljs-string">service</span><br>查看已启动的服务列表：<span class="hljs-string">systemctl</span> <span class="hljs-built_in">list-unit-files|grep</span> <span class="hljs-string">enabled</span><br>查看启动失败的服务列表：<span class="hljs-string">systemctl</span> <span class="hljs-built_in">--failed</span><br>查看版本：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--version</span><br>查看帮助：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--help</span><br>显示状态：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--state</span><br>查看所有打开的端口：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--zone=public</span> <span class="hljs-built_in">--list-ports</span><br>更新防火墙规则：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--reload</span><br>查看区域信息:<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--get-active-zones</span><br>查看指定接口所属区域：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--get-zone-of-interface=eth0</span><br>拒绝所有包：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--panic-on</span><br>取消拒绝状态：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--panic-off</span><br>查看是否拒绝：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--query-panic</span><br>开放<span class="hljs-string">80</span>端口：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--zone=public</span> <span class="hljs-built_in">--add-port=80/tcp</span> <span class="hljs-built_in">--permanent</span> （<span class="hljs-built_in">--permanent永久生效，没有此参数重启后失效）</span><br>查看<span class="hljs-string">80</span>端口：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--zone=public</span> <span class="hljs-built_in">--query-port=80/tcp</span><br>删除<span class="hljs-string">80</span>端口：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--zone=public</span> <span class="hljs-built_in">--remove-port=80/tcp</span> <span class="hljs-built_in">--permanent</span><br>开放端口区间：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--permanent</span> <span class="hljs-built_in">--zone=public</span> <span class="hljs-built_in">--add-port=8080-9999/tcp</span> //永久<br>重新载入使配置立即生效：<span class="hljs-string">firewall-cmd</span> <span class="hljs-built_in">--reload</span><br></code></pre></td></tr></table></figure>
+<p>此时每次下载文件都会有提示。 若要移除提示，请在mget *.*命令之前运行：prompt off</p>
+<p>注：所有文件都已下载到linux主机的当前目录中。 例如，对于在&#x2F;usr&#x2F;my下运行的ftp命令，所有文件都将下载到&#x2F;usr&#x2F;my下。</p>
+<h3 id="显示下载进度"><a href="#显示下载进度" class="headerlink" title="显示下载进度"></a>显示下载进度</h3><p>默认的情况是什么都看不见的，在这瞎等也属实是啥都不敢动</p>
+<blockquote>
+<p>hash</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">ftp&gt; </span><span class="language-bash"><span class="hljs-built_in">hash</span></span><br></code></pre></td></tr></table></figure>
 
+<p>这样就可以显示下载的进度了</p>
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><blockquote>
+<p>put</p>
+</blockquote>
+<p>格式：</p>
+<p><code>put local-file [remote-file]</code><br>将本地一个文件传送至远端主机中。<br>如要把本地的test.txt传送到远端主机&#x2F;usr&#x2F;your,并改名为test2.txt，则：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ftp&gt; put <span class="hljs-number">1</span>.htm <span class="hljs-regexp">/usr/y</span>our/test2.txt(回车)<br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p>mput</p>
+</blockquote>
+<p>格式：<code>mput local-files</code><br>将本地主机中一批文件传送至远端主机。<br>如要把本地当前目录下所有html文件上传到服务器&#x2F;usr&#x2F;your&#x2F; 下，则：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">ftp&gt; </span><span class="language-bash"><span class="hljs-built_in">cd</span> /usr/your （回车）</span><br><span class="hljs-meta prompt_">ftp&gt; </span><span class="language-bash">mput *.htm　（回车）</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">服务管理命令：<br>zkServer.sh start|stop|restart|status<br><br>客户端连接：<br>zkCli.sh -server $&#123;ip&#125;:$&#123;port&#125;<br><br>客户端关闭：<br>quit 或者按 Ctrl + C<br></code></pre></td></tr></table></figure>
+<p>注意：上传文件都来自于主机的当前目录下。比如，在　&#x2F;usr&#x2F;my下运行的ftp命令，则只有在&#x2F;usr&#x2F;my下的文件linux才会上传到服务器&#x2F;usr&#x2F;your 下。</p>
+<h3 id="断开链接"><a href="#断开链接" class="headerlink" title="断开链接"></a>断开链接</h3><blockquote>
+<p>bye   exit   quit</p>
+</blockquote>
+<p>中断与服务器的连接。这三哥命令都可以执行退出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">ftp&gt; </span><span class="language-bash"><span class="hljs-built_in">bye</span>：中断与服务器的连接。</span><br></code></pre></td></tr></table></figure>
 
+<h3 id="常见的状态指令"><a href="#常见的状态指令" class="headerlink" title="常见的状态指令"></a>常见的状态指令</h3><p>这里只列举部分常见的状态执行含义，如果遇到其他的请自行百度</p>
+<blockquote>
+<p>1xx - 肯定的初步答复这些状态代码指示一项操作已经成功开始，但客户端希望在继续操作新命令前得到另一个答复。</p>
+</blockquote>
+<ul>
+<li>110 重新启动标记答复</li>
+<li>120 服务已就绪，在 nnn 分钟后开始</li>
+</ul>
+<blockquote>
+<p>2xx - 肯定的完成答复 一项操作已经成功完成。客户端可以执行新命令。</p>
+</blockquote>
+<ul>
+<li>200 命令确定</li>
+<li>202 未执行命令，站点上的命令过多</li>
+<li>212 目录状态</li>
+<li>213 文件状态</li>
+<li>230用户已登录，继续进行</li>
+<li>250 请求的文件操作正确，已完成</li>
+</ul>
+<blockquote>
+<p>3xx - 肯定的中间答复,该命令已成功，但服务器需要更多来自客户端的信息以完成对请求的处理</p>
+</blockquote>
+<ul>
+<li>331 用户名正确，需要密码</li>
+<li>332 需要登录帐户</li>
+</ul>
+<blockquote>
+<p>4xx - 瞬态否定的完成答复,该命令不成功，但错误是暂时的。如果客户端重试命令，可能会执行成功</p>
+</blockquote>
+<ul>
+<li>426 Connection closed; transfer aborted</li>
+<li>451 请求的操作异常终止：正在处理本地错误</li>
+</ul>
+<blockquote>
+<p>5xx - 永久性否定的完成答复,该命令不成功，错误是永久性的。如果客户端重试命令，将再次出现同样的错误</p>
+</blockquote>
+<ul>
+<li>500 语法错误，命令无法识别。这可能包括诸如命令行太长之类的错误</li>
+<li>501 在参数中有语法错误</li>
+<li>502 未执行命令</li>
+<li>503 错误的命令序列</li>
+<li>504 未执行该参数的命令</li>
+<li>530 - 该状态代码表示用户无法登录，因为用户名和密码组合无效。如果使用某个用户帐户登录，可能键入错误的用户名或密码，也可能选择只允许匿名访问。如果使用匿名帐户登录，IIS 的配置可能拒绝匿名访问</li>
+<li>550 未执行请求的操作。文件不可用(例如，未找到文件，没有访问权限)</li>
+</ul>
 
               
             </div>
@@ -301,7 +390,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/Liunx/" class="category-chain-item">Liunx</a>
   
   
 
@@ -328,8 +417,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Liunx常用命令</div>
-      <div>http://example.com/2022/05/29/Liunx常用命令/</div>
+      <div>liunx链接Ftp</div>
+      <div>http://example.com/2022/06/20/liunx链接Ftp/</div>
     </div>
     <div class="license-meta">
       
@@ -341,7 +430,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年5月29日</div>
+          <div>2022年6月20日</div>
         </div>
       
       
@@ -371,9 +460,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/20/liunx%E9%93%BE%E6%8E%A5Ftp/" title="liunx链接Ftp">
+                      <a href="/2022/06/20/Orcale%E8%A1%A8%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="Orcale表锁解决方法">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">liunx链接Ftp</span>
+                        <span class="hidden-mobile">Orcale表锁解决方法</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -381,8 +470,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/29/httpUtils/" title="httpUtils">
-                        <span class="hidden-mobile">httpUtils</span>
+                      <a href="/2022/05/29/Liunx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Liunx常用命令">
+                        <span class="hidden-mobile">Liunx常用命令</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
