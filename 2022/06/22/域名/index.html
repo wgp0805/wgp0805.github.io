@@ -16,22 +16,22 @@
   <meta name="author" content="汪广平">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Orcale表锁解决方法查询表锁语句1select*from v$session t1,v$locked_object t2 where t1.sid&#x3D;t2.SESSION_ID  解锁被锁的表1234alter system kill session &amp;#x27;sess.sid,sess.serial#&amp;#x27;;-- 将上述需要取的id放在下边执行就可以了alter system kill">
+    <meta name="description" content="今天闲着没事想起来以前白嫖了个域名还没有解析，闲着没事就再次尝试了下在阿里云国际版进行一下解析，结果尝试成功了，记录下解析过程  登录阿里云国际版，没有账号的话注册一个， 然后选择云解析dns 然后添加上自己的域名 点击解析设置，这里记住不要悬着转发，因为转发需要进行备案才行，我就是给博客用的所以就选择CNAME意思就是从一个域名跳转到另一个域名，然后把博客的地址填写上就可以了！ 在github上">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Orcale表锁解决方法">
-<meta property="og:url" content="http://example.com/2022/06/20/Orcale%E8%A1%A8%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:title" content="域名申请及解析">
+<meta property="og:url" content="http://example.com/2022/06/22/%E5%9F%9F%E5%90%8D/index.html">
 <meta property="og:site_name" content="WgpBlog">
-<meta property="og:description" content="Orcale表锁解决方法查询表锁语句1select*from v$session t1,v$locked_object t2 where t1.sid&#x3D;t2.SESSION_ID  解锁被锁的表1234alter system kill session &amp;#x27;sess.sid,sess.serial#&amp;#x27;;-- 将上述需要取的id放在下边执行就可以了alter system kill">
+<meta property="og:description" content="今天闲着没事想起来以前白嫖了个域名还没有解析，闲着没事就再次尝试了下在阿里云国际版进行一下解析，结果尝试成功了，记录下解析过程  登录阿里云国际版，没有账号的话注册一个， 然后选择云解析dns 然后添加上自己的域名 点击解析设置，这里记住不要悬着转发，因为转发需要进行备案才行，我就是给博客用的所以就选择CNAME意思就是从一个域名跳转到另一个域名，然后把博客的地址填写上就可以了！ 在github上">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-06-20T12:15:30.000Z">
-<meta property="article:modified_time" content="2022-06-20T12:15:50.188Z">
+<meta property="article:published_time" content="2022-06-22T14:12:39.000Z">
+<meta property="article:modified_time" content="2022-06-22T14:21:53.599Z">
 <meta property="article:author" content="汪广平">
-<meta property="article:tag" content="orcale">
+<meta property="article:tag" content="域名相关">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Orcale表锁解决方法 - WgpBlog</title>
+  <title>域名申请及解析 - WgpBlog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -194,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Orcale表锁解决方法"></span>
+            <span id="subtitle" data-typed-text="域名申请及解析"></span>
           
         </div>
 
@@ -205,8 +205,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-20 20:15" pubdate>
-          2022年6月20日 晚上
+        <time datetime="2022-06-22 22:12" pubdate>
+          2022年6月22日 晚上
         </time>
       </span>
     
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          475 字
+          356 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          4 分钟
+          3 分钟
         
       </span>
     
@@ -266,17 +266,35 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Orcale表锁解决方法</h1>
+            <h1 style="display: none">域名申请及解析</h1>
             
             <div class="markdown-body">
               
-              <h1 id="Orcale表锁解决方法"><a href="#Orcale表锁解决方法" class="headerlink" title="Orcale表锁解决方法"></a>Orcale表锁解决方法</h1><h3 id="查询表锁语句"><a href="#查询表锁语句" class="headerlink" title="查询表锁语句"></a>查询表锁语句</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span><span class="hljs-operator">*</span><span class="hljs-keyword">from</span> v$session t1,v$locked_object t2 <span class="hljs-keyword">where</span> t1.sid<span class="hljs-operator">=</span>t2.SESSION_ID<br></code></pre></td></tr></table></figure>
-
-<h3 id="解锁被锁的表"><a href="#解锁被锁的表" class="headerlink" title="解锁被锁的表"></a>解锁被锁的表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">system</span> kill session <span class="hljs-string">&#x27;sess.sid,sess.serial#&#x27;</span>;<br><br><span class="hljs-comment">-- 将上述需要取的id放在下边执行就可以了</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">system</span> kill session <span class="hljs-string">&#x27;137,30686&#x27;</span>;<br></code></pre></td></tr></table></figure>
-
-<p>查询导致锁表的sql</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> a.username username, a.sid sid, a.serial# serial,b.id1 id1, c.sql_text sqltext <span class="hljs-keyword">from</span> v$session a, v$lock b, v$sqltext c <span class="hljs-keyword">where</span> b.id1 <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> <span class="hljs-keyword">distinct</span> e.id1 <span class="hljs-keyword">from</span> v$session d, v$lock e <span class="hljs-keyword">where</span> d.lockwait <span class="hljs-operator">=</span> e.kaddr) <span class="hljs-keyword">and</span> a.sid <span class="hljs-operator">=</span> b.sid <span class="hljs-keyword">and</span> c.hash_value <span class="hljs-operator">=</span> a.sql_hash_value <span class="hljs-keyword">and</span> b.request <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br></code></pre></td></tr></table></figure>
-
+              <p>今天闲着没事想起来以前白嫖了个域名还没有解析，闲着没事就再次尝试了下在阿里云国际版进行一下解析，结果尝试成功了，记录下解析过程</p>
+<ol>
+<li>登录阿里云国际版，没有账号的话注册一个，</li>
+<li>然后选择云解析dns</li>
+<li>然后添加上自己的域名</li>
+<li>点击解析设置，这里记住不要悬着转发，因为转发需要进行备案才行，我就是给博客用的所以就选择CNAME意思就是从一个域名跳转到另一个域名，然后把博客的地址填写上就可以了！</li>
+<li>在github上进行setting-&gt;pages，填写要使用的域名保存即可</li>
+</ol>
+<blockquote>
+<p>申请的域名</p>
+</blockquote>
+<p>usebug.tk</p>
+<p>wgpblog.tk</p>
+<blockquote>
+<p>阿里云国际版地址</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.alibabacloud.com/zh">https://www.alibabacloud.com/zh</a></p>
+<blockquote>
+<p>另一个可以解析不用备案的域名的地方CloudFlare</p>
+</blockquote>
+<p>cloudflare.com</p>
+<blockquote>
+<p>白嫖域名的网站</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://freenom.com/">https://freenom.com</a></p>
 
               
             </div>
@@ -294,7 +312,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Orcale/" class="category-chain-item">Orcale</a>
+  <a href="/categories/%E5%9F%9F%E5%90%8D/" class="category-chain-item">域名</a>
   
   
 
@@ -309,7 +327,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/orcale/">#orcale</a>
+        <a href="/tags/%E5%9F%9F%E5%90%8D%E7%9B%B8%E5%85%B3/">#域名相关</a>
       
     </div>
   
@@ -321,8 +339,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Orcale表锁解决方法</div>
-      <div>http://example.com/2022/06/20/Orcale表锁解决方法/</div>
+      <div>域名申请及解析</div>
+      <div>http://example.com/2022/06/22/域名/</div>
     </div>
     <div class="license-meta">
       
@@ -334,7 +352,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年6月20日</div>
+          <div>2022年6月22日</div>
         </div>
       
       
@@ -364,18 +382,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/22/%E5%9F%9F%E5%90%8D/" title="域名申请及解析">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">域名申请及解析</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/20/liunx%E9%93%BE%E6%8E%A5Ftp/" title="liunx链接Ftp">
-                        <span class="hidden-mobile">liunx链接Ftp</span>
+                      <a href="/2022/06/20/Orcale%E8%A1%A8%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="Orcale表锁解决方法">
+                        <span class="hidden-mobile">Orcale表锁解决方法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

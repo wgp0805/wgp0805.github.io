@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>域名申请及解析</title>
+    <link href="/2022/06/22/%E5%9F%9F%E5%90%8D/"/>
+    <url>/2022/06/22/%E5%9F%9F%E5%90%8D/</url>
+    
+    <content type="html"><![CDATA[<p>今天闲着没事想起来以前白嫖了个域名还没有解析，闲着没事就再次尝试了下在阿里云国际版进行一下解析，结果尝试成功了，记录下解析过程</p><ol><li>登录阿里云国际版，没有账号的话注册一个，</li><li>然后选择云解析dns</li><li>然后添加上自己的域名</li><li>点击解析设置，这里记住不要悬着转发，因为转发需要进行备案才行，我就是给博客用的所以就选择CNAME意思就是从一个域名跳转到另一个域名，然后把博客的地址填写上就可以了！</li><li>在github上进行setting-&gt;pages，填写要使用的域名保存即可</li></ol><blockquote><p>申请的域名</p></blockquote><p>usebug.tk</p><p>wgpblog.tk</p><blockquote><p>阿里云国际版地址</p></blockquote><p><a href="https://www.alibabacloud.com/zh">https://www.alibabacloud.com/zh</a></p><blockquote><p>另一个可以解析不用备案的域名的地方CloudFlare</p></blockquote><p>cloudflare.com</p><blockquote><p>白嫖域名的网站</p></blockquote><p><a href="https://freenom.com/">https://freenom.com</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>域名</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>域名相关</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Orcale表锁解决方法</title>
     <link href="/2022/06/20/Orcale%E8%A1%A8%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
     <url>/2022/06/20/Orcale%E8%A1%A8%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
