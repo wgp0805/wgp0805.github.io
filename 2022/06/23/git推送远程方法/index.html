@@ -24,7 +24,7 @@
 <meta property="og:description" content="1.初始化：创建一个git仓库，创建之后就会在当前目录生成一个.git的文件 1git init  2.添加文件：把文件添加到缓冲区 1git add filename  3.添加所有文件到缓冲区（从目前掌握的水平看，和后面加“.”的区别在于，加all可以添加被手动删除的文件，而加“.”不行）： 12git add .git add --all  4.提交：提交缓冲区的所有修改到仓库(注意：如果修">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-23T10:30:42.000Z">
-<meta property="article:modified_time" content="2022-06-23T10:30:59.667Z">
+<meta property="article:modified_time" content="2022-06-23T10:36:33.528Z">
 <meta property="article:author" content="汪广平">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary_large_image">
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          638 字
+          1.4k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          6 分钟
+          12 分钟
         
       </span>
     
@@ -295,6 +295,23 @@
 <p>PS2: 使用vscode拉取代码提示：在签出前，请清理存储库工作树</p>
 <p>解决方法：</p>
 <figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-number">1</span>、git stash （把当前未提交的修改暂存起来，让仓库还原到最后一次提交的状态。）<br><span class="hljs-number">2</span>、git pull （拉取远程仓库的代码，让你现在的代码和远程仓库一致）<br><span class="hljs-number">3</span>、git stash <span class="hljs-built_in">pop</span> （恢复第一步储存起来的代码，也就是恢复当前未提交的修改）<br></code></pre></td></tr></table></figure>
+
+<h2 id="git更新"><a href="#git更新" class="headerlink" title="git更新"></a>git更新</h2><p>1.如果本地当前分支设置了上游分支通过：git branch -vv 查看、后运行：git pull 即可更新最新代码<br>2.如果没有设置上游分支可先设置上游分支：git branch -u origin&#x2F;分支名、再执行：git pull。<br>3.直接执行：git pull origin 分支名。</p>
+<h3 id="git回退"><a href="#git回退" class="headerlink" title="git回退"></a>git回退</h3><p>查看版本</p>
+<blockquote>
+<p>git log</p>
+</blockquote>
+<p>可以看到有很多版本，每个版本的第一行是commit接一串字符串（部分打码了） 。要退出git log只需要按Q键。</p>
+<p>2、选择想要回退到的版本，复制commit后面的一串字符串</p>
+<p>3、输入命令</p>
+<blockquote>
+<p><strong>git reset –hard</strong> 字符串</p>
+</blockquote>
+<p>比如我复制图上第一个commit后的字符串，其结果如下：</p>
+<blockquote>
+<p>HEAD is now at 2b345e3 RobotRotate 夹具和关节一起动</p>
+</blockquote>
+<h2 id="git-合并代码"><a href="#git-合并代码" class="headerlink" title="git 合并代码"></a>git 合并代码</h2><p>一、git 如何把分支代码合并到master<br> 1.首先切换到分支；<br>     git checkout hellomonkey<br> 2.使用git pull 把分支代码pull下来；<br>     git pull<br> 3.切换到主分支；<br>    git checkout master<br> 4.把分支的代码merge到主分支；<br>    git merge hellomonkey<br> 5.git push推上去ok完成,现在 你自己分支的代码就合并到主分支上了。<br>    git push<br> 同样，主分支的文件也可以合并的分支上。<br>二、git 如何把master分支代码合并到自己的分支<br> master分支的代码领先自己的分支,git 如何把master分支代码合并到自己的分支<br> 1.首先切换到主分支<br>    git checkout master<br> 2.使用git pull 把领先的主分支代码pull下来<br>    git pull<br> 3.切换到自己的分支<br>    git checkout xxx(自己的分支)<br> 4.把主分支的代码merge到自己的分支<br>    git merge master<br> 5.git push推上去ok完成,现在 你自己分支的代码就和主分支的代码一样了<br>    git push origin 自己分支名</p>
 
               
             </div>
