@@ -1,0 +1,977 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="汪广平">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="我们都知道，Java8 中增加了 Stream 处理，可以配合 Lambda 表达式来使用，让操作集合非常便利。虽然我们平时经常使用 Stream，但用到的方法其实并不多，梳理清楚之后还是非常好掌握的。 Stream 提供的方法非常多，按照调用当前方法是否结束流处理，可以分为中间操作和结束操作。 对于中间操作，又可以分为有状态的操作和无状态操作：  无状态的操作是指当前元素的操作不受前面元素的影响">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Steam的简单操作">
+<meta property="og:url" content="http://example.com/2022/09/10/Steam%E7%9A%84%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="我们都知道，Java8 中增加了 Stream 处理，可以配合 Lambda 表达式来使用，让操作集合非常便利。虽然我们平时经常使用 Stream，但用到的方法其实并不多，梳理清楚之后还是非常好掌握的。 Stream 提供的方法非常多，按照调用当前方法是否结束流处理，可以分为中间操作和结束操作。 对于中间操作，又可以分为有状态的操作和无状态操作：  无状态的操作是指当前元素的操作不受前面元素的影响">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/640">
+<meta property="og:image" content="http://example.com/img/641">
+<meta property="article:published_time" content="2022-09-10T03:20:02.000Z">
+<meta property="article:modified_time" content="2023-12-09T06:29:53.815Z">
+<meta property="article:author" content="汪广平">
+<meta property="article:tag" content="steam">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/640">
+  
+  
+  
+  <title>Steam的简单操作 - WgpBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>WGP</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Steam的简单操作"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-10 11:20" pubdate>
+          2022年9月10日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          140 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Steam的简单操作</h1>
+            
+            <div class="markdown-body">
+              
+              <p>我们都知道，Java8 中增加了 Stream 处理，可以配合 Lambda 表达式来使用，让操作集合非常便利。虽然我们平时经常使用 Stream，但用到的方法其实并不多，梳理清楚之后还是非常好掌握的。</p>
+<p>Stream 提供的方法非常多，按照调用当前方法是否结束流处理，可以分为中间操作和结束操作。</p>
+<p>对于中间操作，又可以分为有状态的操作和无状态操作：</p>
+<ul>
+<li>无状态的操作是指当前元素的操作不受前面元素的影响。</li>
+<li>有状态的操作是指当前元素的操作需要等所有元素处理完之后才能进行。</li>
+</ul>
+<p>对于结束操作，又可以分为短路操作和非短路操作，具体如下：</p>
+<ul>
+<li>短路操作是指不需要处理完全部的元素就可以结束。</li>
+<li>非短路操作是指必须处理完所有元素才能结束。</li>
+</ul>
+<h2 id="1-创建Steam"><a href="#1-创建Steam" class="headerlink" title="1. 创建Steam"></a>1. 创建Steam</h2><h3 id="1-1-使用集合创建"><a href="#1-1-使用集合创建" class="headerlink" title="1.1 使用集合创建"></a>1.1 使用集合创建</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs 复制">List&lt;Integer&gt; list = Arrays.asList(5, 2, 3, 1, 4);<br>Stream stream = list.stream();<br><br>//当然此处也可以直接简写，因为本身Steam就是支持链式编程的所有的操作可以直接.出来<br>        Stream&lt;Integer&gt; stream1 = Arrays.asList(5, 2, 3, 1, 4).stream();<br>        <br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-使用数组创建"><a href="#1-2-使用数组创建" class="headerlink" title="1.2 使用数组创建"></a>1.2 使用数组创建</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 复制">String[] array=&#123;&quot;ab&quot;, &quot;abc&quot;, &quot;abcd&quot;, &quot;abcde&quot;, &quot;abcdef&quot; &#125;;<br>Stream&lt;String&gt; stream = Arrays.stream(array);<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-使用-Stream-静态方法"><a href="#1-3-使用-Stream-静态方法" class="headerlink" title="1.3 使用 Stream 静态方法"></a>1.3 使用 Stream 静态方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs copy">public static void main(String[] args) &#123;<br>       //这里通过Steam的静态方法生成一个Steam的流 这里是举例和下边的没什么关系<br>       Stream&lt;String&gt; stream = Stream.of(&quot;ab&quot;, &quot;abc&quot;, &quot;abcd&quot;, &quot;abcde&quot;, &quot;abcdef&quot;);<br>       //这个方法和generate方法作用类似，都可以用来生成一个包含无限个元素的流。只不过这个方法比generate方法在使用上要更灵活。<br>       //可以理解为 从0 开始生成，然后依次加3  最后声明的次数 2<br>       Stream&lt;Integer&gt; stream2 = Stream.iterate(0, (x) -&gt; x + 3).limit(2);<br>       stream2.forEach(r -&gt; System.out.print(r + &quot; &quot;));<br><br>       System.out.println();<br>       //道理同上<br>       Stream&lt;Integer&gt; stream3 = Stream.generate(new Random()::nextInt).limit(3);<br>       stream3.forEach(r -&gt; System.out.print(r + &quot; &quot;));<br><br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs copy">0 3 <br>-689643422 821220540 1920968145 <br></code></pre></td></tr></table></figure>
+
+<h3 id="2-1-map"><a href="#2-1-map" class="headerlink" title="2.1 map"></a>2.1 map</h3><p>接收一个函数作为入参，把这个函数应用到每个元素上，执行结果组成一个新的 stream 返回。</p>
+<p>案例 1：对整数数组每个元素加 3 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs copy">List&lt;Integer&gt; list = Arrays.asList(5, 2, 3, 1, 4);<br>List&lt;Integer&gt; newList = list.stream().map(x -&gt; x + 3).collect(Collectors.toList());<br>System.out.println(&quot;newList:&quot; + newList);<br></code></pre></td></tr></table></figure>
+
+<p>上面代码输出结果如下：</p>
+<blockquote>
+<p>newList:[8, 5, 6, 4, 7]</p>
+</blockquote>
+<p>案例 2：把字符串数组的每个元素转换为大写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs copy">List&lt;String&gt; list = Arrays.asList(&quot;ab&quot;, &quot;abc&quot;, &quot;abcd&quot;, &quot;abcde&quot;, &quot;abcdef&quot;);<br>//这里的collect代表要生成的类型<br>List&lt;String&gt; newList = list.stream().map(String::toUpperCase).collect(Collectors.toList());<br>System.out.println(&quot;newList:&quot; + newList);<br></code></pre></td></tr></table></figure>
+
+<p>上面代码输出结果如下：</p>
+<blockquote>
+<p>newList:[AB, ABC, ABCD, ABCDE, ABCDEF]</p>
+</blockquote>
+<h3 id="2-2-mapToXXX"><a href="#2-2-mapToXXX" class="headerlink" title="2.2 mapToXXX"></a>2.2 mapToXXX</h3><p>包括三个方法：mapToInt、mapToDouble、mapToLong</p>
+<p>案例 3：把字符串数组转为整数数组：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;String&gt; <span class="hljs-built_in">list</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">List(<span class="hljs-string">&quot;ab&quot;</span>, <span class="hljs-string">&quot;abc&quot;</span>, <span class="hljs-string">&quot;abcd&quot;</span>, <span class="hljs-string">&quot;abcde&quot;</span>, <span class="hljs-string">&quot;abcdef&quot;</span>)</span>;<br><span class="hljs-built_in">int</span><span class="hljs-literal">[]</span> newList = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.map<span class="hljs-constructor">ToInt(<span class="hljs-params">r</span> -&gt; <span class="hljs-params">r</span>.<span class="hljs-params">length</span>()</span>).<span class="hljs-keyword">to</span><span class="hljs-constructor">Array()</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;newList:&quot;</span> + <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">String(<span class="hljs-params">newList</span>)</span>);<br></code></pre></td></tr></table></figure>
+
+<p>上面代码输出结果如下：</p>
+<blockquote>
+<p>newList:[2, 3, 4, 5, 6]</p>
+</blockquote>
+<h3 id="2-3-flatMap"><a href="#2-3-flatMap" class="headerlink" title="2.3 flatMap"></a>2.3 flatMap</h3><p>flatMap接收函数作为入参，然后把集合中每个元素转换成一个 stream，再把这些 stream 组成一个新的 stream，是拆分单词很好的工具。如下图：</p>
+<p><img src="/img/640" srcset="/img/loading.gif" lazyload alt="图片"></p>
+<p>案例 4：把一个字符串数组转成另一个字符串数组：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;String&gt; <span class="hljs-built_in">list</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">List(<span class="hljs-string">&quot;ab-abc-abcd-abcde-abcdef&quot;</span>, <span class="hljs-string">&quot;5-2-3-1-4&quot;</span>)</span>;<br>List&lt;String&gt; newList = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.flat<span class="hljs-constructor">Map(<span class="hljs-params">s</span> -&gt; Arrays.<span class="hljs-params">stream</span>(<span class="hljs-params">s</span>.<span class="hljs-params">split</span>(<span class="hljs-string">&quot;-&quot;</span>)</span>)).collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;newList：&quot;</span> + newList);<br></code></pre></td></tr></table></figure>
+
+<p>上面代码输出结果：</p>
+<blockquote>
+<p>newList：[ab, abc, abcd, abcde, abcdef, 5, 2, 3, 1, 4]</p>
+</blockquote>
+<h3 id="2-4-flatMapToXXX"><a href="#2-4-flatMapToXXX" class="headerlink" title="2.4 flatMapToXXX"></a>2.4 flatMapToXXX</h3><p>类似于 flatMap，返回一个 XXXStream。</p>
+<p>包括三个方法：flatMapToInt、flatMapToLong、flatMapToDouble</p>
+<p>案例 5：对给定的二维整数数组求和:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">int</span>[][] <span class="hljs-class"><span class="hljs-keyword">data</span> = &#123;&#123;1,2&#125;,&#123;3,4&#125;,&#123;5,6&#125;&#125;;</span><br><span class="hljs-type">IntStream</span> intStream = <span class="hljs-type">Arrays</span>.stream(<span class="hljs-class"><span class="hljs-keyword">data</span>).flatMapToInt(<span class="hljs-title">row</span> -&gt; <span class="hljs-type">Arrays</span>.<span class="hljs-title">stream</span>(<span class="hljs-title">row</span>));</span><br><span class="hljs-type">System</span>.out.println(intStream.sum());<br></code></pre></td></tr></table></figure>
+
+<p>输出结果为：21。</p>
+<h3 id="2-5-filter"><a href="#2-5-filter" class="headerlink" title="2.5 filter"></a>2.5 filter</h3><p>筛选功能，按照一定的规则将符合条件的元素提取到新的流中。</p>
+<p>定义一个学生类，包含姓名、年龄、性别、考试成绩四个属性：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">String</span> name;<br>    <span class="hljs-keyword">private</span> Integer age;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">String</span> sex;<br>    <span class="hljs-keyword">private</span> Integer score;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">(<span class="hljs-type">String</span> name, Integer age, <span class="hljs-type">String</span> sex, Integer score)</span></span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>        <span class="hljs-keyword">this</span>.age = age;<br>        <span class="hljs-keyword">this</span>.score = score;<br>        <span class="hljs-keyword">this</span>.sex = sex;<br>    &#125;<br>    <span class="hljs-comment">//省略getters/setters</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>案例 6：找出考试成绩在 90 分以上的学生姓名：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;Student&gt; students = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;<span class="hljs-literal">()</span>;<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Mike&quot;</span>, 10, <span class="hljs-string">&quot;male&quot;</span>, 88)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jack&quot;</span>, 13,<span class="hljs-string">&quot;male&quot;</span>, 90)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Lucy&quot;</span>, 15,<span class="hljs-string">&quot;female&quot;</span>, 100)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jessie&quot;</span>, 12,<span class="hljs-string">&quot;female&quot;</span>, 78)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Allon&quot;</span>, 16,<span class="hljs-string">&quot;female&quot;</span>, 92)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Alis&quot;</span>, 22,<span class="hljs-string">&quot;female&quot;</span>, 50)</span>);<br><br>List&lt;String&gt; nameList = students.stream<span class="hljs-literal">()</span>.filter(x -&gt; x.get<span class="hljs-constructor">Score()</span> &gt;= <span class="hljs-number">90</span>).map(Student::getName).collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;考试成绩90分以上的学生姓名：&quot;</span> + nameList);<br></code></pre></td></tr></table></figure>
+
+<p>输出如下：</p>
+<blockquote>
+<p>考试成绩90分以上的学生姓名：[Jack, Lucy, Allon]</p>
+</blockquote>
+<h3 id="2-6-peek"><a href="#2-6-peek" class="headerlink" title="2.6 peek"></a>2.6 peek</h3><p>返回由 stream 中元素组成的新 stream，用给定的函数作用在新 stream 的每个元素上。传入的函数是一个 Consume 类型的，没有返回值，因此并不会改变原 stream 中元素的值。peek 主要用是 debug，可以方便地 查看流处理结果是否正确。</p>
+<p>案例 7：过滤出 stream 中长度大于 3 的字符串并转为大写：</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sas">Stream.of(<span class="hljs-string">&quot;one&quot;</span>, <span class="hljs-string">&quot;two&quot;</span>, <span class="hljs-string">&quot;three&quot;</span>, <span class="hljs-string">&quot;four&quot;</span>)<br>             .filter(e -&gt; e.<span class="hljs-meta">length</span>() &gt; 3)<br>             .<span class="hljs-meta">peek</span>(e -&gt; System.<span class="hljs-keyword">out</span>.printl<span class="hljs-meta">n</span>(<span class="hljs-string">&quot;Filtered value: &quot;</span> + e))<br>             .map(String::toUpperCase)<br>             .<span class="hljs-meta">peek</span>(e -&gt; System.<span class="hljs-keyword">out</span>.printl<span class="hljs-meta">n</span>(<span class="hljs-string">&quot;Mapped value: &quot;</span> + e))<br>             .collect(Collectors.toList());<br></code></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<blockquote>
+<p>Filtered value: three </p>
+<p>Mapped value: THREE </p>
+<p>Filtered value: four </p>
+<p>Mapped value: FOUR</p>
+</blockquote>
+<h3 id="2-7-unordered"><a href="#2-7-unordered" class="headerlink" title="2.7 unordered"></a>2.7 unordered</h3><p>把一个有序的 stream 转成一个无序 stream ，如果原 stream 本身就是无序的，可能会返回原始的 stream。</p>
+<p>案例 8：把一个有序数组转成无序</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">List(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-string">&quot;4&quot;</span>, <span class="hljs-string">&quot;5&quot;</span>)</span><br>                .parallel<span class="hljs-constructor">Stream()</span><br>                .unordered<span class="hljs-literal">()</span><br>                .<span class="hljs-keyword">for</span><span class="hljs-constructor">Each(<span class="hljs-params">r</span> -&gt; System.<span class="hljs-params">out</span>.<span class="hljs-params">print</span>(<span class="hljs-params">r</span> + <span class="hljs-string">&quot; &quot;</span>)</span>);<br></code></pre></td></tr></table></figure>
+
+<p>每次执行输出的结果不一样，下面是一次输出的结果：</p>
+<blockquote>
+<p>3 5 4 2 1</p>
+</blockquote>
+<h2 id="3-有状态操作"><a href="#3-有状态操作" class="headerlink" title="3 有状态操作"></a>3 有状态操作</h2><h3 id="3-1-distinct"><a href="#3-1-distinct" class="headerlink" title="3.1 distinct"></a>3.1 distinct</h3><p>去重功能。</p>
+<p>案例 9 ：去掉字符串数组中的重复字符串</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">String<span class="hljs-literal">[]</span> <span class="hljs-built_in">array</span> = &#123; <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>&#125;;<br>List&lt;String&gt; newList = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span>stream(<span class="hljs-built_in">array</span>).distinct<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;newList:&quot;</span> + newList);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>newList:[a, b, c, d, e]</p>
+</blockquote>
+<h3 id="3-2-limit"><a href="#3-2-limit" class="headerlink" title="3.2 limit"></a>3.2 limit</h3><p>限制从 stream 中获取前 n 个元素。</p>
+<p>案例 10 ：从数组中获取前 5 个元素</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">String<span class="hljs-literal">[]</span> <span class="hljs-built_in">array</span> = &#123; <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>&#125;;<br>List&lt;String&gt; newList = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span>stream(<span class="hljs-built_in">array</span>).limit(<span class="hljs-number">5</span>).collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;newList:&quot;</span> + newList);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>newList:[c, c, a, b, b]</p>
+</blockquote>
+<h3 id="3-3-skip"><a href="#3-3-skip" class="headerlink" title="3.3 skip"></a>3.3 skip</h3><p>跳过 Stream 中前 n 个元素</p>
+<p>案例 11：从数组中获取第 5 个元素之后的元素</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">String<span class="hljs-literal">[]</span> <span class="hljs-built_in">array</span> = &#123; <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;f&quot;</span>, <span class="hljs-string">&quot;g&quot;</span>, <span class="hljs-string">&quot;h&quot;</span>, <span class="hljs-string">&quot;i&quot;</span>&#125;;<br>List&lt;String&gt; newList = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span>stream(<span class="hljs-built_in">array</span>).skip(<span class="hljs-number">5</span>).collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;newList:&quot;</span> + newList);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>newList:[f, g, h, i]</p>
+</blockquote>
+<h3 id="3-4-sorted"><a href="#3-4-sorted" class="headerlink" title="3.4 sorted"></a>3.4 sorted</h3><p>排序功能。</p>
+<p>案例 12：对给定数组进行排序</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">String<span class="hljs-literal">[]</span> <span class="hljs-built_in">array</span> = &#123; <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>&#125;;<br>List&lt;String&gt; newList = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span>stream(<span class="hljs-built_in">array</span>).sorted<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;newList:&quot;</span> + newList);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>newList:[a, b, b, c, c, d, d, e, e]</p>
+</blockquote>
+<p>案例 13：按照学生成绩进行排序</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;Student&gt; students = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;<span class="hljs-literal">()</span>;<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Mike&quot;</span>, 10, <span class="hljs-string">&quot;male&quot;</span>, 88)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jack&quot;</span>, 13,<span class="hljs-string">&quot;male&quot;</span>, 90)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Lucy&quot;</span>, 15,<span class="hljs-string">&quot;female&quot;</span>, 100)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jessie&quot;</span>, 12,<span class="hljs-string">&quot;female&quot;</span>, 78)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Allon&quot;</span>, 16,<span class="hljs-string">&quot;female&quot;</span>, 92)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Alis&quot;</span>, 22,<span class="hljs-string">&quot;female&quot;</span>, 50)</span>);<br><br>List&lt;String&gt; nameList = students.stream<span class="hljs-literal">()</span>.sorted(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Comparator</span>.</span></span>comparing(Student::getScore)).map(Student::getName).collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;按成绩排序输出学生姓名：&quot;</span> + nameList);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>考试成绩90分以上的学生姓名：[Alis, Jessie, Mike, Jack, Allon, Lucy]</p>
+</blockquote>
+<h2 id="4-短路操作"><a href="#4-短路操作" class="headerlink" title="4 短路操作"></a>4 短路操作</h2><h3 id="4-1-findAny"><a href="#4-1-findAny" class="headerlink" title="4.1 findAny"></a>4.1 findAny</h3><p>找出 stream 中任何一个满足过滤条件的元素。</p>
+<p>案例 14：找出任何一个成绩高于 90 分的学生</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;Student&gt; students = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;<span class="hljs-literal">()</span>;<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Mike&quot;</span>, 10, <span class="hljs-string">&quot;male&quot;</span>, 88)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jack&quot;</span>, 13,<span class="hljs-string">&quot;male&quot;</span>, 90)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Lucy&quot;</span>, 15,<span class="hljs-string">&quot;female&quot;</span>, 100)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jessie&quot;</span>, 12,<span class="hljs-string">&quot;female&quot;</span>, 78)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Allon&quot;</span>, 16,<span class="hljs-string">&quot;female&quot;</span>, 92)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Alis&quot;</span>, 22,<span class="hljs-string">&quot;female&quot;</span>, 50)</span>);<br><br>Optional&lt;Student&gt; studentFindAny = students.stream<span class="hljs-literal">()</span>.filter(x -&gt; x.get<span class="hljs-constructor">Score()</span> &gt; <span class="hljs-number">90</span>).find<span class="hljs-constructor">Any()</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;找出任意一个考试成绩在90分以上的学生姓名：&quot;</span> + studentFindAny.<span class="hljs-keyword">or</span><span class="hljs-constructor">ElseGet(<span class="hljs-params">null</span>)</span>.get<span class="hljs-constructor">Name()</span>);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>找出任意一个考试成绩在90分以上的学生姓名：Lucy</p>
+</blockquote>
+<h3 id="4-2-anyMatch"><a href="#4-2-anyMatch" class="headerlink" title="4.2 anyMatch"></a>4.2 anyMatch</h3><p>是否存在任意一个满足给定条件的元素。</p>
+<p>案例 15：是否存在成绩高于 90 分的学生，是否存在成绩低于 50 分的学生。还是采用上面案例 14 中的学生集合。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">boolean result1 = students.stream<span class="hljs-literal">()</span>.any<span class="hljs-constructor">Match(<span class="hljs-params">x</span> -&gt; <span class="hljs-params">x</span>.<span class="hljs-params">getScore</span>()</span> &gt; <span class="hljs-number">90</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;是否存在成绩高于 90 分的学生：&quot;</span> + result1);<br>boolean result2 = students.stream<span class="hljs-literal">()</span>.any<span class="hljs-constructor">Match(<span class="hljs-params">x</span> -&gt; <span class="hljs-params">x</span>.<span class="hljs-params">getScore</span>()</span> &lt; <span class="hljs-number">50</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;是否存在成绩低于 50 分的学生：&quot;</span> + result2);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>是否存在成绩高于 90 分的学生：true</p>
+<p>是否存在成绩低于 50 分的学生：false</p>
+</blockquote>
+<h3 id="4-3-allMatch"><a href="#4-3-allMatch" class="headerlink" title="4.3 allMatch"></a>4.3 allMatch</h3><p>是否集合中所有元素都满足给定的条件，如果集合是空，则返回 true。</p>
+<p>案例 16：学生成绩是否都高于 90 分，是否都高于 50 分。还是采用上面案例 14 中的学生集合。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">boolean result1 = students.stream<span class="hljs-literal">()</span>.all<span class="hljs-constructor">Match(<span class="hljs-params">x</span> -&gt; <span class="hljs-params">x</span>.<span class="hljs-params">getScore</span>()</span> &gt; <span class="hljs-number">90</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;是否所有学生的成绩都高于90分：&quot;</span> + result1);<br>boolean result2 = students.stream<span class="hljs-literal">()</span>.all<span class="hljs-constructor">Match(<span class="hljs-params">x</span> -&gt; <span class="hljs-params">x</span>.<span class="hljs-params">getScore</span>()</span> &gt; <span class="hljs-number">50</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;是否所有学生的成绩都高于50分：&quot;</span> + result2);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>是否所有学生的成绩都高于90分：false</p>
+<p>是否所有学生的成绩都高于50分：true</p>
+</blockquote>
+<h3 id="4-4-noneMatch"><a href="#4-4-noneMatch" class="headerlink" title="4.4 noneMatch"></a>4.4 noneMatch</h3><p>是否没有元素能匹配给定的条件，如果集合是空，则返回 true。</p>
+<p>案例 17：是不是没有学生成绩在 90 分以上，是否没有学生成绩在 50 分以下。还是采用上面案例 14 中的学生集合。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">boolean result1 = students.stream<span class="hljs-literal">()</span>.none<span class="hljs-constructor">Match(<span class="hljs-params">x</span> -&gt; <span class="hljs-params">x</span>.<span class="hljs-params">getScore</span>()</span> &gt; <span class="hljs-number">90</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;是不是没有学生成绩在 90 分以上：&quot;</span> + result1);<br>boolean result2 = students.stream<span class="hljs-literal">()</span>.none<span class="hljs-constructor">Match(<span class="hljs-params">x</span> -&gt; <span class="hljs-params">x</span>.<span class="hljs-params">getScore</span>()</span> &lt; <span class="hljs-number">50</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;是不是没有学生成绩在 50 分以下：&quot;</span> + result2);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>是不是没有学生成绩在 90 分以上：false</p>
+<p>是不是没有学生成绩在 50 分以下：true</p>
+</blockquote>
+<h3 id="4-5-findFirst"><a href="#4-5-findFirst" class="headerlink" title="4.5 findFirst"></a>4.5 findFirst</h3><p>找出第一个符合条件的元素。</p>
+<p>案例 18：找出第一个成绩在 90 分以上的学生。还是采用上面案例 14 中的学生集合。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Optional&lt;Student&gt; studentFindAny = students.stream<span class="hljs-literal">()</span>.filter(x -&gt; x.get<span class="hljs-constructor">Score()</span> &gt; <span class="hljs-number">90</span>).find<span class="hljs-constructor">First()</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;第一个成绩在 90 分以上的学生姓名：&quot;</span> + studentFindAny.<span class="hljs-keyword">or</span><span class="hljs-constructor">ElseGet(<span class="hljs-params">null</span>)</span>.get<span class="hljs-constructor">Name()</span>);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>第一个成绩在 90 分以上的学生姓名：Lucy</p>
+</blockquote>
+<h2 id="5-非短路操作"><a href="#5-非短路操作" class="headerlink" title="5 非短路操作"></a>5 非短路操作</h2><h3 id="5-1-forEach"><a href="#5-1-forEach" class="headerlink" title="5.1 forEach"></a>5.1 forEach</h3><p>遍历元素。</p>
+<p>案例 19：遍历一个数组并打印</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs smali">List&lt;Integer&gt;<span class="hljs-built_in"> array </span>= Arrays.asList(5, 2, 3, 1, 4);<br>array.stream().forEach(System.out<span class="hljs-keyword"> :</span>: println);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>5 2 3 1 4</p>
+</blockquote>
+<h3 id="5-2-forEachOrdered"><a href="#5-2-forEachOrdered" class="headerlink" title="5.2 forEachOrdered"></a>5.2 forEachOrdered</h3><p>按照给定集合中元素的顺序输出。主要使用场景是在并行流的情况下，按照给定的顺序输出元素。</p>
+<p>案例 20：用并行流遍历一个数组并按照给定数组的顺序输出结果</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs smali">List&lt;Integer&gt;<span class="hljs-built_in"> array </span>= Arrays.asList(5, 2, 3, 1, 4);<br>array.parallelStream().forEachOrdered(System.out<span class="hljs-keyword"> :</span>: println);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>5 2 3 1 4</p>
+</blockquote>
+<h3 id="5-3-toArray"><a href="#5-3-toArray" class="headerlink" title="5.3 toArray"></a>5.3 toArray</h3><p>返回包括给定 stream 中所有元素的数组。</p>
+<p>案例 21：把给定字符串流转化成数组</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs haxe">Stream&lt;<span class="hljs-keyword">String</span>&gt; stream = Arrays.asList(<span class="hljs-string">&quot;ab&quot;</span>, <span class="hljs-string">&quot;abc&quot;</span>, <span class="hljs-string">&quot;abcd&quot;</span>, <span class="hljs-string">&quot;abcde&quot;</span>, <span class="hljs-string">&quot;abcdef&quot;</span>).stream();<br><span class="hljs-keyword">String</span>[] <span class="hljs-keyword">new</span><span class="hljs-type">Array1</span> = stream.toArray(str -&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">String</span>[<span class="hljs-number">5</span>]);<br><span class="hljs-keyword">String</span>[] <span class="hljs-keyword">new</span><span class="hljs-type">Array2</span> = stream.toArray(<span class="hljs-keyword">String</span>[]:<span class="hljs-type"></span>:<span class="hljs-keyword">new</span><span class="hljs-type"></span>);<br>Object[] <span class="hljs-keyword">new</span><span class="hljs-type">Array3</span> = stream.toArray();<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-4-reduce"><a href="#5-4-reduce" class="headerlink" title="5.4 reduce"></a>5.4 reduce</h3><p>规约操作，把一个流的所有元素合并成一个元素，比如求和、求乘积、求最大最小值等。</p>
+<p>案例 22：求整数数组元素之和、乘积和最大值</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs livescript">List&lt;Integer&gt; <span class="hljs-keyword">list</span> = Arrays.asList(<span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>);<br>Optional&lt;Integer&gt; sum = <span class="hljs-keyword">list</span>.stream<span class="hljs-function"><span class="hljs-params">()</span>.<span class="hljs-title">reduce</span><span class="hljs-params">((x, y) -&gt; x + y)</span>;</span><br><span class="hljs-function"><span class="hljs-title">Optional</span>&lt;<span class="hljs-title">Integer</span>&gt; <span class="hljs-title">product</span> = <span class="hljs-title">list</span>.<span class="hljs-title">stream</span><span class="hljs-params">()</span>.<span class="hljs-title">reduce</span><span class="hljs-params">((x, y) -&gt; x * y)</span>;</span><br><span class="hljs-function"><span class="hljs-title">Optional</span>&lt;<span class="hljs-title">Integer</span>&gt; <span class="hljs-title">max</span> = <span class="hljs-title">list</span>.<span class="hljs-title">stream</span><span class="hljs-params">()</span>.<span class="hljs-title">reduce</span><span class="hljs-params">((x, y) -&gt; x &gt; y ? x : y)</span>;</span><br><span class="hljs-function"><span class="hljs-title">System</span>.<span class="hljs-title">out</span>.<span class="hljs-title">println</span><span class="hljs-params">(<span class="hljs-string">&quot;数组元素之和：&quot;</span> + sum.get())</span>;</span><br><span class="hljs-function"><span class="hljs-title">System</span>.<span class="hljs-title">out</span>.<span class="hljs-title">println</span><span class="hljs-params">(<span class="hljs-string">&quot;数组元素乘积：&quot;</span> + product.get())</span>;</span><br><span class="hljs-function"><span class="hljs-title">System</span>.<span class="hljs-title">out</span>.<span class="hljs-title">println</span><span class="hljs-params">(<span class="hljs-string">&quot;数组元素最大值：&quot;</span> + max.get())</span>;</span><br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>数组元素之和：15</p>
+<p>数组元素乘积：120 </p>
+<p>数组元素最大值：5</p>
+</blockquote>
+<p>案例 23：求全班学生最高分、全班学生总分</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">List&lt;Student&gt; students = <span class="hljs-built_in">new</span> ArrayList&lt;&gt;();<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Mike&quot;, <span class="hljs-number">10</span>, &quot;male&quot;, <span class="hljs-number">88</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Jack&quot;, <span class="hljs-number">13</span>,&quot;male&quot;, <span class="hljs-number">90</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Lucy&quot;, <span class="hljs-number">15</span>,&quot;female&quot;, <span class="hljs-number">100</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Jessie&quot;, <span class="hljs-number">12</span>,&quot;female&quot;, <span class="hljs-number">78</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Allon&quot;, <span class="hljs-number">16</span>,&quot;female&quot;, <span class="hljs-number">92</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Alis&quot;, <span class="hljs-number">22</span>,&quot;female&quot;, <span class="hljs-number">50</span>));<br>Optional&lt;<span class="hljs-type">Integer</span>&gt; maxScore = students.stream().map(r -&gt; r.getScore()).reduce(<span class="hljs-type">Integer</span>::max);<br>Optional&lt;<span class="hljs-type">Integer</span>&gt; sumScore = students.stream().map(r -&gt; r.getScore()).reduce(<span class="hljs-type">Integer</span>::sum);<br><span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;全班学生最高分：&quot; + maxScore.<span class="hljs-keyword">get</span>());<br><span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;全班学生总分：&quot; + sumScore.<span class="hljs-keyword">get</span>());<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>全班学生最高分：100 </p>
+<p>全班学生总分：498</p>
+</blockquote>
+<h3 id="5-5-collect"><a href="#5-5-collect" class="headerlink" title="5.5 collect"></a>5.5 collect</h3><p>把 stream 中的元素归集到新的集合或者归集成单个元素。</p>
+<h4 id="5-5-1-归集成新集合"><a href="#5-5-1-归集成新集合" class="headerlink" title="5.5.1 归集成新集合"></a>5.5.1 归集成新集合</h4><p>方法包括 toList、toSet、toMap。</p>
+<p>案例 24：根据学生列表，归纳出姓名列表、不同分数列表、姓名分数集合，其中 Mike 和 Jessie 的分数都是 88。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;Student&gt; students = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;<span class="hljs-literal">()</span>;<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Mike&quot;</span>, 10, <span class="hljs-string">&quot;male&quot;</span>, 88)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jack&quot;</span>, 13,<span class="hljs-string">&quot;male&quot;</span>, 90)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Lucy&quot;</span>, 15,<span class="hljs-string">&quot;female&quot;</span>, 100)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jessie&quot;</span>, 12,<span class="hljs-string">&quot;female&quot;</span>, 88)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Allon&quot;</span>, 16,<span class="hljs-string">&quot;female&quot;</span>, 92)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Alis&quot;</span>, 22,<span class="hljs-string">&quot;female&quot;</span>, 50)</span>);<br>List&lt;String&gt; <span class="hljs-built_in">list</span> = students.stream<span class="hljs-literal">()</span>.map(r -&gt; r.get<span class="hljs-constructor">Name()</span>).collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">List()</span>);<br>Set&lt;Integer&gt; set = students.stream<span class="hljs-literal">()</span>.map(r -&gt; r.get<span class="hljs-constructor">Score()</span>).collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">Set()</span>);<br>Map&lt;String, Integer&gt; map = students.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">Map(Student::<span class="hljs-params">getName</span>, Student::<span class="hljs-params">getScore</span>)</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;全班学生姓名列表：&quot;</span> + <span class="hljs-built_in">list</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;全班学生不同分数列表：&quot;</span> + set);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;全班学生姓名分数集合：&quot;</span> + map);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>全班学生姓名列表：[Mike, Jack, Lucy, Jessie, Allon, Alis] </p>
+<p>全班学生不同分数列表：[50, 100, 88, 90, 92] </p>
+<p>全班学生姓名分数集合：{Mike&#x3D;88, Allon&#x3D;92, Alis&#x3D;50, Lucy&#x3D;100, Jack&#x3D;90, Jessie&#x3D;88}</p>
+</blockquote>
+<h4 id="5-5-2-统计功能"><a href="#5-5-2-统计功能" class="headerlink" title="5.5.2 统计功能"></a>5.5.2 统计功能</h4><p>统计功能包括如下方法：</p>
+<p><img src="/img/641" srcset="/img/loading.gif" lazyload alt="图片"></p>
+<p>案例 25：求总数、求和、最大&#x2F;最小&#x2F;平均值</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;Integer&gt; <span class="hljs-built_in">list</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">List(5, 2, 3, 1, 4)</span>;<br>long count = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>counting<span class="hljs-literal">()</span>);<br><span class="hljs-built_in">int</span> sum = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>summing<span class="hljs-constructor">Int(<span class="hljs-params">r</span> -&gt; <span class="hljs-params">r</span>)</span>);<br>double average = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>averaging<span class="hljs-constructor">Double(<span class="hljs-params">r</span> -&gt; <span class="hljs-params">r</span>)</span>);<br>Optional&lt;Integer&gt; max = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>max<span class="hljs-constructor">By(Integer::<span class="hljs-params">compare</span>)</span>);<br>Optional&lt;Integer&gt; min = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>max<span class="hljs-constructor">By((<span class="hljs-params">x</span>, <span class="hljs-params">y</span>)</span> -&gt; x &gt; y ? y : x));<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;总数:&quot;</span> + count);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;总和:&quot;</span> + sum);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;平均值:&quot;</span> + average);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;最大值:&quot;</span> + max.get<span class="hljs-literal">()</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;最小值:&quot;</span> + min.get<span class="hljs-literal">()</span>);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>总数:5 </p>
+<p>总和:15 </p>
+<p>平均值:3.0 </p>
+<p>最大值:5 </p>
+<p>最小值:5</p>
+</blockquote>
+<p>案例 26：求总和统计</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;Integer&gt; <span class="hljs-built_in">list</span> = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">List(5, 2, 3, 1, 4)</span>;<br>IntSummaryStatistics statistics = <span class="hljs-built_in">list</span>.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>summarizing<span class="hljs-constructor">Int(<span class="hljs-params">r</span> -&gt; <span class="hljs-params">r</span>)</span>);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;综合统计结果：&quot;</span> + statistics.<span class="hljs-keyword">to</span><span class="hljs-constructor">String()</span>);<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>综合统计结果：IntSummaryStatistics{count&#x3D;5, sum&#x3D;15, min&#x3D;1, average&#x3D;3.000000, max&#x3D;5}</p>
+</blockquote>
+<h4 id="5-5-3-分区和分组"><a href="#5-5-3-分区和分组" class="headerlink" title="5.5.3 分区和分组"></a>5.5.3 分区和分组</h4><p>主要包括两个函数：</p>
+<ul>
+<li>partitioningBy：把 stream 分成两个 map</li>
+<li>groupingBy：把 stream 分成多个 map</li>
+</ul>
+<p>案例 27：将学生按照 80 分以上和以下分区</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">List&lt;Student&gt; students = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;<span class="hljs-literal">()</span>;<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Mike&quot;</span>, 10, <span class="hljs-string">&quot;male&quot;</span>, 88)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jack&quot;</span>, 10,<span class="hljs-string">&quot;male&quot;</span>, 90)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Lucy&quot;</span>, 12,<span class="hljs-string">&quot;female&quot;</span>, 100)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Jessie&quot;</span>, 12,<span class="hljs-string">&quot;female&quot;</span>, 78)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Allon&quot;</span>, 16,<span class="hljs-string">&quot;female&quot;</span>, 92)</span>);<br>students.add(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Student(<span class="hljs-string">&quot;Alis&quot;</span>, 16,<span class="hljs-string">&quot;female&quot;</span>, 50)</span>);<br>Map&lt;Boolean, List&lt;Student&gt;&gt; partitionByScore = students.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>partitioning<span class="hljs-constructor">By(<span class="hljs-params">x</span> -&gt; <span class="hljs-params">x</span>.<span class="hljs-params">getScore</span>()</span> &gt; <span class="hljs-number">80</span>));<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;将学生按照考试成绩80分以上分区：&quot;</span>);<br>partitionByScore.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each((<span class="hljs-params">k</span>,<span class="hljs-params">v</span> )</span> -&gt; &#123;<br>    <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(k ? <span class="hljs-string">&quot;80分以上：&quot;</span> : <span class="hljs-string">&quot;80分以下：&quot;</span>);<br>    v.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each(<span class="hljs-params">r</span> -&gt; System.<span class="hljs-params">out</span>.<span class="hljs-params">print</span>(<span class="hljs-params">r</span>.<span class="hljs-params">getName</span>()</span> + <span class="hljs-string">&quot;,&quot;</span>));<br>    <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println<span class="hljs-literal">()</span>;<br>&#125;);<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println<span class="hljs-literal">()</span>;<br></code></pre></td></tr></table></figure>
+
+<p>分区结果是把 Student 列表分成 key 只有 true 和 false 两个值的 map，输出如下：</p>
+<blockquote>
+<p>将学生按照考试成绩80分以上分区：</p>
+<p>80分以下：Jessie,Alis,</p>
+<p>80分以上：Mike,Jack,Lucy,Allon,</p>
+</blockquote>
+<p>案例 28：将学生按照性别、年龄分组</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Map&lt;String, Map&lt;Integer, List&lt;Student&gt;&gt;&gt; group = students.stream<span class="hljs-literal">()</span>.collect(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Collectors</span>.</span></span>grouping<span class="hljs-constructor">By(Student::<span class="hljs-params">getSex</span>, Collectors.<span class="hljs-params">groupingBy</span>(Student::<span class="hljs-params">getAge</span>)</span>));<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;将学生按照性别、年龄分组：&quot;</span>);<br>group.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each((<span class="hljs-params">k</span>,<span class="hljs-params">v</span> )</span> -&gt; &#123;<br>    <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(k +<span class="hljs-string">&quot;：&quot;</span>);<br>    v.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each((<span class="hljs-params">k1</span>,<span class="hljs-params">v1</span>)</span> -&gt; &#123;<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.print(<span class="hljs-string">&quot;      &quot;</span> + k1 + <span class="hljs-string">&quot;:&quot;</span> );<br>        v1.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each(<span class="hljs-params">r</span> -&gt; System.<span class="hljs-params">out</span>.<span class="hljs-params">print</span>(<span class="hljs-params">r</span>.<span class="hljs-params">getName</span>()</span> + <span class="hljs-string">&quot;,&quot;</span>));<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println<span class="hljs-literal">()</span>;<br>    &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>输出如下：</p>
+<blockquote>
+<p>将学生按照性别、年龄分组：</p>
+<p>female：</p>
+<p>   16:Allon,Alis, </p>
+<p>   12:Lucy,Jessie, </p>
+<p>male：</p>
+<p>   10:Mike,Jack,</p>
+</blockquote>
+<h4 id="5-5-4-连接"><a href="#5-5-4-连接" class="headerlink" title="5.5.4 连接"></a>5.5.4 连接</h4><p>将 stream 中的元素用指定的连接符合并，连接符可以是空。</p>
+<p>案例 29：输出所有学生的姓名，用逗号分隔，这里还是使用案例 27 中的学生列表</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-built_in">String</span> studentNames = students.stream().<span class="hljs-keyword">map</span>(r -&gt; r.getName()).collect(Collectors.joining(<span class="hljs-string">&quot;,&quot;</span>));<br>System.out.println(<span class="hljs-string">&quot;所有学生姓名列表：&quot;</span> + studentNames);<br></code></pre></td></tr></table></figure>
+
+<p>输出如下：</p>
+<blockquote>
+<p>所有学生姓名列表：Mike,Jack,Lucy,Jessie,Allon,Alis</p>
+</blockquote>
+<h4 id="5-5-5-规约"><a href="#5-5-5-规约" class="headerlink" title="5.5.5 规约"></a>5.5.5 规约</h4><p>在 5.4 节已经讲过规约了，这里的规约支持更强大的自定义规约。</p>
+<p>案例 30：数组中每个元素加 1 后求总和</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs livescript">List&lt;Integer&gt; <span class="hljs-keyword">list</span> = Arrays.asList(<span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>);<br>int listSum = <span class="hljs-keyword">list</span>.stream<span class="hljs-function"><span class="hljs-params">()</span>.<span class="hljs-title">collect</span><span class="hljs-params">(Collectors.reducing(<span class="hljs-number">0</span>, x -&gt; x + <span class="hljs-number">1</span>, (sum, b) -&gt; sum + b))</span>;</span><br><span class="hljs-function"><span class="hljs-title">System</span>.<span class="hljs-title">out</span>.<span class="hljs-title">println</span><span class="hljs-params">(<span class="hljs-string">&quot;数组中每个元素加 1 后总和：&quot;</span> + listSum)</span>;</span><br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>数组中每个元素加 1 后总和：20</p>
+</blockquote>
+<h3 id="5-6-max、min、count"><a href="#5-6-max、min、count" class="headerlink" title="5.6 max、min、count"></a>5.6 max、min、count</h3><p>stream 提供的方便统计的方法。</p>
+<p>案例 31：统计整数数组中最大值、最小值、大于 3 的元素个数</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">List&lt;<span class="hljs-type">Integer</span>&gt; list = Arrays.asList(<span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>);<br><span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;数组元素最大值：&quot;+list.stream().max(<span class="hljs-type">Integer</span>::compareTo).<span class="hljs-keyword">get</span>());<br><span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;数组元素最小值：&quot;+list.stream().min(<span class="hljs-type">Integer</span>::compareTo).<span class="hljs-keyword">get</span>());<br><span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;数组中大于3的元素个数：&quot;+list.stream().<span class="hljs-keyword">filter</span>(x -&gt; x &gt; <span class="hljs-number">3</span>).count());<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>数组元素最大值：5</p>
+<p>数组元素最小值：1</p>
+<p>数组中大于3的元素个数：2</p>
+</blockquote>
+<p>案例 32：统计分数最高的学生姓名</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">List&lt;Student&gt; students = <span class="hljs-built_in">new</span> ArrayList&lt;&gt;();<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Mike&quot;, <span class="hljs-number">10</span>, &quot;male&quot;, <span class="hljs-number">88</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Jack&quot;, <span class="hljs-number">10</span>,&quot;male&quot;, <span class="hljs-number">90</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Lucy&quot;, <span class="hljs-number">12</span>,&quot;female&quot;, <span class="hljs-number">100</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Jessie&quot;, <span class="hljs-number">12</span>,&quot;female&quot;, <span class="hljs-number">78</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Allon&quot;, <span class="hljs-number">16</span>,&quot;female&quot;, <span class="hljs-number">92</span>));<br>students.<span class="hljs-keyword">add</span>(<span class="hljs-built_in">new</span> Student(&quot;Alis&quot;, <span class="hljs-number">16</span>,&quot;female&quot;, <span class="hljs-number">50</span>));<br>Optional&lt;Student&gt; optional = students.stream().max(Comparator.comparing(r -&gt; r.getScore()));<br><span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;成绩最高的学生姓名：&quot; + optional.<span class="hljs-keyword">get</span>().getName());<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<blockquote>
+<p>成绩最高的学生姓名：Lucy</p>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/steam/">#steam</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Steam的简单操作</div>
+      <div>http://example.com/2022/09/10/Steam的简单操作/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>汪广平</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月10日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/22/vim%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" title="vim命令大全">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vim命令大全</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/10/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AE%80%E5%8D%95%E8%A7%A3%E6%9E%90/" title="lambda表达式简单解析">
+                        <span class="hidden-mobile">lambda表达式简单解析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

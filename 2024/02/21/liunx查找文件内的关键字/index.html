@@ -1,0 +1,833 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="汪广平">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一般小的文件查找对应的文件内的内容可以使用vi命令。如果文件超过G了可以使用grep命令 vim查找 &#x2F; [想要查找的内容]  向下查找：在命令模式下输入“&#x2F;要查找的内容”，按下回车键即可进行查找。如果要继续查找下一个匹配项，可以按下“n”键；如果要查找上一个匹配项，可以按下“N”键。  &#x2F;?[想要查找的内容]  向上查找：在命令模式下输入“?要查找的内容”，按下回车键即可进行查找。如果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="liunx查找文件内的关键字">
+<meta property="og:url" content="http://example.com/2024/02/21/liunx%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E5%86%85%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97/index.html">
+<meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="一般小的文件查找对应的文件内的内容可以使用vi命令。如果文件超过G了可以使用grep命令 vim查找 &#x2F; [想要查找的内容]  向下查找：在命令模式下输入“&#x2F;要查找的内容”，按下回车键即可进行查找。如果要继续查找下一个匹配项，可以按下“n”键；如果要查找上一个匹配项，可以按下“N”键。  &#x2F;?[想要查找的内容]  向上查找：在命令模式下输入“?要查找的内容”，按下回车键即可进行查找。如果">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-21T05:32:49.000Z">
+<meta property="article:modified_time" content="2024-02-21T06:37:40.329Z">
+<meta property="article:author" content="汪广平">
+<meta property="article:tag" content="liunx">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>liunx查找文件内的关键字 - WgpBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>WGP</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="liunx查找文件内的关键字"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-21 13:32" pubdate>
+          2024年2月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">liunx查找文件内的关键字</h1>
+            
+            <div class="markdown-body">
+              
+              <p>一般小的文件查找对应的文件内的内容可以使用<code>vi</code>命令。如果文件超过G了可以使用<code>grep</code>命令</p>
+<h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><blockquote>
+<p><code>/</code> [想要查找的内容]</p>
+</blockquote>
+<p>向下查找：在命令模式下输入“&#x2F;要查找的内容”，按下回车键即可进行查找。如果要继续查找下一个匹配项，可以按下“n”键；如果要查找上一个匹配项，可以按下“N”键。</p>
+<blockquote>
+<p><code>/?</code>[想要查找的内容]</p>
+</blockquote>
+<p>向上查找：在命令模式下输入“?要查找的内容”，按下回车键即可进行查找。如果要继续查找上一个匹配项，可以按下“n”键；如果要查找下一个匹配项，可以按下“N”键。</p>
+<h3 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h3><blockquote>
+<p><code>:s/</code></p>
+</blockquote>
+<p>替换：在命令模式下输入“:s&#x2F;要替换的关键字&#x2F;替换后的关键字&#x2F;g”，其中“g”表示全局替换。</p>
+<p>%表示全部文档，g表示全局替换，c表示替换前需要确认</p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li>删除光标所在行：<code>dd</code></li>
+<li>删除从光标所在行开始的n行：<code>dnd</code>，比如：<code>d2d</code>会删除光标所在行及其后1行，共删除2行</li>
+<li>删除从光标所在行到文件尾：<code>dG</code>（G表示跳转到文件尾）</li>
+<li>删除从光标行到文件头：<code>dgg</code>（gg表示跳转到文件头）</li>
+<li>删除从光标位置到行尾：<code>d$</code>（$表示跳转到行尾）</li>
+<li>删除从光标位置到行头：<code>d0</code>（数字0表示跳转到行头）</li>
+<li>删除从光标位置到单词（word）尾：<code>dw</code></li>
+<li>删除文档中所有匹配的行：:g&#x2F;pattern&#x2F;d，其中pattern为要匹配的内容</li>
+<li>删除指定行中的匹配行：<code>:1,10g/pattern/d</code>，删除第1-10行里匹配pattern的行</li>
+<li>删除不包含指定内容的行：<code>:v/pattern/d</code>或者<code>:g!/pattern/d</code>，删除所有不包含pattern的行</li>
+</ul>
+<h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><blockquote>
+<p>grep [options] pattern [FILE]</p>
+</blockquote>
+<ul>
+<li>grep：命令本身</li>
+<li>[options]：命令修饰符</li>
+<li>pattern：要找到的搜索查询</li>
+<li>[FILE]：命令将要搜索的文件</li>
+</ul>
+<p>示例：<code>grep -i abc output.txt</code></p>
+<p>如果<code>FILE</code>是<code>-</code>，则从标准输入中读取数据（不递归），如果没有提供<code>FILE</code>，则在当前目录递归搜索。</p>
+<h3 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a><strong>常用选项</strong></h3><blockquote>
+<p>通用程序信息</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">--help：输出帮助信息<br>-V, --version：输出版本信息<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>模式语法</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">-E, --extended-regexp：把模式作为扩展的正则表达式<br>-F, --fixed-strings：把模式作为固定的字符串<br>-G, --basic-regexp：把模式作为正常的正则表达式，此为默认行为<br>-P, --perl-regexp：把模式作为`Pecl`兼容的正则表达式<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>匹配控制</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">-e [PATTERNS], --regexp=[PATTERNS]：指定给出的正则表达式字符串，此选项可使用多次，则会搜索给出的所有表达式，可结合`-f`一起使用<br><br>-f [FILE], --file=FILE：从文件中获取正则表达式，文件中每一行为一个正则表达式，此选项可使用多次，可结合`-e`一起使用，如果文件中包含0个表达式，则不匹配任何内容，如果[FILE]给出的是`-`，则从标准输入中读取数据<br><br>-i, --ignore-case：忽略大小写<br><br>---no-ignore-case：区分大小写，如果已经使用了`-i`，则使用此选项会取消`-i`的效果，两个选项会彼此覆盖<br><br>-v, --invert-match：反转匹配，即查找未匹配到的行<br><br>-w, --word-regexp：仅仅选择匹配到的包含整个单词的行<br><br>-x, --line-regexp：仅仅整行匹配<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通用输出控制</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs text">-c, --count：抑制正常的输出，打印匹配到行的数量，如果接`-v, --invert-match`则统计未匹配到的数量<br><br>--color[=WHEN], --colour[=WHEN]：输出带颜色，WHEN有三个选项：never, always, auto<br><br>-L, --files-without-match：抑制正常的输出，打印未匹配到的文件名<br><br>-l, --files-with-matches：抑制正常的输出，打印匹配到的文件名<br><br>-m[NUM], --max-count=NUM：指定匹配查找读取的行数，如果[NUM]为0，则会立即停止读取，默认值为-1，表示无限读取<br><br>-o, --only-matching：仅仅打印匹配到的行<br><br>-q, --quiet, --silent：不输出任何东西，静音模式<br><br>-s, --no-messages：抑制错误信息，关于不存在或不可读的文件<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出行前缀控制</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">-b, --byte-offset：打印匹配到的内容之前基0的字节偏移内容<br><br>-H, --with-filename：打印匹配到的文件名，当指定超过一个文件时，此为默认行为<br><br>-h, --no-filename：抑制输出文件名，当仅指定一个文件时，或数据来源于标准输出时，此为默认行为<br><br>-n, --line-number：输出匹配行的基1的行号<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上下文行控制</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">-A[NUM], --after-context=[NUM]：在匹配到的字符串之后打印指定的行数<br><br>-B[NUM], --before-context=[NUM]：在匹配到的字符串之前打印指定的行数<br><br>-C[NUM], -[NUM], --context=[NUM]：在匹配到的字符串之前和之后打印指定的行数<br><br>--group-separator=[SEP]：当使用`-A`, `-B`, `-C`时，使用指定的分隔符代替默认的`--`<br><br>--no-group-separator：当使用`-A`, `-B`, `-C`时，不显示分隔符<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>文件和目录选择</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs text">-a, --text：解析二进制文件作为一个正常文本，等价于`--binary-files=text`<br><br>-D[ACTION], --devices=[ACTION]：如果输出的文件是一个设备文件、FIFO或socket，则会使用[ACTION]来解析它，默认情况[ACTION]是read，把设备文件当做普通文件，如果[ACTION]是`skip`，设备文件将会被跳过<br><br>-d[ACTION], --directories=[ACTION]：如果输入的文件是一个目录，则会使用[ACTION]来解析它，默认情况[ACTION]是read，把目录当做普通文件，如果[ACTION]是`skip`, 则会跳过此目录，如果[ACTION]是`recurse`，则会在每一个目录下面读取所有文件<br><br>--exclude=[GLOB]：跳过匹配到文件名的文件<br><br>--exclude-from=[FILE]：从文件中读取匹配模式：跳过匹配到文件名的文件<br><br>--exclude-dir=[GLOB]：跳过匹配到的目录，当搜索时递归时，也会跳过子目录<br><br>--include=[GLOB]：从匹配到的文件中搜索<br><br>-r, --recursive：在给出的每个目录下递归读取所有的文件，与`-d recurse`等价<br></code></pre></td></tr></table></figure>
+
+<h3 id="可用的正则表达式语法"><a href="#可用的正则表达式语法" class="headerlink" title="可用的正则表达式语法"></a><strong>可用的正则表达式语法</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs text">?    # 前一项是可选的，最多匹配一次<br>^    # 锚定行的开始 如：&#x27;^grep&#x27;匹配所有以grep开头的行。    <br>$    # 锚定行的结束 如：&#x27;grep$&#x27; 匹配所有以grep结尾的行。<br>.    # 匹配一个非换行符的字符 如：&#x27;gr.p&#x27;匹配gr后接一个任意字符，然后是p。    <br>*    # 匹配零个或多个先前字符 如：&#x27;*grep&#x27;匹配所有一个或多个空格后紧跟grep的行。    <br>.*   # 一起用代表任意字符。   <br>[]   # 匹配一个指定范围内的字符，如&#x27;[Gg]rep&#x27;匹配Grep和grep。    <br>[^]  # 匹配一个不在指定范围内的字符，如：&#x27;[^A-Z]rep&#x27; 匹配不包含 A-Z 中的字母开头，紧跟 rep 的行<br>\(..\)  # 标记匹配字符，如&#x27;\(love\)&#x27;，love被标记为1。    <br>\&lt;      # 锚定单词的开始，如:&#x27;\&lt;grep&#x27;匹配包含以grep开头的单词的行。    <br>\&gt;      # 锚定单词的结束，如&#x27;grep\&gt;&#x27;匹配包含以grep结尾的单词的行。    <br>x\&#123;m\&#125;  # 重复字符x，m次，如：&#x27;0\&#123;5\&#125;&#x27;匹配包含5个o的行。    <br>x\&#123;m,\&#125;   # 重复字符x,至少m次，如：&#x27;o\&#123;5,\&#125;&#x27;匹配至少有5个o的行。    <br>x\&#123;m,n\&#125;  # 重复字符x，至少m次，不多于n次，如：&#x27;o\&#123;5,10\&#125;&#x27;匹配5--10个o的行。   <br>\w    # 匹配文字和数字字符，也就是[A-Za-z0-9]，如：&#x27;G\w*p&#x27;匹配以G后跟零个或多个文字或数字字符，然后是p。   <br>\W    # \w的反置形式，匹配一个或多个非单词字符，如点号句号等。   <br>\b    # 单词锁定符，如: &#x27;\bgrep\b&#x27;只匹配grep。<br></code></pre></td></tr></table></figure>
+
+<h3 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a><strong>应用实例</strong></h3><ul>
+<li>一般用法</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep abc message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>匹配的结果添加颜色显示</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep --color abc message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>递归搜索</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -r abc /ssh<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>忽略大小写</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -i abc message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>统计匹配到的总行数</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -c abc message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>反转搜索，匹配不包含的行</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -v abc message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打印匹配到的字符串行号</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -n abc message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>仅仅匹配包含整个单词的数据</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -w linux message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>结合其他命令一起使用，通过通道传递过来</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">dpkg -L | grep -i openssh<br><br>说明：以上搜索`openssh`包<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打印匹配行之前或之后行的内容</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">grep abc message.log -A 3<br>grep abc message.log -B 3<br>grep abc message.log -C 3<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用正则表达式来匹配</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">grep ^abc message.log<br><br>grep abc$ message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打印匹配到的文件名</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -l abc a.txt b.txt c.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>仅仅打印匹配到的文本</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -o abc a.txt b.txt c.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>指定多个正则表达式字符串</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -e abc -e Acb -e cbe message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>从文件中读取模式</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep -f pattern1.txt pattern2.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用<code>|</code>分割多个匹配模式</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep abc|def message.log<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在当前目录下的所有文件中搜索匹配</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">grep abc *<br></code></pre></td></tr></table></figure>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Liunx/" class="category-chain-item">Liunx</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/liunx/">#liunx</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>liunx查找文件内的关键字</div>
+      <div>http://example.com/2024/02/21/liunx查找文件内的关键字/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>汪广平</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月21日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/02/21/IDEA%E4%BD%BF%E7%94%A8Git%E6%8F%90%E4%BA%A4%E6%8A%A5%E9%94%99%20unable%20to%20read%20askpass%20response%20from/" title="IDEA使用Git提交报错 unable to read askpass response from">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">IDEA使用Git提交报错 unable to read askpass response from</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/21/jvm%E5%8F%82%E6%95%B0%E8%A7%A3%E9%87%8A/" title="jvm参数解释">
+                        <span class="hidden-mobile">jvm参数解释</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
