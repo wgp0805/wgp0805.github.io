@@ -221,6 +221,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/06/13/mysql%E6%9F%A5%E8%AF%A2cpu%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E7%9A%84%E6%96%B9%E6%B3%95/" target="_self">
+          mysql查询cpu占用过高的方法
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2023/06/13/mysql%E6%9F%A5%E8%AF%A2cpu%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E7%9A%84%E6%96%B9%E6%B3%95/" target="_self">
+        <div>
+          
+          查询mysql的进程号1ps aux | grep mysqld  mysql	32319	80.4	5.4	15790296	7241632	?  使用top查询mysql的使用情况  1top -p 32319 -H   可以看到每个线程的资源占用情况。 MySQL客户端，连接登录后：通过PID号直接查看执行的语句：1select sql_text from performance_schem
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-13 10:06" pubdate>
+              2023-06-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/mysql/" class="category-chain-item">mysql</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/mysql/">#mysql</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/06/13/orcale%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9F%A5%E8%AF%A2%E8%B5%84%E6%BA%90%E7%9A%84%E6%96%B9%E6%B3%95/" target="_self">
           orcale常用的查询资源的方法
         </a>
@@ -757,67 +818,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/lambda/">#lambda</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/01/%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4%E9%97%AE%E9%A2%98/" target="_self">
-          JAVA项目重复提交问题
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2022/08/01/%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4%E9%97%AE%E9%A2%98/" target="_self">
-        <div>
-          
-          今天在处理老项目的遗留问题时，发现数据库中记录的数据存在冗余数据，然后发现这些数据是存在问题的，因为这个表记录了用户在办理业务成功还是失败的表，情况无非两种要么成功，要么失败，但是数据上出现了业务办理失败了，但是成功才会存入的数据也展示处出来了。  就像上边倒数第二条属于一样，经过分析，发现是用户在提交成功之后页面跳转，然后返回上一步操作，这时客户拿着之前操作完的订单号再次操作了这条数据，因为这条
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-01 18:34" pubdate>
-              2022-08-01
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/java/">#java</a>
             
           </div>
         
