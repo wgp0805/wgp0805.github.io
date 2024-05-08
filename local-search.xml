@@ -8,19 +8,19 @@
     <link href="/2024/05/08/idea%E9%93%BE%E6%8E%A5svn%E6%8A%A5%E9%94%99/"/>
     <url>/2024/05/08/idea%E9%93%BE%E6%8E%A5svn%E6%8A%A5%E9%94%99/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<p>重新安装windows10后，使用idea下代码时报了错E170013 E230001: Server SSL certificate verification failed: certificate issued、</p><p>网上找了下相同的问题，在此记录下解决方案</p><p>cmd打开运行窗口，执行以下命令</p><p>svn ls <a href="https://xxx/">https://xxx</a></p><p>xxx是具体的svn项目地址</p><p>最后会显示(R)eject, accept (t)emporarily or accept (p)ermanently?</p><p>输入p即可</p><p>然后根据提示输入svn账户名UserName和密码Password</p><p>最后checkout from subversion刷新一下就好了</p>]]></content>
     
     
     <categories>
       
-      <category>分类</category>
+      <category>IDEA</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>标签</tag>
+      <tag>SVN</tag>
       
     </tags>
     
