@@ -1,0 +1,773 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="汪广平">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="01、背景介绍在实际的项目开发过程中，我们经常需要将某些变量从代码里面抽离出来，放在配置文件里面，以便更加统一、灵活的管理服务配置信息。比如，数据库、eureka、zookeeper、redis、mq、kafka 等服务组件的连接参数配置，还有我们自定义的项目参数配置变量。 当然，实际上根据当前的业务需求，我们往往会自定义参数，然后注入到代码里面去，以便灵活使用！ 今天，我们就一起来聊一聊Spri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot优雅的加载配置文件的几种方式">
+<meta property="og:url" content="http://example.com/2024/08/13/SpringBoot%E4%BC%98%E9%9B%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="01、背景介绍在实际的项目开发过程中，我们经常需要将某些变量从代码里面抽离出来，放在配置文件里面，以便更加统一、灵活的管理服务配置信息。比如，数据库、eureka、zookeeper、redis、mq、kafka 等服务组件的连接参数配置，还有我们自定义的项目参数配置变量。 当然，实际上根据当前的业务需求，我们往往会自定义参数，然后注入到代码里面去，以便灵活使用！ 今天，我们就一起来聊一聊Spri">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/SpringBoot%E4%BC%98%E9%9B%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/640-1723529850860-3.png">
+<meta property="og:image" content="http://example.com/img/SpringBoot%E4%BC%98%E9%9B%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/640-1723529856481-5.png">
+<meta property="article:published_time" content="2024-08-13T06:14:45.000Z">
+<meta property="article:modified_time" content="2024-08-13T06:18:12.430Z">
+<meta property="article:author" content="汪广平">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/SpringBoot%E4%BC%98%E9%9B%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/640-1723529850860-3.png">
+  
+  
+  
+  <title>SpringBoot优雅的加载配置文件的几种方式 - WgpBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>WGP</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SpringBoot优雅的加载配置文件的几种方式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-13 14:14" pubdate>
+          2024年8月13日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          71 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SpringBoot优雅的加载配置文件的几种方式</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="01、背景介绍"><a href="#01、背景介绍" class="headerlink" title="01、背景介绍"></a><strong>01、背景介绍</strong></h2><p>在实际的项目开发过程中，我们经常需要将某些变量从代码里面抽离出来，放在配置文件里面，以便更加统一、灵活的管理服务配置信息。比如，数据库、eureka、zookeeper、redis、mq、kafka 等服务组件的连接参数配置，还有我们自定义的项目参数配置变量。</p>
+<p>当然，实际上根据当前的业务需求，我们往往会自定义参数，然后注入到代码里面去，以便灵活使用！</p>
+<p>今天，我们就一起来聊一聊<code>SpringBoot</code>加载配置文件的几种玩法，如果有遗漏，欢迎留言！</p>
+<p>SpringBoot 项目在启用时，首先会默认加载<code>bootstrap.properties</code>或者<code>bootstrap.yml</code>这两个配置文件（这两个优先级最高）；接着会加载<code>application.properties</code>或<code>application.yml</code>；如果配置了<code>spring.profiles</code>这个变量，同时还会加载对应的<code>application-&#123;profile&#125;.properties</code>或者<code>application-&#123;profile&#125;.yml</code>文件，<code>profile</code>为对应的环境变量，比如<code>dev</code>，如果没有配置，则会加载<code>profile=default</code>的配置文件。</p>
+<p>虽然说配置项都写在同一个配置文件没有问题，但是很多时候我们仍然希望能分开写，这样会比较清晰，比如<code>zookeeper</code>的配置写在<code>zookeeper.properties</code>，数据库相关的配置写在<code>datasource.properties</code>等等，因此就需要设置加载外部配置文件！</p>
+<p>具体该如何实现呢，下面我们一起来看看！</p>
+<h2 id="02、方案实践"><a href="#02、方案实践" class="headerlink" title="02、方案实践"></a><strong>02、方案实践</strong></h2><p><strong>2.1、通过<code>@value</code>注解实现参数加载</strong></p>
+<p>当我们想要在某个类里面注入某个变量，通过<code>@value</code>注解就可以简单实现参数的注入！</p>
+<p>例如<code>application.properties</code>文件里，配置一个<code>config.name</code>的变量<code>key</code>，值为<code>zhangsan</code></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">//</span> <span class="hljs-string">参数定义</span><br><span class="hljs-attr">config.name</span>=<span class="hljs-string">zhangsan</span><br></code></pre></td></tr></table></figure>
+
+<p>然后在对应的类里面，通过参数<code>@value</code>注入即可！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloController</span> &#123;<br>    <br>    <span class="hljs-meta">@Value(&quot;$&#123;config.name&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String config;<br><br>    <span class="hljs-meta">@GetMapping(&quot;config&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">config</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> JSON.toJSONString(config);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用<code>@value</code>注解注入配置，通常情况下有个要求就是，注解里面的变量，必须在<code>application.properties</code>文件里面事先定义好，否则启动报错！</p>
+<p>当然，如果我们不想让它抱错，我们可以给它一个缺省值<code>xxx</code>，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Value(&quot;$&#123;config.name:xxx&#125;&quot;)</span><br><span class="hljs-keyword">private</span> String config;<br></code></pre></td></tr></table></figure>
+
+<p>这样，SpringBoot 项目在启用时不会报错！</p>
+<p><strong>2.2、通过<code>@ConfigurationProperties</code>注解实现参数加载</strong></p>
+<p>某些场景下，<code>@value</code>注解并不能满足我们所有的需求，比如参数配置的数据类型是一个对象或者数组，这个时候才用<code>@ConfigurationProperties</code>会是一个比较好的选择！</p>
+<ul>
+<li>配置一个对象类型的参数</li>
+</ul>
+<p>例如在<code>application.properties</code>文件里，当我们想配置一个对象类型的参数，我们可以这样操作！</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">//参数定义</span><br><span class="hljs-attr">config2.name</span>=<span class="hljs-string">demo_1</span><br><span class="hljs-attr">config2.value</span>=<span class="hljs-string">demo_value_1</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，创建一个配置类<code>Config2</code>，用于将定义的变量映射到配置类里面。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;config2&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Config2</span> &#123;<br><br>    <span class="hljs-keyword">public</span> String name;<br><br>    <span class="hljs-keyword">public</span> String value;<br><br>    <span class="hljs-comment">//...get、set</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>读取数据的方式，也很简单，直接注入到对应的类里面就可以了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloController</span> &#123;<br>    <br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> Config2 config2;<br><br>    <span class="hljs-meta">@GetMapping(&quot;config2&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">config2</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> JSON.toJSONString(config2);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>配置一个<code>Map</code>类型的参数</li>
+</ul>
+<p>例如在<code>application.properties</code>文件里，当我们想配置一个 Map 类型的参数，我们可以这样操作！</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">//参数定义</span><br><span class="hljs-attr">config3.map1.name</span>=<span class="hljs-string">demo_id_1_name</span><br><span class="hljs-attr">config3.map1.value</span>=<span class="hljs-string">demo_id_1_value</span><br><span class="hljs-attr">config3.map2.name</span>=<span class="hljs-string">demo_id_2_name</span><br><span class="hljs-attr">config3.map2.value</span>=<span class="hljs-string">demo_id_2_value</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，创建一个配置类<code>Config3</code>，用于将定义的变量映射到配置类里面。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;config3&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Config3</span> &#123;<br><br>    <span class="hljs-keyword">private</span> Map&lt;String, String&gt; map1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    <span class="hljs-keyword">private</span> Map&lt;String, String&gt; map2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    <span class="hljs-comment">//...get、set</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>读取数据的方式，与之类似！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloController</span> &#123;<br>    <br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> Config3 config3;<br><br>    <span class="hljs-meta">@GetMapping(&quot;config3&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">config3</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> JSON.toJSONString(config3);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>配置一个<code>List</code>类型的参数</li>
+</ul>
+<p>例如在<code>application.properties</code>文件里，当我们想配置一个 List 类型的参数，我们可以这样操作！</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">//参数定义</span><br><span class="hljs-attr">config4.userList[0].enable</span>=<span class="hljs-string">maillist_1_enable</span><br><span class="hljs-attr">config4.userList[0].name</span>=<span class="hljs-string">maillist_1_name</span><br><span class="hljs-attr">config4.userList[0].value</span>=<span class="hljs-string">maillist_1_value</span><br><br><span class="hljs-attr">config4.userList[1].enable</span>=<span class="hljs-string">maillist_2_enable</span><br><span class="hljs-attr">config4.userList[1].name</span>=<span class="hljs-string">maillist_2_name</span><br><span class="hljs-attr">config4.userList[1].value</span>=<span class="hljs-string">maillist_2_value</span><br><br><span class="hljs-attr">config4.userList[2].enable</span>=<span class="hljs-string">maillist_3_enable</span><br><span class="hljs-attr">config4.userList[2].name</span>=<span class="hljs-string">maillist_3_name</span><br><span class="hljs-attr">config4.userList[2].value</span>=<span class="hljs-string">maillist_3_value</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，创建一个配置类<code>Config4</code>，用于将定义的变量映射到配置类里面。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;config4&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Config4</span> &#123;<br><br>    <span class="hljs-keyword">private</span> List&lt;UserEntity&gt; userList;<br><br>    <span class="hljs-keyword">public</span> List&lt;UserEntity&gt; <span class="hljs-title function_">getUserList</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> userList;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setUserList</span><span class="hljs-params">(List&lt;UserEntity&gt; userList)</span> &#123;<br>        <span class="hljs-built_in">this</span>.userList = userList;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserEntity</span> &#123;<br><br>    <span class="hljs-keyword">private</span> String enable;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> String value;<br><br>    <span class="hljs-comment">//...get、set</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>读取数据的方式，与之类似！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloController</span> &#123;<br>    <br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> Config4 config4;<br><br>    <span class="hljs-meta">@GetMapping(&quot;config4&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">config4</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> JSON.toJSONString(config4);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>2.3、通过<code>@PropertySource</code>注解实现配置文件加载</strong></p>
+<p>正如我们最开始所介绍的，很多时间，我们希望将配置文件分卡写，比如<code>zookeeper</code>组件对应的服务配置文件是<code>zookeeper.properties</code>，<code>redis</code>组件对应的服务配置文件是<code>redis.properties</code>等等。</p>
+<p>这种自定义的配置文件，我们应该如何加载到<code>Spring</code>容器里面呢？</p>
+<p>其实方法也很简单，通过<code>@PropertySource</code>就可以实现！</p>
+<p>首先，我们在<code>resources</code>资源文件夹下，创建两个配置文件<code>test.properties</code>和<code>bussiness.properties</code>，内容如下！</p>
+<p><code>test.properties</code>文件内容：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">aaa.a1</span>=<span class="hljs-string">aa1123</span><br><span class="hljs-attr">aaa.a2</span>=<span class="hljs-string">aa2123</span><br><span class="hljs-attr">aaa.a3</span>=<span class="hljs-string">aa3123</span><br><span class="hljs-attr">aaa.a4</span>=<span class="hljs-string">aa4123</span><br></code></pre></td></tr></table></figure>
+
+<p><code>bussiness.properties</code>文件内容：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">bbbb.a1</span>=<span class="hljs-string">bb1123</span><br><span class="hljs-attr">bbbb.a2</span>=<span class="hljs-string">bb2123</span><br><span class="hljs-attr">bbbb.a3</span>=<span class="hljs-string">bb3123</span><br><span class="hljs-attr">bbbb.a4</span>=<span class="hljs-string">bb4123</span><br></code></pre></td></tr></table></figure>
+
+<p>在<code>SpringBoot</code>启动类上加载配置文件即可！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@PropertySource(value = &#123;&quot;test.properties&quot;,&quot;bussiness.properties&quot;&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PropertyApplication</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(PropertyApplication.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>读取数据的方式，与之类似！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloController</span> &#123;<br>    <br>    <span class="hljs-meta">@Value(&quot;$&#123;aaa.a2&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String a2;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;bbbb.a1&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String bbbbA1;<br>    <br>    <span class="hljs-meta">@GetMapping(&quot;a2&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">a2</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> JSON.toJSONString(a2);<br>    &#125;<br><br>    <span class="hljs-meta">@GetMapping(&quot;bbbbA1&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">bbbbA1</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> JSON.toJSONString(bbbbA1);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果我们只是在业务中需要用到自定义配置文件的值，这样引入并没有什么问题；但是如果某些自定义的变量，在项目启动的时候需要用到，这种方式会存在一些问题，原因如下：</p>
+<p><img src="/img/SpringBoot%E4%BC%98%E9%9B%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/640-1723529850860-3.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
+<p>翻译过来的意思就是说：</p>
+<p>虽然在<code>@SpringBootApplication</code>上使用<code>@PropertySource</code>似乎是在环境中加载自定义资源的一种方便而简单的方法，但我们不推荐使用它，因为<code>SpringBoot</code>在刷新应用程序上下文之前就准备好了环境。使用<code>@PropertySource</code>定义的任何键都加载得太晚，无法对自动配置产生任何影响。</p>
+<p>因此，如果某些参数是启动项变量，建议将其定义在<code>application.properties</code>或<code>application.yml</code>文件里面，这样就不会有问题！</p>
+<p>或者，采用【<strong>自定义环境处理类</strong>】来实现配置文件的加载！</p>
+<p><strong>2.4、通过自定义环境处理类，实现配置文件的加载</strong></p>
+<p>实现方法也很简单，首先，创建一个实现自<code>EnvironmentPostProcessor</code>接口的类，然后自行加载配置文件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEnvironmentPostProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">EnvironmentPostProcessor</span> &#123;<br><br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">postProcessEnvironment</span><span class="hljs-params">(ConfigurableEnvironment environment, SpringApplication application)</span> &#123;<br>        <span class="hljs-comment">//自定义配置文件</span><br>        String[] profiles = &#123;<br>                <span class="hljs-string">&quot;test.properties&quot;</span>,<br>                <span class="hljs-string">&quot;bussiness.properties&quot;</span>,<br>                <span class="hljs-string">&quot;blog.yml&quot;</span><br>        &#125;;<br><br>        <span class="hljs-comment">//循环添加</span><br>        <span class="hljs-keyword">for</span> (String profile : profiles) &#123;<br>            <span class="hljs-comment">//从classpath路径下面查找文件</span><br>            <span class="hljs-type">Resource</span> <span class="hljs-variable">resource</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathResource</span>(profile);<br>            <span class="hljs-comment">//加载成PropertySource对象，并添加到Environment环境中</span><br>            environment.getPropertySources().addLast(loadProfiles(resource));<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">//加载单个配置文件</span><br>    <span class="hljs-keyword">private</span> PropertySource&lt;?&gt; loadProfiles(Resource resource) &#123;<br>        <span class="hljs-keyword">if</span> (!resource.exists()) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;资源&quot;</span> + resource + <span class="hljs-string">&quot;不存在&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(resource.getFilename().contains(<span class="hljs-string">&quot;.yml&quot;</span>))&#123;<br>            <span class="hljs-keyword">return</span> loadYaml(resource);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">return</span> loadProperty(resource);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 加载properties格式的配置文件</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> resource</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> PropertySource <span class="hljs-title function_">loadProperty</span><span class="hljs-params">(Resource resource)</span>&#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//从输入流中加载一个Properties对象</span><br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">properties</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>            properties.load(resource.getInputStream());<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PropertiesPropertySource</span>(resource.getFilename(), properties);<br>        &#125;<span class="hljs-keyword">catch</span> (Exception ex) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;加载配置文件失败&quot;</span> + resource, ex);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 加载yml格式的配置文件</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> resource</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> PropertySource <span class="hljs-title function_">loadYaml</span><span class="hljs-params">(Resource resource)</span>&#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">YamlPropertiesFactoryBean</span> <span class="hljs-variable">factory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">YamlPropertiesFactoryBean</span>();<br>            factory.setResources(resource);<br>            <span class="hljs-comment">//从输入流中加载一个Properties对象</span><br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">properties</span> <span class="hljs-operator">=</span> factory.getObject();<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PropertiesPropertySource</span>(resource.getFilename(), properties);<br>        &#125;<span class="hljs-keyword">catch</span> (Exception ex) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;加载配置文件失败&quot;</span> + resource, ex);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着，在<code>resources</code>资源目录下，我们还需要创建一个文件<code>META-INF/spring.factories</code>，通过<code>spi</code>方式，将自定义环境处理类加载到<code>Spring</code>处理器里面，当项目启动时，会自动调用这个类！</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">#启用我们的自定义环境处理类<br>org<span class="hljs-selector-class">.springframework</span><span class="hljs-selector-class">.boot</span><span class="hljs-selector-class">.env</span>.EnvironmentPostProcessor=com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.property</span><span class="hljs-selector-class">.env</span>.MyEnvironmentPostProcessor<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/SpringBoot%E4%BC%98%E9%9B%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/640-1723529856481-5.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
+<p>这种自定义环境处理类方式，相对会更佳灵活，首先编写一个通用的配置文件解析类，支持<code>properties</code>和<code>yml</code>文件的读取，然后将其注入到<code>Spring</code>容器里面，基本上可以做到一劳永逸！</p>
+<p><strong>2.5、最后，我们来介绍一下<code>yml</code>文件读取</strong></p>
+<p>在上文中，我们大部分都是以<code>properties</code>为案例进行介绍，可能有的人已经踩过坑了，<strong>在项目中使用<code>@PropertySource</code>注解来加载<code>yml</code>文件，结果启动直接报错，原因是<code>@PropertySource</code>不支持直接解析<code>yml</code>文件，只能解析<code>properties</code>文件</strong>。</p>
+<p><strong>那如果，我想单独解析<code>yml</code>文件，也不想弄一个【自定义环境处理类】这种方式来读取文件，应该如何处理呢</strong>？</p>
+<p>操作方式也很简单，以自定义的<code>blog.yml</code>文件为例！</p>
+<p><code>blog.yml</code>文件内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">pzblog:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">helloWorld</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，创建一个读取<code>yml</code>文件的配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConfigYaml</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 加载YML格式自定义配置文件</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> PropertySourcesPlaceholderConfigurer <span class="hljs-title function_">properties</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">PropertySourcesPlaceholderConfigurer</span> <span class="hljs-variable">configurer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PropertySourcesPlaceholderConfigurer</span>();<br>        <span class="hljs-type">YamlPropertiesFactoryBean</span> <span class="hljs-variable">yaml</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">YamlPropertiesFactoryBean</span>();<br>        yaml.setResources(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathResource</span>(<span class="hljs-string">&quot;blog.yml&quot;</span>));<br>        configurer.setProperties(yaml.getObject());<br>        <span class="hljs-keyword">return</span> configurer;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>读取数据的方式，与之类似！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloController</span> &#123;<br>    <br>    <span class="hljs-meta">@Value(&quot;$&#123;pzblog.name&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String pzblogName;<br><br>    <span class="hljs-meta">@GetMapping(&quot;pzblogName&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">pzblogName</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> JSON.toJSONString(pzblogName);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/SpringBoot/" class="category-chain-item">SpringBoot</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SpringBoot/">#SpringBoot</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SpringBoot优雅的加载配置文件的几种方式</div>
+      <div>http://example.com/2024/08/13/SpringBoot优雅的加载配置文件的几种方式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>汪广平</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月13日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/13/liunx%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%EF%BC%88600%E6%9D%A1%EF%BC%89/" title="liunx命令总结（600条）">
+                        <span class="hidden-mobile">liunx命令总结（600条）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
