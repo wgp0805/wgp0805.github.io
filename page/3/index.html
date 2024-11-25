@@ -221,6 +221,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/07/07/liunx%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98/" target="_self">
+          liunx挂载硬盘
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2023/07/07/liunx%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98/" target="_self">
+        <div>
+          
+          我要挂载的硬盘为sdb，首先将硬盘插上。 1 查看硬盘使用检测硬盘命令： 1lsblk  看到 sdb 存在,并且没有进行挂载  可以使用命令查询硬盘的实际位置 1fdisk -l   然后使用查看硬盘命令： 1df -h  如果只是插上硬盘而无其他操作，则看不到要挂载的硬盘sdb。 2 挂载格式化硬盘 sdb ： 1mkfs -t ext4 &#x2F;dev&#x2F;sdb  如果不格式化可能会报错  导致挂载
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-07-07 15:42" pubdate>
+              2023-07-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/liunx/" class="category-chain-item">liunx</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/liunx/">#liunx</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/06/21/wgp-vue%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" target="_self">
           wgp-vue管理系统（长期更新文章，除了工作时间以外写的，不知道啥时候结束，总之慢慢写吧）
         </a>
@@ -759,67 +820,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E6%80%BB%E7%BB%93/">#总结</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/02/23/idea%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%87%BA%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" target="_self">
-          idea控制台输出中文乱码
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2023/02/23/idea%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%87%BA%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" target="_self">
-        <div>
-          
-          记录一次idea控制台输出中文乱码的问题，开始时项目启动时tomcat打印的中文时正常的，然后当项目执行到这句话的时候，日志信息开始乱码 1log.info(&quot;执行订购流程，订单号：&quot; + merchantOrderId);   原来的配置信息是这样的，但是当时考虑到项目使用ecplise导入过来的，所以项目的编码格式应该是跟随电脑系统一致的，所以这里没有问题，因为如果现在这里
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-23 19:22" pubdate>
-              2023-02-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/IDE/" class="category-chain-item">IDE</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/idea/">#idea</a>
             
           </div>
         
