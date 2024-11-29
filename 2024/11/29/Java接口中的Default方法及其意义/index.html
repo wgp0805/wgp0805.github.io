@@ -16,23 +16,22 @@
   <meta name="author" content="汪广平">
   <meta name="keywords" content="">
   
-    <meta name="description" content="结论 底层原理不同：Filter 是 基于 函数回调 实现的； Interceptor 是基于 反射机制与动态代理 实现的。  使用范围不同：Filter 是 Servlet规范 的接口，依赖web容器（Tomcat等），只能在web工程中使用；Interceptor 是 Spring的组件，不依赖web容器。  触发时机不同：请求进入顺序： Tomcat &#x3D;&#x3D;&gt; Fil">
+    <meta name="description" content="Java接口中的Default方法及其意义背景在Java 8中，引入了接口中的default方法，这一特性为接口带来了新的功能和灵活性。本文将探讨default方法的意义，并通过示例说明其在实际开发中的应用。 什么是Default方法？在Java 8之前，接口只能包含抽象方法，实现类必须提供这些方法的具体实现。Java 8引入了default方法，允许在接口中提供方法的默认实现。这意味着实现类可以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="过滤器Filter与拦截器Interceptor的区别">
-<meta property="og:url" content="http://example.com/2024/11/25/%E8%BF%87%E6%BB%A4%E5%99%A8Filter%E4%B8%8E%E6%8B%A6%E6%88%AA%E5%99%A8Interceptor%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:title" content="Java接口中的Default方法及其意义">
+<meta property="og:url" content="http://example.com/2024/11/29/Java%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84Default%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%84%8F%E4%B9%89/index.html">
 <meta property="og:site_name" content="WgpBlog">
-<meta property="og:description" content="结论 底层原理不同：Filter 是 基于 函数回调 实现的； Interceptor 是基于 反射机制与动态代理 实现的。  使用范围不同：Filter 是 Servlet规范 的接口，依赖web容器（Tomcat等），只能在web工程中使用；Interceptor 是 Spring的组件，不依赖web容器。  触发时机不同：请求进入顺序： Tomcat &#x3D;&#x3D;&gt; Fil">
+<meta property="og:description" content="Java接口中的Default方法及其意义背景在Java 8中，引入了接口中的default方法，这一特性为接口带来了新的功能和灵活性。本文将探讨default方法的意义，并通过示例说明其在实际开发中的应用。 什么是Default方法？在Java 8之前，接口只能包含抽象方法，实现类必须提供这些方法的具体实现。Java 8引入了default方法，允许在接口中提供方法的默认实现。这意味着实现类可以">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-25T07:44:28.000Z">
-<meta property="article:modified_time" content="2024-11-25T08:14:41.516Z">
+<meta property="article:published_time" content="2024-11-29T06:05:32.000Z">
+<meta property="article:modified_time" content="2024-11-29T06:08:04.567Z">
 <meta property="article:author" content="汪广平">
-<meta property="article:tag" content="过滤器">
-<meta property="article:tag" content="拦截器">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>过滤器Filter与拦截器Interceptor的区别 - WgpBlog</title>
+  <title>Java接口中的Default方法及其意义 - WgpBlog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="过滤器Filter与拦截器Interceptor的区别"></span>
+            <span id="subtitle" data-typed-text="Java接口中的Default方法及其意义"></span>
           
         </div>
 
@@ -206,8 +205,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-25 15:44" pubdate>
-          2024年11月25日 下午
+        <time datetime="2024-11-29 14:05" pubdate>
+          2024年11月29日 下午
         </time>
       </span>
     
@@ -218,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          1.8k 字
         
       </span>
     
@@ -229,7 +228,7 @@
         
         
         
-          31 分钟
+          16 分钟
         
       </span>
     
@@ -267,46 +266,42 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">过滤器Filter与拦截器Interceptor的区别</h1>
+            <h1 style="display: none">Java接口中的Default方法及其意义</h1>
             
             <div class="markdown-body">
               
-              <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
-<li><p>底层原理不同：Filter 是 基于 函数回调 实现的； Interceptor 是基于 反射机制与动态代理 实现的。</p>
+              <h3 id="Java接口中的Default方法及其意义"><a href="#Java接口中的Default方法及其意义" class="headerlink" title="Java接口中的Default方法及其意义"></a>Java接口中的Default方法及其意义</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>在Java 8中，引入了接口中的<code>default</code>方法，这一特性为接口带来了新的功能和灵活性。本文将探讨<code>default</code>方法的意义，并通过示例说明其在实际开发中的应用。</p>
+<h4 id="什么是Default方法？"><a href="#什么是Default方法？" class="headerlink" title="什么是Default方法？"></a>什么是Default方法？</h4><p>在Java 8之前，接口只能包含抽象方法，实现类必须提供这些方法的具体实现。Java 8引入了<code>default</code>方法，允许在接口中提供方法的默认实现。这意味着实现类可以选择性地覆盖这些方法，而不必强制实现所有方法。</p>
+<h4 id="Default方法的意义"><a href="#Default方法的意义" class="headerlink" title="Default方法的意义"></a>Default方法的意义</h4><ol>
+<li><p><strong>向后兼容</strong></p>
+<ul>
+<li><strong>避免破坏现有实现</strong>：在接口中添加新的方法时，如果这些方法没有默认实现，所有实现类都需要提供实现，这可能导致大量代码需要修改。<code>default</code>方法可以在接口中提供默认实现，从而避免破坏现有的实现类。</li>
+</ul>
 </li>
-<li><p>使用范围不同：Filter 是 Servlet规范 的接口，依赖web容器（Tomcat等），只能在web工程中使用；Interceptor 是 Spring的组件，不依赖web容器。</p>
+<li><p><strong>提供默认行为</strong></p>
+<ul>
+<li><strong>减少重复代码</strong>：通过在接口中提供默认实现，可以减少实现类中的重复代码，提高代码的可维护性和复用性。</li>
+</ul>
 </li>
-<li><p>触发时机不同：请求进入顺序： Tomcat &#x3D;&#x3D;&gt; Filter &#x3D;&#x3D;&gt; Servlet &#x3D;&#x3D;&gt; Interceptor &#x3D;&#x3D;&gt; Controller。</p>
+<li><p><strong>增强接口的功能</strong></p>
+<ul>
+<li><strong>扩展功能</strong>：可以在不改变现有实现类的情况下，为接口增加新的功能。这对于库的维护者特别有用，可以在不破坏现有API的情况下，逐步增强接口的功能。</li>
+</ul>
 </li>
-<li><p>拦截范围不同：Filter 对进入容器的所有请求进行拦截；Interceptor 只会对<code>Controller</code>中请求或访问<code>static</code>目录下的资源请求进行拦截。</p>
-</li>
-<li><p>注入bean情况不同：Filter 中能正常注入其他bean; Interceptor 在 springcontext 之前加载，而 bean 由 Spring管理，所以注册 Interceptor 前需要先手动注入 Interceptor ；</p>
-</li>
-<li><p>控制执行顺序不同：实际开发中，使用的通常是多个 Filter 或 Interceptor 组成的 链；Filter 中 拦截的核心方法是 doFilter(), Filter 直接按顺序执行；但是在 Interceptor 中存在 前置拦截方法 preHandle() 和 后置拦截方法 postHandle()，preHandle() 是顺序执行的，而 postHandle() 是反顺序执行的。</p>
+<li><p><strong>简化设计</strong></p>
+<ul>
+<li><strong>灵活的设计</strong>：<code>default</code>方法使得接口设计更加灵活。可以在接口中定义一些通用的行为，而不需要每个实现类都重新实现这些行为。这有助于简化设计，使代码更加清晰和简洁。</li>
+</ul>
 </li>
 </ol>
-<h2 id="Interceptor讲解"><a href="#Interceptor讲解" class="headerlink" title="Interceptor讲解"></a>Interceptor讲解</h2><ol>
-<li><p>preHandle (HttpServletRequest request, HttpServletResponse response, Object handle) 方法，该方法将在请求处理之前进行调用。SpringMVC 中的Interceptor 是链式调用，在一个应用中或者说是在一个请求中可以同时存在多个Interceptor。每个Interceptor 的调用会依据它的声明顺序依次执行，而且最先执行的都是Interceptor 中的preHandle 方法，所以可以在这个方法中进行一些前置初始化操作或者是对当前请求的一个预处理，也可以在这个方法中进行一些判断来决定请求是否要继续进行下去。该方法的返回值是布尔值Boolean类型的，当它返回为false时，表示请求结束，后续的Interceptor和Controller都不会再执行；当返回值为true时就会继续调用下一个Interceptor的preHandle方法，如果已经是最后一个Interceptor的时候就会是调用当前请求的Controller方法。</p>
-</li>
-<li><p>postHandle (HttpServletRequest request, HttpServletResponse response, Object handle, ModelAndView modelAndView) 方法，由preHandle 方法的解释我们知道这个方法包括后面要说到的afterCompletion方法都只能是在当前所属的Interceptor的preHandle方法的返回值为true时才能被调用。postHandle方法，顾名思义就是在当前请求进行处理之后，也就是Controller方法调用之后执行，但是它会在DispatcherServlet进行视图返回渲染之前被调用，所以我们可以在这个方法中对Controller处理之后的ModelAndView对象进行操作。postHandle方法被调用的方向跟preHandle是相反的，也就是说先声明的Interceptor的postHandle方法反而会后执行。</p>
-</li>
-<li><p>afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handle, Exception ex) 方法，该方法也是需要当前对应的Interceptor 的preHandle 方法的返回值为true 时才会执行。顾名思义，该方法将在整个请求结束之后，也就是在DispatcherServlet 渲染了对应的视图之后执行。这个方法的主要作用是用于进行资源清理工作的。</p>
-</li>
-</ol>
-<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h2><h3 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h3><ul>
-<li>preHandle() ：这个方法将在请求处理之前进行调用。注意：如果该方法的返回值为false ,将视为当前请求结束，不仅自身的拦截器会失效，还会导致其他的拦截器也不再执行。</li>
-<li>postHandle()：只有在 preHandle() 方法返回值为true 时才会执行。会在Controller 中的方法调用之后，DispatcherServlet 返回渲染视图之前被调用。 有意思的是：postHandle() 方法被调用的顺序跟 preHandle() 是相反的，先声明的拦截器 preHandle() 方法先执行，而postHandle()方法反而会后执行。</li>
-<li>afterCompletion()：只有在 preHandle() 方法返回值为true 时才会执行。在整个请求结束之后， DispatcherServlet 渲染了对应的视图之后执行。</li>
-</ul>
-<h3 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h3><ul>
-<li>init() ：该方法在容器启动初始化过滤器时被调用，它在 Filter 的整个生命周期只会被调用一次。注意：这个方法必须执行成功，否则过滤器会不起作用。</li>
-<li>doFilter() ：容器中的每一次请求都会调用该方法， FilterChain 用来调用下一个过滤器 Filter。</li>
-<li>destroy()： 当容器销毁 过滤器实例时调用该方法，一般在方法中销毁或关闭资源，在过滤器 Filter 的整个生命周期也只会被调用一次</li>
-</ul>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="Filter-1"><a href="#Filter-1" class="headerlink" title="Filter"></a>Filter</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> javax.servlet.annotation.WebFilter;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-comment">//将Filter注入IOC容器中</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@WebFilter(urlPatterns = &quot;/*&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyFilter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Filter</span> &#123;<br><br> 	<span class="hljs-meta">@Override</span> <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">(FilterConfig filterConfig)</span> <span class="hljs-keyword">throws</span> ServletException &#123;<br> 		<span class="hljs-comment">// Filter前置</span><br>    &#125;<br><br> 	<span class="hljs-meta">@Override</span> <br>     <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="hljs-keyword">throws</span> IOException, ServletException &#123;<br><br> 			<span class="hljs-comment">// 调用后续过滤器或目标资源（这里就是放行，放行后response中才会有内容） </span><br>         <span class="hljs-comment">//Filter处理中</span><br>         filterChain.doFilter(servletRequest, servletResponse);<br><br> <br>     &#125;<br><br> 	<span class="hljs-meta">@Override</span> <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">destroy</span><span class="hljs-params">()</span> &#123;<br> 		<span class="hljs-comment">//Filter后置</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>假设有一个<code>Vehicle</code>接口，我们希望在不破坏现有实现类的情况下，为所有车辆添加一个默认的启动方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Vehicle</span> &#123;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">drive</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">start</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Starting the vehicle.&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Car</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Vehicle</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">drive</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Driving the car.&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Bike</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Vehicle</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">drive</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Riding the bike.&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">start</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Starting the bike with a kick.&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Vehicle</span> <span class="hljs-variable">car</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Car</span>();<br>        <span class="hljs-type">Vehicle</span> <span class="hljs-variable">bike</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Bike</span>();<br><br>        car.start(); <span class="hljs-comment">// 输出 &quot;Starting the vehicle.&quot;</span><br>        car.drive(); <span class="hljs-comment">// 输出 &quot;Driving the car.&quot;</span><br><br>        bike.start(); <span class="hljs-comment">// 输出 &quot;Starting the bike with a kick.&quot;</span><br>        bike.drive(); <span class="hljs-comment">// 输出 &quot;Riding the bike.&quot;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="Interceptor-1"><a href="#Interceptor-1" class="headerlink" title="Interceptor"></a>Interceptor</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PermissionInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br><br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * 执行方法前 </span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>		<br>		<span class="hljs-comment">// if need login</span><br>		<span class="hljs-type">boolean</span> <span class="hljs-variable">needLogin</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>;<br>        <br>        ...<br>            <br>		<span class="hljs-keyword">if</span> (needLogin) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * 执行方法后</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">postHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler, <span class="hljs-meta">@Nullable</span> ModelAndView modelAndView)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <br>        <span class="hljs-comment">//业务代码</span><br>        <br>    &#125;<br>	<br>    <br>    <br>    <br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * DispatcherServlet 渲染了对应的视图之后执行</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterCompletion</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler, <span class="hljs-meta">@Nullable</span> Exception ex)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <br>        <span class="hljs-comment">//业务代码</span><br>        <br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
+<p>在这个示例中，<code>Vehicle</code>接口包含一个<code>drive</code>方法和一个<code>start</code>方法。<code>start</code>方法是一个<code>default</code>方法，提供了一个默认的实现。<code>Car</code>类实现了<code>Vehicle</code>接口，但没有重写<code>start</code>方法，因此调用<code>car.start()</code>时会使用接口中的默认实现。<code>Bike</code>类重写了<code>start</code>方法，因此调用<code>bike.start()</code>时会使用类中的实现。</p>
+<h4 id="调用规则"><a href="#调用规则" class="headerlink" title="调用规则"></a>调用规则</h4><p>当Java接口中的<code>default</code>方法与实现类中的方法具有相同的方法签名时，调用的是实现类中的方法。这是因为实现类中的方法优先级高于接口中的<code>default</code>方法。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p><code>default</code>方法的意义在于提供向后兼容性、减少重复代码、增强接口功能和简化设计。通过在接口中提供默认实现，可以在不破坏现有实现类的情况下，逐步增强接口的功能，使代码更加灵活和可维护。</p>
+<p>希望本文对您理解Java接口中的<code>default</code>方法有所帮助。如果您有任何疑问或建议，欢迎留言交流。</p>
 
               
             </div>
@@ -339,9 +334,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%BF%87%E6%BB%A4%E5%99%A8/">#过滤器</a>
-      
-        <a href="/tags/%E6%8B%A6%E6%88%AA%E5%99%A8/">#拦截器</a>
+        <a href="/tags/java/">#java</a>
       
     </div>
   
@@ -353,8 +346,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>过滤器Filter与拦截器Interceptor的区别</div>
-      <div>http://example.com/2024/11/25/过滤器Filter与拦截器Interceptor的区别/</div>
+      <div>Java接口中的Default方法及其意义</div>
+      <div>http://example.com/2024/11/29/Java接口中的Default方法及其意义/</div>
     </div>
     <div class="license-meta">
       
@@ -366,7 +359,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月25日</div>
+          <div>2024年11月29日</div>
         </div>
       
       
@@ -396,18 +389,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/29/Java%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84Default%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%84%8F%E4%B9%89/" title="Java接口中的Default方法及其意义">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java接口中的Default方法及其意义</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/08/13/SpringBoot%E4%BC%98%E9%9B%85%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="SpringBoot优雅的加载配置文件的几种方式">
-                        <span class="hidden-mobile">SpringBoot优雅的加载配置文件的几种方式</span>
+                      <a href="/2024/11/25/%E8%BF%87%E6%BB%A4%E5%99%A8Filter%E4%B8%8E%E6%8B%A6%E6%88%AA%E5%99%A8Interceptor%E7%9A%84%E5%8C%BA%E5%88%AB/" title="过滤器Filter与拦截器Interceptor的区别">
+                        <span class="hidden-mobile">过滤器Filter与拦截器Interceptor的区别</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
