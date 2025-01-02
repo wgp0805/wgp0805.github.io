@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="汪广平">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="今天在单位，经理给新来的新人出了一个小问题，来判断新人的能力，小问题不是很复杂，是用网上一直很火的开源项目若依，主要的问题是，在若依的项目将mybatis更换为mybatis-plus，由于plus的方便，所以现在对于单表查询大家都是不愿意去写xml的，我当时看感觉也不是很复杂，可能唯一复杂的地方就是在写mybatisplus的配置文件，可能比较困难，但是若依的官方网站有切换的方法，所以不是很难，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="若依项目使用mybatis切换mybatis-plus导致PageHelper失效的问题">
+<meta property="og:url" content="http://example.com/2025/01/02/%E8%8B%A5%E4%BE%9D%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8mybatis%E5%88%87%E6%8D%A2mybatis-plus%E5%AF%BC%E8%87%B4PageHelper%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="今天在单位，经理给新来的新人出了一个小问题，来判断新人的能力，小问题不是很复杂，是用网上一直很火的开源项目若依，主要的问题是，在若依的项目将mybatis更换为mybatis-plus，由于plus的方便，所以现在对于单表查询大家都是不愿意去写xml的，我当时看感觉也不是很复杂，可能唯一复杂的地方就是在写mybatisplus的配置文件，可能比较困难，但是若依的官方网站有切换的方法，所以不是很难，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-01-02T01:36:32.000Z">
+<meta property="article:modified_time" content="2025-01-02T02:05:39.370Z">
+<meta property="article:author" content="汪广平">
+<meta property="article:tag" content="mybatis-plus">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>若依项目使用mybatis切换mybatis-plus导致PageHelper失效的问题 - WgpBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>WGP</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="若依项目使用mybatis切换mybatis-plus导致PageHelper失效的问题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-02 09:36" pubdate>
+          2025年1月2日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          30k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          251 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">若依项目使用mybatis切换mybatis-plus导致PageHelper失效的问题</h1>
+            
+            <div class="markdown-body">
+              
+              <p>今天在单位，经理给新来的新人出了一个小问题，来判断新人的能力，小问题不是很复杂，是用网上一直很火的开源项目若依，主要的问题是，在若依的项目将mybatis更换为mybatis-plus，由于plus的方便，所以现在对于单表查询大家都是不愿意去写xml的，我当时看感觉也不是很复杂，可能唯一复杂的地方就是在写mybatisplus的配置文件，可能比较困难，但是若依的官方网站有切换的方法，所以不是很难，当我弄完之后，经理说了一句这样会有问题，你看看分页是不是不好使了，一看果然如此，但是始终不知道问题出在哪里，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.ruoyi.framework.config;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.ArrayList;<br><span class="hljs-keyword">import</span> java.util.Arrays;<br><span class="hljs-keyword">import</span> java.util.HashSet;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> javax.sql.DataSource;<br><span class="hljs-keyword">import</span> org.apache.ibatis.io.VFS;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;<br><span class="hljs-keyword">import</span> org.mybatis.spring.SqlSessionFactoryBean;<br><span class="hljs-keyword">import</span> org.mybatis.spring.boot.autoconfigure.SpringBootVFS;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.core.env.Environment;<br><span class="hljs-keyword">import</span> org.springframework.core.io.DefaultResourceLoader;<br><span class="hljs-keyword">import</span> org.springframework.core.io.Resource;<br><span class="hljs-keyword">import</span> org.springframework.core.io.support.PathMatchingResourcePatternResolver;<br><span class="hljs-keyword">import</span> org.springframework.core.io.support.ResourcePatternResolver;<br><span class="hljs-keyword">import</span> org.springframework.core.type.classreading.CachingMetadataReaderFactory;<br><span class="hljs-keyword">import</span> org.springframework.core.type.classreading.MetadataReader;<br><span class="hljs-keyword">import</span> org.springframework.core.type.classreading.MetadataReaderFactory;<br><span class="hljs-keyword">import</span> org.springframework.util.ClassUtils;<br><span class="hljs-keyword">import</span> com.ruoyi.common.utils.StringUtils;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* Mybatis支持*匹配扫描包</span><br><span class="hljs-comment">*</span><br><span class="hljs-comment">* <span class="hljs-doctag">@author</span> ruoyi</span><br><span class="hljs-comment">*/</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyBatisConfig</span><br>&#123;<br>   <span class="hljs-meta">@Autowired</span><br>   <span class="hljs-keyword">private</span> Environment env;<br><br>   <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">DEFAULT_RESOURCE_PATTERN</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;**/*.class&quot;</span>;<br><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">setTypeAliasesPackage</span><span class="hljs-params">(String typeAliasesPackage)</span><br>   &#123;<br>       <span class="hljs-type">ResourcePatternResolver</span> <span class="hljs-variable">resolver</span> <span class="hljs-operator">=</span> (ResourcePatternResolver) <span class="hljs-keyword">new</span> <span class="hljs-title class_">PathMatchingResourcePatternResolver</span>();<br>       <span class="hljs-type">MetadataReaderFactory</span> <span class="hljs-variable">metadataReaderFactory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CachingMetadataReaderFactory</span>(resolver);<br>       List&lt;String&gt; allResult = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;String&gt;();<br>       <span class="hljs-keyword">try</span><br>       &#123;<br>           <span class="hljs-keyword">for</span> (String aliasesPackage : typeAliasesPackage.split(<span class="hljs-string">&quot;,&quot;</span>))<br>           &#123;<br>               List&lt;String&gt; result = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;String&gt;();<br>               aliasesPackage = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX<br>                       + ClassUtils.convertClassNameToResourcePath(aliasesPackage.trim()) + <span class="hljs-string">&quot;/&quot;</span> + DEFAULT_RESOURCE_PATTERN;<br>               Resource[] resources = resolver.getResources(aliasesPackage);<br>               <span class="hljs-keyword">if</span> (resources != <span class="hljs-literal">null</span> &amp;&amp; resources.length &gt; <span class="hljs-number">0</span>)<br>               &#123;<br>                   <span class="hljs-type">MetadataReader</span> <span class="hljs-variable">metadataReader</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>                   <span class="hljs-keyword">for</span> (Resource resource : resources)<br>                   &#123;<br>                       <span class="hljs-keyword">if</span> (resource.isReadable())<br>                       &#123;<br>                           metadataReader = metadataReaderFactory.getMetadataReader(resource);<br>                           <span class="hljs-keyword">try</span><br>                           &#123;<br>                               result.add(Class.forName(metadataReader.getClassMetadata().getClassName()).getPackage().getName());<br>                           &#125;<br>                           <span class="hljs-keyword">catch</span> (ClassNotFoundException e)<br>                           &#123;<br>                               e.printStackTrace();<br>                           &#125;<br>                       &#125;<br>                   &#125;<br>               &#125;<br>               <span class="hljs-keyword">if</span> (result.size() &gt; <span class="hljs-number">0</span>)<br>               &#123;<br>                   HashSet&lt;String&gt; hashResult = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;String&gt;(result);<br>                   allResult.addAll(hashResult);<br>               &#125;<br>           &#125;<br>           <span class="hljs-keyword">if</span> (allResult.size() &gt; <span class="hljs-number">0</span>)<br>           &#123;<br>               typeAliasesPackage = String.join(<span class="hljs-string">&quot;,&quot;</span>, (String[]) allResult.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[<span class="hljs-number">0</span>]));<br>           &#125;<br>           <span class="hljs-keyword">else</span><br>           &#123;<br>               <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;mybatis typeAliasesPackage 路径扫描错误,参数typeAliasesPackage:&quot;</span> + typeAliasesPackage + <span class="hljs-string">&quot;未找到任何包&quot;</span>);<br>           &#125;<br>       &#125;<br>       <span class="hljs-keyword">catch</span> (IOException e)<br>       &#123;<br>           e.printStackTrace();<br>       &#125;<br>       <span class="hljs-keyword">return</span> typeAliasesPackage;<br>   &#125;<br><br>   <span class="hljs-keyword">public</span> Resource[] resolveMapperLocations(String[] mapperLocations)<br>   &#123;<br>       <span class="hljs-type">ResourcePatternResolver</span> <span class="hljs-variable">resourceResolver</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PathMatchingResourcePatternResolver</span>();<br>       List&lt;Resource&gt; resources = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;Resource&gt;();<br>       <span class="hljs-keyword">if</span> (mapperLocations != <span class="hljs-literal">null</span>)<br>       &#123;<br>           <span class="hljs-keyword">for</span> (String mapperLocation : mapperLocations)<br>           &#123;<br>               <span class="hljs-keyword">try</span><br>               &#123;<br>                   Resource[] mappers = resourceResolver.getResources(mapperLocation);<br>                   resources.addAll(Arrays.asList(mappers));<br>               &#125;<br>               <span class="hljs-keyword">catch</span> (IOException e)<br>               &#123;<br>                   <span class="hljs-comment">// ignore</span><br>               &#125;<br>           &#125;<br>       &#125;<br>       <span class="hljs-keyword">return</span> resources.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Resource</span>[resources.size()]);<br>   &#125;<br><br>   <span class="hljs-meta">@Bean</span><br>   <span class="hljs-keyword">public</span> SqlSessionFactory <span class="hljs-title function_">sqlSessionFactory</span><span class="hljs-params">(DataSource dataSource)</span> <span class="hljs-keyword">throws</span> Exception<br>   &#123;<br>       <span class="hljs-type">String</span> <span class="hljs-variable">typeAliasesPackage</span> <span class="hljs-operator">=</span> env.getProperty(<span class="hljs-string">&quot;mybatis.typeAliasesPackage&quot;</span>);<br>       <span class="hljs-type">String</span> <span class="hljs-variable">mapperLocations</span> <span class="hljs-operator">=</span> env.getProperty(<span class="hljs-string">&quot;mybatis.mapperLocations&quot;</span>);<br>       <span class="hljs-type">String</span> <span class="hljs-variable">configLocation</span> <span class="hljs-operator">=</span> env.getProperty(<span class="hljs-string">&quot;mybatis.configLocation&quot;</span>);<br>       typeAliasesPackage = setTypeAliasesPackage(typeAliasesPackage);<br>       VFS.addImplClass(SpringBootVFS.class);<br><br>       <span class="hljs-keyword">final</span> <span class="hljs-type">SqlSessionFactoryBean</span> <span class="hljs-variable">sessionFactory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBean</span>();<br>       sessionFactory.setDataSource(dataSource);<br>       sessionFactory.setTypeAliasesPackage(typeAliasesPackage);<br>       sessionFactory.setMapperLocations(resolveMapperLocations(StringUtils.split(mapperLocations, <span class="hljs-string">&quot;,&quot;</span>)));<br>       sessionFactory.setConfigLocation(<span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultResourceLoader</span>().getResource(configLocation));<br>       <span class="hljs-keyword">return</span> sessionFactory.getObject();<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这是原来的mybatis的配置按照官网的操作步骤，是要把这个都注释掉，然后加入新的，新的配置官网都有直接复制就行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.ruoyi.framework.config;<br><br><span class="hljs-keyword">import</span> com.baomidou.mybatisplus.annotation.DbType;<br><span class="hljs-keyword">import</span> com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;<br><span class="hljs-keyword">import</span> com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;<br><span class="hljs-keyword">import</span> com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;<br><span class="hljs-keyword">import</span> com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;<br><span class="hljs-keyword">import</span> com.github.pagehelper.PageInterceptor;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.transaction.annotation.EnableTransactionManagement;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Mybatis Plus 配置</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> ruoyi</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@EnableTransactionManagement(proxyTargetClass = true)</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MybatisPlusConfig</span><br>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> MybatisPlusInterceptor <span class="hljs-title function_">mybatisPlusInterceptor</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-type">MybatisPlusInterceptor</span> <span class="hljs-variable">interceptor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MybatisPlusInterceptor</span>();<br>        <span class="hljs-comment">// 分页插件</span><br>        interceptor.addInnerInterceptor(paginationInnerInterceptor());<br>        <span class="hljs-comment">// 乐观锁插件</span><br>        interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());<br>        <span class="hljs-comment">// 阻断插件</span><br>        interceptor.addInnerInterceptor(blockAttackInnerInterceptor());<br>        <span class="hljs-keyword">return</span> interceptor;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 分页插件，自动识别数据库类型 https://baomidou.com/guide/interceptor-pagination.html</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> PaginationInnerInterceptor <span class="hljs-title function_">paginationInnerInterceptor</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-type">PaginationInnerInterceptor</span> <span class="hljs-variable">paginationInnerInterceptor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PaginationInnerInterceptor</span>();<br>        <span class="hljs-comment">// 设置数据库类型为mysql</span><br>        paginationInnerInterceptor.setDbType(DbType.MYSQL);<br>        <span class="hljs-comment">// 设置最大单页限制数量，默认 500 条，-1 不受限制</span><br>        paginationInnerInterceptor.setMaxLimit(-<span class="hljs-number">1L</span>);<br>        <span class="hljs-keyword">return</span> paginationInnerInterceptor;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 乐观锁插件 https://baomidou.com/guide/interceptor-optimistic-locker.html</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> OptimisticLockerInnerInterceptor <span class="hljs-title function_">optimisticLockerInnerInterceptor</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">OptimisticLockerInnerInterceptor</span>();<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 如果是对全表的删除或更新操作，就会终止该操作 https://baomidou.com/guide/interceptor-block-attack.html</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> BlockAttackInnerInterceptor <span class="hljs-title function_">blockAttackInnerInterceptor</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BlockAttackInnerInterceptor</span>();<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后我们这边经理指定了mybatisplus的版本<code>&lt;mybatis-plus.version&gt;3.5.9&lt;/mybatis-plus.version&gt;</code>,pagehelper不用动。在总的<code>pom.xml</code>中加入配置信息</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- mybatis-plus --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.baomidou<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-plus-spring-boot3-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;mybatis-plus.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>到这里若依官网的修改建议就结束了，但是这时在启动的时候会报错</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs txt">C:\Java\jdk17\bin\java.exe -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:11595,suspend=y,server=n -agentpath:C:\Users\w1217\AppData\Local\Temp\idea_libasyncProfiler_dll_temp_folder7618\libasyncProfiler.dll=version,jfr,event=wall,interval=10ms,cstack=no,file=C:\Users\w1217\IdeaSnapshots\RuoYiApplication_2025_01_02_094531.jfr,dbghelppath=C:\Users\w1217\AppData\Local\Temp\idea_dbghelp_dll_temp_folder1\dbghelp.dll,log=C:\Users\w1217\AppData\Local\Temp\RuoYiApplication_2025_01_02_094531.jfr.log.txt,logLevel=DEBUG -XX:TieredStopAtLevel=1 -Dspring.output.ansi.enabled=always -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true &quot;-Dmanagement.endpoints.jmx.exposure.include=*&quot; -javaagent:C:\Users\w1217\AppData\Local\JetBrains\IntelliJIdea2024.3\captureAgent\debugger-agent.jar -Dkotlinx.coroutines.debug.enable.creation.stack.trace=false -Ddebugger.agent.enable.coroutines=true -Dkotlinx.coroutines.debug.enable.flows.stack.trace=true -Dkotlinx.coroutines.debug.enable.mutable.state.flows.stack.trace=true -Dfile.encoding=UTF-8 -classpath &quot;D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-admin\target\classes;D:\java\apache-maven-3.2.2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.5.0\springdoc-openapi-starter-webmvc-ui-2.5.0.jar;D:\java\apache-maven-3.2.2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.5.0\springdoc-openapi-starter-webmvc-api-2.5.0.jar;D:\java\apache-maven-3.2.2\repository\org\springdoc\springdoc-openapi-starter-common\2.5.0\springdoc-openapi-starter-common-2.5.0.jar;D:\java\apache-maven-3.2.2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.21\swagger-core-jakarta-2.2.21.jar;D:\java\apache-maven-3.2.2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.21\swagger-annotations-jakarta-2.2.21.jar;D:\java\apache-maven-3.2.2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.21\swagger-models-jakarta-2.2.21.jar;D:\java\apache-maven-3.2.2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;D:\java\apache-maven-3.2.2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;D:\java\apache-maven-3.2.2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.17.1\jackson-dataformat-yaml-2.17.1.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-webmvc\6.1.8\spring-webmvc-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-beans\6.1.8\spring-beans-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-context\6.1.8\spring-context-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-core\6.1.8\spring-core-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-jcl\6.1.8\spring-jcl-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-expression\6.1.8\spring-expression-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\webjars\swagger-ui\5.13.0\swagger-ui-5.13.0.jar;D:\java\apache-maven-3.2.2\repository\com\mysql\mysql-connector-j\8.2.0\mysql-connector-j-8.2.0.jar;D:\java\apache-maven-3.2.2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-framework\target\classes;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-web\3.3.0\spring-boot-starter-web-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter\3.3.0\spring-boot-starter-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot\3.3.0\spring-boot-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.0\spring-boot-starter-logging-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;D:\java\apache-maven-3.2.2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;D:\java\apache-maven-3.2.2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;D:\java\apache-maven-3.2.2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;D:\java\apache-maven-3.2.2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;D:\java\apache-maven-3.2.2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-json\3.3.0\spring-boot-starter-json-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.0\spring-boot-starter-tomcat-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.24\tomcat-embed-core-10.1.24.jar;D:\java\apache-maven-3.2.2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.24\tomcat-embed-el-10.1.24.jar;D:\java\apache-maven-3.2.2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.24\tomcat-embed-websocket-10.1.24.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-web\6.1.8\spring-web-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\io\micrometer\micrometer-observation\1.13.0\micrometer-observation-1.13.0.jar;D:\java\apache-maven-3.2.2\repository\io\micrometer\micrometer-commons\1.13.0\micrometer-commons-1.13.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-aop\3.3.0\spring-boot-starter-aop-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-aop\6.1.8\spring-aop-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\aspectj\aspectjweaver\1.9.22\aspectjweaver-1.9.22.jar;D:\java\apache-maven-3.2.2\repository\com\alibaba\druid-spring-boot-3-starter\1.2.23\druid-spring-boot-3-starter-1.2.23.jar;D:\java\apache-maven-3.2.2\repository\com\alibaba\druid\1.2.23\druid-1.2.23.jar;D:\java\apache-maven-3.2.2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.0\spring-boot-autoconfigure-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\pro\fessional\kaptcha\2.3.3\kaptcha-2.3.3.jar;D:\java\apache-maven-3.2.2\repository\com\jhlabs\filters\2.0.235-1\filters-2.0.235-1.jar;D:\java\apache-maven-3.2.2\repository\com\github\oshi\oshi-core\6.6.3\oshi-core-6.6.3.jar;D:\java\apache-maven-3.2.2\repository\net\java\dev\jna\jna\5.14.0\jna-5.14.0.jar;D:\java\apache-maven-3.2.2\repository\net\java\dev\jna\jna-platform\5.14.0\jna-platform-5.14.0.jar;D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-system\target\classes;D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-quartz\target\classes;D:\java\apache-maven-3.2.2\repository\org\quartz-scheduler\quartz\2.3.2\quartz-2.3.2.jar;D:\java\apache-maven-3.2.2\repository\com\mchange\mchange-commons-java\0.2.15\mchange-commons-java-0.2.15.jar;D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-common\target\classes;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-spring-boot3-starter\3.5.9\mybatis-plus-spring-boot3-starter-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus\3.5.9\mybatis-plus-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-core\3.5.9\mybatis-plus-core-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-annotation\3.5.9\mybatis-plus-annotation-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-spring\3.5.9\mybatis-plus-spring-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\org\mybatis\mybatis\3.5.16\mybatis-3.5.16.jar;D:\java\apache-maven-3.2.2\repository\org\mybatis\mybatis-spring\3.0.4\mybatis-spring-3.0.4.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-spring-boot-autoconfigure\3.5.9\mybatis-plus-spring-boot-autoconfigure-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.3.0\spring-boot-starter-jdbc-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-jdbc\6.1.8\spring-jdbc-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-jsqlparser\3.5.9\mybatis-plus-jsqlparser-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\com\github\jsqlparser\jsqlparser\5.0\jsqlparser-5.0.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-jsqlparser-common\3.5.9\mybatis-plus-jsqlparser-common-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\com\baomidou\mybatis-plus-extension\3.5.9\mybatis-plus-extension-3.5.9.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-context-support\6.1.8\spring-context-support-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-security\3.3.0\spring-boot-starter-security-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\security\spring-security-config\6.3.0\spring-security-config-6.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\security\spring-security-core\6.3.0\spring-security-core-6.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\security\spring-security-crypto\6.3.0\spring-security-crypto-6.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\security\spring-security-web\6.3.0\spring-security-web-6.3.0.jar;D:\java\apache-maven-3.2.2\repository\com\github\pagehelper\pagehelper-spring-boot-starter\2.1.0\pagehelper-spring-boot-starter-2.1.0.jar;D:\java\apache-maven-3.2.2\repository\com\github\pagehelper\pagehelper-spring-boot-autoconfigure\2.1.0\pagehelper-spring-boot-autoconfigure-2.1.0.jar;D:\java\apache-maven-3.2.2\repository\com\github\pagehelper\pagehelper\6.1.0\pagehelper-6.1.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-validation\3.3.0\spring-boot-starter-validation-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;D:\java\apache-maven-3.2.2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\classmate\1.7.0\classmate-1.7.0.jar;D:\java\apache-maven-3.2.2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;D:\java\apache-maven-3.2.2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;D:\java\apache-maven-3.2.2\repository\com\alibaba\fastjson2\fastjson2\2.0.53\fastjson2-2.0.53.jar;D:\java\apache-maven-3.2.2\repository\commons-io\commons-io\2.13.0\commons-io-2.13.0.jar;D:\java\apache-maven-3.2.2\repository\org\apache\poi\poi-ooxml\4.1.2\poi-ooxml-4.1.2.jar;D:\java\apache-maven-3.2.2\repository\org\apache\poi\poi\4.1.2\poi-4.1.2.jar;D:\java\apache-maven-3.2.2\repository\commons-codec\commons-codec\1.16.1\commons-codec-1.16.1.jar;D:\java\apache-maven-3.2.2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;D:\java\apache-maven-3.2.2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;D:\java\apache-maven-3.2.2\repository\com\zaxxer\SparseBitSet\1.2\SparseBitSet-1.2.jar;D:\java\apache-maven-3.2.2\repository\org\apache\poi\poi-ooxml-schemas\4.1.2\poi-ooxml-schemas-4.1.2.jar;D:\java\apache-maven-3.2.2\repository\org\apache\xmlbeans\xmlbeans\3.1.0\xmlbeans-3.1.0.jar;D:\java\apache-maven-3.2.2\repository\org\apache\commons\commons-compress\1.19\commons-compress-1.19.jar;D:\java\apache-maven-3.2.2\repository\com\github\virtuald\curvesapi\1.06\curvesapi-1.06.jar;D:\java\apache-maven-3.2.2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;D:\java\apache-maven-3.2.2\repository\io\jsonwebtoken\jjwt\0.9.1\jjwt-0.9.1.jar;D:\java\apache-maven-3.2.2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;D:\java\apache-maven-3.2.2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.3.0\spring-boot-starter-data-redis-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\io\lettuce\lettuce-core\6.3.2.RELEASE\lettuce-core-6.3.2.RELEASE.jar;D:\java\apache-maven-3.2.2\repository\io\netty\netty-common\4.1.110.Final\netty-common-4.1.110.Final.jar;D:\java\apache-maven-3.2.2\repository\io\netty\netty-handler\4.1.110.Final\netty-handler-4.1.110.Final.jar;D:\java\apache-maven-3.2.2\repository\io\netty\netty-resolver\4.1.110.Final\netty-resolver-4.1.110.Final.jar;D:\java\apache-maven-3.2.2\repository\io\netty\netty-buffer\4.1.110.Final\netty-buffer-4.1.110.Final.jar;D:\java\apache-maven-3.2.2\repository\io\netty\netty-transport-native-unix-common\4.1.110.Final\netty-transport-native-unix-common-4.1.110.Final.jar;D:\java\apache-maven-3.2.2\repository\io\netty\netty-codec\4.1.110.Final\netty-codec-4.1.110.Final.jar;D:\java\apache-maven-3.2.2\repository\io\netty\netty-transport\4.1.110.Final\netty-transport-4.1.110.Final.jar;D:\java\apache-maven-3.2.2\repository\io\projectreactor\reactor-core\3.6.6\reactor-core-3.6.6.jar;D:\java\apache-maven-3.2.2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\data\spring-data-redis\3.3.0\spring-data-redis-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\data\spring-data-keyvalue\3.3.0\spring-data-keyvalue-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\data\spring-data-commons\3.3.0\spring-data-commons-3.3.0.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-tx\6.1.8\spring-tx-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\springframework\spring-oxm\6.1.8\spring-oxm-6.1.8.jar;D:\java\apache-maven-3.2.2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;D:\java\apache-maven-3.2.2\repository\eu\bitwalker\UserAgentUtils\1.21\UserAgentUtils-1.21.jar;D:\java\apache-maven-3.2.2\repository\jakarta\servlet\jakarta.servlet-api\6.0.0\jakarta.servlet-api-6.0.0.jar;D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-generator\target\classes;D:\java\apache-maven-3.2.2\repository\org\apache\velocity\velocity-engine-core\2.3\velocity-engine-core-2.3.jar;D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-mes\target\classes;D:\java\IDEA\IntelliJ IDEA 2024.3\lib\idea_rt.jar&quot; com.ruoyi.RuoYiApplication<br>Connected to the target VM, address: &#x27;127.0.0.1:11595&#x27;, transport: &#x27;socket&#x27;<br>Application Version: 3.8.8<br>Spring Boot Version: 3.3.0<br>////////////////////////////////////////////////////////////////////<br>//                          _ooOoo_                               //<br>//                         o8888888o                              //<br>//                         88&quot; . &quot;88                              //<br>//                         (| ^_^ |)                              //<br>//                         O\  =  /O                              //<br>//                      ____/`---&#x27;\____                           //<br>//                    .&#x27;  \\|     |//  `.                         //<br>//                   /  \\|||  :  |||//  \                        //<br>//                  /  _||||| -:- |||||-  \                       //<br>//                  |   | \\\  -  /// |   |                       //<br>//                  | \_|  &#x27;&#x27;\---/&#x27;&#x27;  |   |                       //<br>//                  \  .-\__  `-`  ___/-. /                       //<br>//                ___`. .&#x27;  /--.--\  `. . ___                     //<br>//              .&quot;&quot; &#x27;&lt;  `.___\_&lt;|&gt;_/___.&#x27;  &gt;&#x27;&quot;&quot;.                  //<br>//            | | :  `- \`.;`\ _ /`;.`/ - ` : | |                 //<br>//            \  \ `-.   \_ __\ /__ _/   .-` /  /                 //<br>//      ========`-.____`-.___\_____/___.-`____.-&#x27;========         //<br>//                           `=---=&#x27;                              //<br>//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //<br>//             佛祖保佑       永不宕机      永无BUG               //<br>////////////////////////////////////////////////////////////////////<br>09:45:32.524 [background-preinit] INFO  o.h.v.i.util.Version - [&lt;clinit&gt;,21] - HV000001: Hibernate Validator 8.0.1.Final<br>09:45:32.560 [main] INFO  c.r.RuoYiApplication - [logStarting,50] - Starting RuoYiApplication using Java 17 with PID 23124 (D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3\ruoyi-admin\target\classes started by w1217 in D:\java\IDEA\Project-gs\RuoYi-Vue-springboot3)<br>09:45:32.561 [main] DEBUG c.r.RuoYiApplication - [logStarting,51] - Running with Spring Boot v3.3.0, Spring v6.1.8<br>09:45:32.562 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,660] - The following 1 profile is active: &quot;druid&quot;<br>09:45:33.308 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - [refresh,632] - Exception encountered during context initialization - cancelling refresh attempt: java.lang.IllegalArgumentException: Could not find class [org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration]<br>09:45:33.329 [main] ERROR o.s.b.SpringApplication - [reportFailure,859] - Application run failed<br>java.lang.IllegalArgumentException: Could not find class [org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration]<br>	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:355)<br>	at org.springframework.core.annotation.TypeMappedAnnotation.adapt(TypeMappedAnnotation.java:466)<br>	at org.springframework.core.annotation.TypeMappedAnnotation.getValue(TypeMappedAnnotation.java:391)<br>	at org.springframework.core.annotation.TypeMappedAnnotation.asMap(TypeMappedAnnotation.java:278)<br>	at org.springframework.core.annotation.AbstractMergedAnnotation.asAnnotationAttributes(AbstractMergedAnnotation.java:191)<br>	at org.springframework.context.annotation.AnnotationBeanNameGenerator.determineBeanNameFromAnnotation(AnnotationBeanNameGenerator.java:144)<br>	at org.springframework.context.annotation.AnnotationBeanNameGenerator.generateBeanName(AnnotationBeanNameGenerator.java:110)<br>	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.registerBeanDefinitionForImportedConfigurationClass(ConfigurationClassBeanDefinitionReader.java:160)<br>	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:141)<br>	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:120)<br>	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:429)<br>	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:290)<br>	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:349)<br>	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:118)<br>	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:788)<br>	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:606)<br>	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)<br>	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)<br>	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)<br>	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)<br>	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)<br>	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)<br>	at com.ruoyi.RuoYiApplication.main(RuoYiApplication.java:19)<br>Caused by: java.lang.ClassNotFoundException: org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration<br>	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)<br>	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)<br>	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)<br>	at java.base/java.lang.Class.forName0(Native Method)<br>	at java.base/java.lang.Class.forName(Class.java:467)<br>	at org.springframework.util.ClassUtils.forName(ClassUtils.java:304)<br>	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:345)<br>	... 22 common frames omitted<br>Disconnected from the target VM, address: &#x27;127.0.0.1:11595&#x27;, transport: &#x27;socket&#x27;<br><br>Process finished with exit code 1<br><br></code></pre></td></tr></table></figure>
+
+<p>造成这个错误的主要原因是jsqlparser这个东西被mybatis-plus提前接管了，所以在pagehelper就不应该再去接管了，所以这时要再启动类里边将pagehelper的自动配置排除掉。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.ruoyi;<br><br><span class="hljs-keyword">import</span> com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;<br><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;<br><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;<br><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 启动程序</span><br><span class="hljs-comment"> * </span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> ruoyi</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@SpringBootApplication(exclude = &#123; DataSourceAutoConfiguration.class, PageHelperAutoConfiguration.class &#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RuoYiApplication</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span><br>    &#123;<br>        <span class="hljs-comment">// System.setProperty(&quot;spring.devtools.restart.enabled&quot;, &quot;false&quot;);</span><br>        SpringApplication.run(RuoYiApplication.class, args);<br>        System.out.println(<span class="hljs-string">&quot;(♥◠‿◠)ﾉﾞ  若依启动成功   ლ(´ڡ`ლ)ﾞ  \n&quot;</span> +<br>                <span class="hljs-string">&quot; .-------.       ____     __        \n&quot;</span> +<br>                <span class="hljs-string">&quot; |  _ _   \\      \\   \\   /  /    \n&quot;</span> +<br>                <span class="hljs-string">&quot; | ( &#x27; )  |       \\  _. /  &#x27;       \n&quot;</span> +<br>                <span class="hljs-string">&quot; |(_ o _) /        _( )_ .&#x27;         \n&quot;</span> +<br>                <span class="hljs-string">&quot; | (_,_).&#x27; __  ___(_ o _)&#x27;          \n&quot;</span> +<br>                <span class="hljs-string">&quot; |  |\\ \\  |  ||   |(_,_)&#x27;         \n&quot;</span> +<br>                <span class="hljs-string">&quot; |  | \\ `&#x27;   /|   `-&#x27;  /           \n&quot;</span> +<br>                <span class="hljs-string">&quot; |  |  \\    /  \\      /           \n&quot;</span> +<br>                <span class="hljs-string">&quot; &#x27;&#x27;-&#x27;   `&#x27;-&#x27;    `-..-&#x27;              &quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这时就可以启动项目了，然后尽情的CRUD了，但是本文的最终问题出现了，若依以前的分页就不好用了，因为将pagehelper的自动配置排除掉了，所以不好使也是再情理之中，但是问题也大概能猜到，就是再处理sql的时候并没有把预先应该拼接的分页sql拼上，但是项目中也并没有关于pagehelper的配置类，所以这个时我就想是不是再处理分页的时候就有问题，然后看BaseController里边处理了分页，但是由于使用mybatis-plus分页自带，所以以后的分页代码就不能是用pagehelper了，不管咋说还是人家自己的好用，所以这里做了个兼容，顺手的事情，在BaseController中增加这两个方法，这样就可以和pageHelper兼容了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> Page <span class="hljs-title function_">getPage</span><span class="hljs-params">()</span> &#123;<br>       <span class="hljs-type">PageDomain</span> <span class="hljs-variable">pageDomain</span> <span class="hljs-operator">=</span> TableSupport.buildPageRequest();<br>       <span class="hljs-type">Page</span> <span class="hljs-variable">page</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Page</span>();<br>       page.setCurrent(pageDomain.getPageNum());<br>       page.setSize(pageDomain.getPageSize());<br>       <span class="hljs-keyword">return</span> page;<br>   &#125;<br><br><br>   <span class="hljs-keyword">public</span> TableDataInfo <span class="hljs-title function_">getDataTable</span><span class="hljs-params">(IPage iPage)</span> &#123;<br>       <span class="hljs-type">TableDataInfo</span> <span class="hljs-variable">rspData</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TableDataInfo</span>();<br>       rspData.setCode(HttpStatus.SUCCESS);<br>       rspData.setRows(iPage.getRecords());<br>       rspData.setTotal(iPage.getTotal());<br>       <span class="hljs-keyword">return</span> rspData;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>但是依旧不好使，这时我就找了经理问了这块应该咋办，网上也没有多少关于这块的问题的解答（PS：主要是我水平不行没查明白。。。）然后经理告诉我在mybatisplus的配置类里，将pagehelper的拦截器注入进来就行了，这时我才恍然大明白，既然项目里边没有分页的拦截器那就是自带了呀，注入进来就行了呀，这顿找啊</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 分页插件，自动识别数据库类型</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> PageInterceptor <span class="hljs-title function_">pageInterceptor</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PageInterceptor</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在mybatis-puls的配置类上加上这段，轻松秒杀，还是年轻，的学啊！！！！</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/mybatis-plus/" class="category-chain-item">mybatis-plus</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/mybatis-plus/">#mybatis-plus</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>若依项目使用mybatis切换mybatis-plus导致PageHelper失效的问题</div>
+      <div>http://example.com/2025/01/02/若依项目使用mybatis切换mybatis-plus导致PageHelper失效的问题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>汪广平</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月2日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/29/Java%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84Default%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%84%8F%E4%B9%89/" title="Java接口中的Default方法及其意义">
+                        <span class="hidden-mobile">Java接口中的Default方法及其意义</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
