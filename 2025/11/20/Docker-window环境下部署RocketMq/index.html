@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="汪广平">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、环境要求 系统版本：Windows 10&#x2F;11（需启用WSL2及Hyper-V） Docker Desktop：≥4.15.0（设置中勾选“Use WSL2”）（安装步骤可参考之前文章：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_17153885&#x2F;article&#x2F;details&#x2F;141337873?spm&#x3D;1011.2415.3001.5331） 硬件配置：双核CPU&amp;#x2F">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker-window环境下部署RocketMq">
+<meta property="og:url" content="http://example.com/2025/11/20/Docker-window%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%83%A8%E7%BD%B2RocketMq/index.html">
+<meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="一、环境要求 系统版本：Windows 10&#x2F;11（需启用WSL2及Hyper-V） Docker Desktop：≥4.15.0（设置中勾选“Use WSL2”）（安装步骤可参考之前文章：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_17153885&#x2F;article&#x2F;details&#x2F;141337873?spm&#x3D;1011.2415.3001.5331） 硬件配置：双核CPU&amp;#x2F">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120100321850.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120100714388.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120100901996.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120100843827.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120101110070.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120101448837.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120101500431.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120101629136.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120101710303.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120102009805.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120102021071.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120102128183.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120102415472.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120102854949.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120102953209.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120103115859.png">
+<meta property="og:image" content="http://example.com/img/RocketMq/image-20251120103139818.png">
+<meta property="article:published_time" content="2025-11-20T02:00:07.000Z">
+<meta property="article:modified_time" content="2025-11-20T02:33:26.509Z">
+<meta property="article:author" content="汪广平">
+<meta property="article:tag" content="RocketMQ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/RocketMq/image-20251120100321850.png">
+  
+  
+  
+  <title>Docker-window环境下部署RocketMq - WgpBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>WGP</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Docker-window环境下部署RocketMq"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-20 10:00" pubdate>
+          2025年11月20日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Docker-window环境下部署RocketMq</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="一、环境要求"><a href="#一、环境要求" class="headerlink" title="一、环境要求"></a>一、环境要求</h2><ol>
+<li>系统版本：Windows 10&#x2F;11（需启用WSL2及Hyper-V）</li>
+<li>Docker Desktop：≥4.15.0（设置中勾选“Use WSL2”）（安装步骤可参考之前文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_17153885/article/details/141337873?spm=1011.2415.3001.5331%EF%BC%89">https://blog.csdn.net/qq_17153885/article/details/141337873?spm=1011.2415.3001.5331）</a></li>
+<li>硬件配置：双核CPU&#x2F;8GB内存&#x2F;50GB磁盘空间</li>
+<li>端口开放：9876（NameServer）、10911（Broker）、8080（控制台）</li>
+</ol>
+<h2 id="二、部署步骤"><a href="#二、部署步骤" class="headerlink" title="二、部署步骤"></a>二、部署步骤</h2><h3 id="1-创建网络"><a href="#1-创建网络" class="headerlink" title="1. 创建网络"></a>1. 创建网络</h3><p>RocketMQ 中有多个服务，需要创建多个容器，创建 docker 网络便于容器间相互通信。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker network create rocketmq<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/RocketMq/image-20251120100321850.png" srcset="/img/loading.gif" lazyload alt="image-20251120100321850"></p>
+<p>由于我这里已经创建成功了，再次创同名网络配置报错了，提示已存在</p>
+<h3 id="2-拉取RocketMQ镜像"><a href="#2-拉取RocketMQ镜像" class="headerlink" title="2. 拉取RocketMQ镜像"></a>2. 拉取RocketMQ镜像</h3><p>打开cmd终端执行以下命令</p>
+<h4 id="2-1、搜索RocketMQ镜像"><a href="#2-1、搜索RocketMQ镜像" class="headerlink" title="2.1、搜索RocketMQ镜像"></a>2.1、搜索RocketMQ镜像</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker search rocketmq<br></code></pre></td></tr></table></figure>
+
+<p><code>docker search</code>docker搜索命令</p>
+<p><code>rocketmq</code>要搜索的中间件信息</p>
+<p><img src="/img/RocketMq/image-20251120100714388.png" srcset="/img/loading.gif" lazyload alt="image-20251120100714388"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull apache/rocketmq:latest<br></code></pre></td></tr></table></figure>
+
+<p><code>dockert pull</code> 拉取镜像命令</p>
+<p><code>apache/rocketmq:latest</code>拉取的镜像名称，其中<code>:latest</code>指定版本号，如果直接拉取最新的镜像可以不写，也可以写<code>:latest</code></p>
+<p><img src="/img/RocketMq/image-20251120100901996.png" srcset="/img/loading.gif" lazyload alt="image-20251120100901996"></p>
+<p>拉取成功后就会在Docker Desktop的镜像页面显示</p>
+<p><img src="/img/RocketMq/image-20251120100843827.png" srcset="/img/loading.gif" lazyload alt="image-20251120100843827"></p>
+<h4 id="2-2、启动NameServer容器"><a href="#2-2、启动NameServer容器" class="headerlink" title="2.2、启动NameServer容器"></a>2.2、启动NameServer容器</h4><p>Namesrv（Name Server）是 RocketMQ 的名称服务，用于管理 Broker 的元数据信息，如 Broker 的地址、状态等。每个 RocketMQ 集群至少需要一个 Namesrv 实例。</p>
+<h5 id="2-2-1、创建数据目录"><a href="#2-2-1、创建数据目录" class="headerlink" title="2.2.1、创建数据目录"></a>2.2.1、创建数据目录</h5><p>创建数据目录（可选，但推荐）：为了持久化存储 Namesrv 的配置和日志数据，建议在本地创建一个数据目录。例如，在 D 盘创建一个名为 “rocketmq_data” 的目录，并在其中创建 “namesrv” 子目录：</p>
+<p><code>mkdir -p D:\dockerDir\recketMQ\namesrv</code></p>
+<p><img src="/img/RocketMq/image-20251120101110070.png" srcset="/img/loading.gif" lazyload alt="image-20251120101110070"></p>
+<h5 id="2-2-2、运行Namesrv容器"><a href="#2-2-2、运行Namesrv容器" class="headerlink" title="2.2.2、运行Namesrv容器"></a>2.2.2、运行Namesrv容器</h5><p>运行 Namesrv 容器：执行以下命令创建并运行 Namesrv 容器：</p>
+<p><code>docker run -d --name rmqnamesrv -p 9876:9876 --network rocketmq -v D:\dockerDir\recketMQ\namesrv:/home/rocketmq/namesrv -e &quot;MAX_POSSIBLE_HEAP=100000000&quot; apache/rocketmq sh mqnamesrv</code></p>
+<p>命令参数说明：</p>
+<ul>
+<li><p><code>-d</code>：以守护进程模式运行容器。</p>
+</li>
+<li><p><code>--name rmqnamesrv</code>：为容器指定名称为 “rmqnamesrv”。</p>
+</li>
+<li><p><code>-p 9876:9876</code>：将容器的 9876 端口映射到主机的 9876 端口，以便外部访问 Namesrv 服务。</p>
+</li>
+<li><p><code>--network rocketm</code>：指定使用之前创建的网络配置</p>
+</li>
+<li><p><code>-v D:\dockerDir\recketMQ\namesrv:/home/rocketmq/namesrv</code>：将主机的 “D:\dockerDir\recketMQ\namesrv” 目录挂载到容器的 “&#x2F;home&#x2F;rocketmq&#x2F;namesrv” 目录，实现数据持久化。（&#x3D;&#x3D;这里正常来说应该是这么配置的，但是我的没有实现，生成的日志啥的依旧在容器的目录中&#x3D;&#x3D;）</p>
+</li>
+<li><p><code>-e &quot;MAX_POSSIBLE_HEAP=100000000&quot;</code>：设置容器中 Java 进程的最大堆内存为 100MB（根据实际需求调整，建议不要设置过大，以免占用过多系统资源）。</p>
+</li>
+<li><p><code>sh mqnamesrv</code>：在容器中执行启动 Namesrv 的命令。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d --name rmqnamesrv -p 9876:9876 --network rocketmq -v D:\dockerDir\recketMQ\namesrv:/home/rocketmq/namesrv -e <span class="hljs-string">&quot;MAX_POSSIBLE_HEAP=100000000&quot;</span> apache/rocketmq sh mqnamesrv<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/RocketMq/image-20251120101448837.png" srcset="/img/loading.gif" lazyload alt="image-20251120101448837"></p>
+<p>容器中就出现了这个启动的容</p>
+<p><img src="/img/RocketMq/image-20251120101500431.png" srcset="/img/loading.gif" lazyload alt="image-20251120101500431"></p>
+<h4 id="2-3、启动Broker容器"><a href="#2-3、启动Broker容器" class="headerlink" title="2.3、启动Broker容器"></a>2.3、启动Broker容器</h4><p>Broker 是 RocketMQ 的核心组件，负责存储和处理消息。每个 Broker 实例需要向 Namesrv 注册，以便客户端能够发现和连接到 Broker。</p>
+<h5 id="2-3-1、创建数据目录"><a href="#2-3-1、创建数据目录" class="headerlink" title="2.3.1、创建数据目录"></a>2.3.1、创建数据目录</h5><p>创建数据目录：同样，为了持久化存储 Broker 的配置、日志和消息数据，在本地创建 “broker” 子目录：<br><code>mkdir -p D:\dockerDir\recketMQ\broker</code></p>
+<p><img src="/img/RocketMq/image-20251120101629136.png" srcset="/img/loading.gif" lazyload alt="image-20251120101629136"></p>
+<h5 id="2-3-2、创建-Broker-配置文件"><a href="#2-3-2、创建-Broker-配置文件" class="headerlink" title="2.3.2、创建 Broker 配置文件"></a>2.3.2、创建 Broker 配置文件</h5><p>创建 Broker 配置文件：在 “broker” 目录中创建一个名为 “broker.conf” 的配置文件，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs pro">brokerClusterName=DefaultCluster # 集群名称<br>brokerName=broker-a   # Broker名称（同一集群内唯一）<br>brokerId=0     # Broker角色（0=主节点）<br>deleteWhen=04  # 文件删除时间（凌晨4点）<br>fileReservedTime=72  # 文件保留时间（72小时）<br>brokerRole=ASYNC_MASTER  #Broker角色（异步主节点）<br>flushDiskType=ASYNC_FLUSH   #刷盘策略（异步刷盘）<br>namesrvAddr=rmqnamesrv:9876 #NameServer地址（需可访问）<br>brokerIP1=172.26.144.1    # Broker对外IP（实际IP或域名）。指定 Broker 的公网 IP 地址或外部访问的 IP 地址<br>autoCreateTopicEnable = true   # 允许自动创建Topic<br>clusterTopicEnable = true      # 启用集群级Topic<br>brokerTopicEnable = true       # 启用Broker级Topic<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/RocketMq/image-20251120101710303.png" srcset="/img/loading.gif" lazyload alt="image-20251120101710303"></p>
+<h5 id="2-3-3、运行Broker容器"><a href="#2-3-3、运行Broker容器" class="headerlink" title="2.3.3、运行Broker容器"></a>2.3.3、运行Broker容器</h5><p>运行 Broker 容器：执行以下命令创建并运行 Broker 容器：</p>
+<p><code>docker run -d --name rmqbroker -p 10911:10911 -p 10909:10909 --network rocketmq -v D:\dockerDir\recketMQ\broker:/home/rocketmq/broker -v D:\dockerDir\recketMQ\broker\broker.conf:/home/rocketmq/conf/broker.conf -e &quot;NAMESRV_ADDR=rmqnamesrv:9876&quot; -e &quot;MAX_POSSIBLE_HEAP=200000000&quot; apache/rocketmq sh mqbroker -c /home/rocketmq/conf/broker.conf</code></p>
+<ul>
+<li><p><code>-p 10911:10911</code>：映射 Broker 的内部通信端口（用于 Broker 与 Namesrv、Broker 与 Broker 之间的通信）到主机的 10911 端口。</p>
+</li>
+<li><p><code>-p 10909:10909</code>：映射 Broker 的客户端通信端口（用于客户端发送和接收消息）到主机的 10909 端口。</p>
+</li>
+<li><p><code>-v D:\dockerDir\recketMQ\broker:/home/rocketmq/broker</code>：挂载 Broker 的数据目录。</p>
+</li>
+<li><p><code>-v D:\dockerDir\recketMQ\broker\broker.conf:/home/rocketmq/conf/broker.conf</code>：挂载 Broker 的配置文件。</p>
+</li>
+<li><p><code>-e &quot;NAMESRV_ADDR=rmqnamesrv:9876&quot;</code>：设置 Namesrv 的地址和端口，其中 “rmqnamesrv” 是之前创建的 Namesrv 容器的名称，Docker 会自动解析为容器的 IP 地址。</p>
+</li>
+<li><p><code>-e &quot;MAX_POSSIBLE_HEAP=200000000&quot;</code>：设置 Broker 进程的最大堆内存为 200MB（根据实际需求调整）。</p>
+</li>
+<li><p><code>sh mqbroker -c /home/rocketmq/conf/broker.conf</code>：在容器中执行启动 Broker 的命令，并指定配置文件路径。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d --name rmqbroker -p 10911:10911 -p 10909:10909 --network rocketmq -v D:\dockerDir\recketMQ\broker:/home/rocketmq/broker -v D:\dockerDir\recketMQ\broker\broker.conf:/home/rocketmq/conf/broker.conf -e <span class="hljs-string">&quot;NAMESRV_ADDR=rmqnamesrv:9876&quot;</span> -e <span class="hljs-string">&quot;MAX_POSSIBLE_HEAP=200000000&quot;</span> apache/rocketmq sh mqbroker -c /home/rocketmq/conf/broker.conf<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/RocketMq/image-20251120102009805.png" srcset="/img/loading.gif" lazyload alt="image-20251120102009805"></p>
+<p><img src="/img/RocketMq/image-20251120102021071.png" srcset="/img/loading.gif" lazyload alt="image-20251120102021071"></p>
+<h4 id="2-4、安装-RocketMQ-控制台（可选，用于可视化管理）"><a href="#2-4、安装-RocketMQ-控制台（可选，用于可视化管理）" class="headerlink" title="2.4、安装 RocketMQ 控制台（可选，用于可视化管理）"></a>2.4、安装 RocketMQ 控制台（可选，用于可视化管理）</h4><p>为了方便对 RocketMQ 集群进行可视化管理和监控，我们可以安装 RocketMQ 控制台。RocketMQ 控制台是一个基于 Web 的管理工具，提供了对 Topic、Consumer Group、Broker 等资源的管理和监控功能。</p>
+<h5 id="2-4-1、拉取RocketMqConsole镜像"><a href="#2-4-1、拉取RocketMqConsole镜像" class="headerlink" title="2.4.1、拉取RocketMqConsole镜像"></a>2.4.1、拉取RocketMqConsole镜像</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull apacherocketmq/rocketmq-dashboard<br></code></pre></td></tr></table></figure>
+
+<p>备注：镜像背景说明</p>
+<ul>
+<li><strong><code>apache/rocketmq-console-ng</code></strong><ul>
+<li><strong>状态</strong>：已废弃（2021年后停止维护）</li>
+<li><strong>问题</strong>：不支持RocketMQ 5.x+，存在兼容性风险</li>
+<li><strong>来源</strong>：非Apache官方维护，社区旧版项目镜像</li>
+</ul>
+</li>
+</ul>
+<p><strong><code>apacherocketmq/rocketmq-dashboard</code></strong></p>
+<ul>
+<li><strong>状态</strong>：官方维护（持续更新，支持最新版本）</li>
+<li><strong>功能</strong>：支持RocketMQ 4.x&#x2F;5.x，集成监控告警、权限管理等新特性</li>
+<li><strong>来源</strong>：Apache RocketMQ官方GitHub仓库</li>
+</ul>
+<p><img src="/img/RocketMq/image-20251120102128183.png" srcset="/img/loading.gif" lazyload alt="image-20251120102128183"></p>
+<h5 id="2-4-2、运行Rocket-console容器"><a href="#2-4-2、运行Rocket-console容器" class="headerlink" title="2.4.2、运行Rocket-console容器"></a>2.4.2、运行Rocket-console容器</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d --name rmq-console -p 8080:8082 --network rmq-net -e <span class="hljs-string">&quot;JAVA_OPTS=-Drocketmq.config.namesrvAddr=rmqnamesrv:9876 -Drocketmq.config.isVIPChannel=false&quot;</span> -t apacherocketmq/rocketmq-dashboard<br></code></pre></td></tr></table></figure>
+
+<p>在上述命令中：</p>
+<ul>
+<li><p><code>-d</code> 是以守护进程模式在后台运行容器。</p>
+</li>
+<li><p><code>--name rmq - dashboard</code> 是给容器指定名称为 <code>rmq - dashboard</code>。</p>
+</li>
+<li><p><code>-p 8080:8082</code> 是将容器的 8082 端口映射到宿主机的 8080 端口，这样就能通过浏览器访问控制台。至于这里为什么不直接使用8080端口，是我发现这个监控程序启动以后，在容器上不是在8080启动的所以使用8082，<strong>这个监控程序启动的时候，不一定是哪个端口，根据实际情况配置就行</strong></p>
+</li>
+</ul>
+<p>‍<img src="/img/RocketMq/image-20251120102415472.png" srcset="/img/loading.gif" lazyload alt="image-20251120102415472"></p>
+<p><img src="/img/RocketMq/image-20251120102854949.png" srcset="/img/loading.gif" lazyload alt="image-20251120102854949"></p>
+<h2 id="三、浏览器访问"><a href="#三、浏览器访问" class="headerlink" title="三、浏览器访问"></a>三、浏览器访问</h2><p>访问控制台：浏览器打开 <a href="http://localhost:8080，若显示Broker节点状态、Topic列表，则部署成功">http://localhost:8080，若显示Broker节点状态、Topic列表，则部署成功</a></p>
+<p><img src="/img/RocketMq/image-20251120102953209.png" srcset="/img/loading.gif" lazyload alt="image-20251120102953209"></p>
+<h3 id="1、主题"><a href="#1、主题" class="headerlink" title="1、主题"></a>1、主题</h3><p><img src="/img/RocketMq/image-20251120103115859.png" srcset="/img/loading.gif" lazyload alt="image-20251120103115859"></p>
+<h3 id="2、消费者"><a href="#2、消费者" class="headerlink" title="2、消费者"></a>2、消费者</h3><p><img src="/img/RocketMq/image-20251120103139818.png" srcset="/img/loading.gif" lazyload alt="image-20251120103139818"></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/RocketMQ/" class="category-chain-item">RocketMQ</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RocketMQ/">#RocketMQ</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Docker-window环境下部署RocketMq</div>
+      <div>http://example.com/2025/11/20/Docker-window环境下部署RocketMq/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>汪广平</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月20日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/29/curl%E8%AF%A6%E8%A7%A3/" title="curl详解">
+                        <span class="hidden-mobile">curl详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,861 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="汪广平">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="什么是ExplainExplain被称为执行计划，在语句之前增加 explain 关键字，MySQL 会在查询上设置一个标记，模拟MySQL优化器来执行SQL语句，执行查询时，会返回执行计划的信息，并不执行这条SQL。（注意，如果 from 中包含子查询，仍会执行该子查询，将结果放入临时表中）。 Explain可以用来分析SQL语句和表结构的性能瓶颈。通过explain的结果，可以了解到如数据表的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql关键字explain解析">
+<meta property="og:url" content="http://example.com/2025/07/25/mysql%E5%85%B3%E9%94%AE%E5%AD%97explain%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="什么是ExplainExplain被称为执行计划，在语句之前增加 explain 关键字，MySQL 会在查询上设置一个标记，模拟MySQL优化器来执行SQL语句，执行查询时，会返回执行计划的信息，并不执行这条SQL。（注意，如果 from 中包含子查询，仍会执行该子查询，将结果放入临时表中）。 Explain可以用来分析SQL语句和表结构的性能瓶颈。通过explain的结果，可以了解到如数据表的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/14rrag7wva.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/rilzsgndxb.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/jnhs4w4jtv.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/dnwf8pmmnn.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/3q5fc14tlm.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/rftygcit03.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/14exzh1r44.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/helb7s88v4.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/qe3k3436we.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/1xhdngwhrd.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/af60wt8gkg.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/87jy550q6r.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/7f8r20tu9m.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/74b0aqxew3.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/n3bn9xru0b.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/cxvutond9k.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/81qg0hqkd7.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/r4z7w8fv0k.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/awjabktz8t.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/6o5wctp5qz.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/cd2lutr42k.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/3mksqvie9d.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/h4qm7fb8uu.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/tzd0yh021o.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/wadpd72z9.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/uogief1hus.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/5zipgrfk3u.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/efcs1hhzjt.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/9ziqzl1pm5.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/p310pemgd4.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/1wfooaxv3p.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/wwbdenqasj.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/9zup77hteb.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/b1mgv7e4ic.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/zssnv7og39.png">
+<meta property="article:published_time" content="2025-07-25T00:30:12.000Z">
+<meta property="article:modified_time" content="2025-07-25T00:32:02.729Z">
+<meta property="article:author" content="汪广平">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ask.qcloudimg.com/http-save/yehe-2107114/14rrag7wva.png">
+  
+  
+  
+  <title>mysql关键字explain解析 - WgpBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>WGP</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="mysql关键字explain解析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-25 08:30" pubdate>
+          2025年7月25日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          54 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">mysql关键字explain解析</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="什么是Explain"><a href="#什么是Explain" class="headerlink" title="什么是Explain"></a><strong>什么是Explain</strong></h2><p>Explain被称为执行计划，在语句之前增加 explain 关键字，<a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/cdb?from_column=20065&from=20065">MySQL</a> 会在查询上设置一个标记，模拟MySQL优化器来执行SQL语句，执行查询时，会返回执行计划的信息，并不执行这条SQL。（注意，如果 from 中包含子查询，仍会执行该子查询，将结果放入临时表中）。</p>
+<p>Explain可以用来分析SQL语句和表结构的性能瓶颈。通过explain的结果，可以了解到如数据表的查询顺序、数据查询操作的操作类型、哪些索引可以被命中、哪些索引实际会命中、每个数据表有多少行记录被查询等信息。</p>
+<h2 id="Explain命令扩展"><a href="#Explain命令扩展" class="headerlink" title="Explain命令扩展"></a><strong>Explain命令扩展</strong></h2><h3 id="explain-extended"><a href="#explain-extended" class="headerlink" title="explain extended"></a><strong>explain extended</strong></h3><p>在explain的基础上提供一些额外的查询信息，在explian extended执行以后，通过show warnings命令可以得到优化后的查询语句，可以看出优化器做了哪些工作，还可以通过某些数据估算表连接的行数。</p>
+<h3 id="explain-partitions"><a href="#explain-partitions" class="headerlink" title="explain partitions"></a><strong>explain partitions</strong></h3><p>用于分析使用了分区的表，会显示出可能用到的分区。</p>
+<h2 id="两点重要提示"><a href="#两点重要提示" class="headerlink" title="两点重要提示"></a><strong>两点重要提示</strong></h2><h3 id="1-Explain结果是基于数据表中现有数据的。"><a href="#1-Explain结果是基于数据表中现有数据的。" class="headerlink" title="1. Explain结果是基于数据表中现有数据的。"></a>1. Explain结果是基于数据表中现有数据的。</h3><h3 id="2-Explain结果与MySQL版本有很大的关系，不同版本的优化器的优化策略不同。"><a href="#2-Explain结果与MySQL版本有很大的关系，不同版本的优化器的优化策略不同。" class="headerlink" title="2. Explain结果与MySQL版本有很大的关系，不同版本的优化器的优化策略不同。"></a>2. Explain结果与MySQL版本有很大的关系，不同版本的优化器的优化策略不同。</h3><h2 id="本文示例使用的数据库表"><a href="#本文示例使用的数据库表" class="headerlink" title="本文示例使用的数据库表"></a><strong>本文示例使用的数据库表</strong></h2><p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/14rrag7wva.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="Explain命令-关键字"><a href="#Explain命令-关键字" class="headerlink" title="Explain命令(关键字)"></a><strong>Explain命令(关键字)</strong></h2><h3 id="explain简单示例"><a href="#explain简单示例" class="headerlink" title="explain简单示例"></a><strong>explain简单示例</strong></h3><p>mysql&gt;explain select * from t_user;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/rilzsgndxb.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>在查询中的每个”表”会输出一行，这里的“表”的意义非常广泛，不仅仅是<a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/tencentdb-catalog?from_column=20065&from=20065">数据库</a>表，还可以是子查询、一个union 结果等。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="explain结果列说明"><a href="#explain结果列说明" class="headerlink" title="explain结果列说明"></a><strong>explain结果列说明</strong></h3><h4 id="-1"><a href="#-1" class="headerlink" title=""></a></h4><h4 id="【id列】"><a href="#【id列】" class="headerlink" title="【id列】"></a>【id列】</h4><p>id列是一个有顺序的编号，是查询的顺序号，有几个 select 就显示几行。id的顺序是按 select 出现的顺序增长的。id列的值越大执行优先级越高越先执行，id列的值相同则从上往下执行，id列的值为NULL最后执行。</p>
+<h4 id="-2"><a href="#-2" class="headerlink" title=""></a></h4><h4 id="【select-type列】"><a href="#【select-type列】" class="headerlink" title="【select_type列】"></a>【select_type列】</h4><p>select_type列的值标明查询的类型：</p>
+<p>1）simple：表明当前行对应的select是简单查询，不包含子查询和union</p>
+<p>2）primary：表明当前行对应的select是复杂查询中最外层的 select</p>
+<p>3）subquery：表明当前行对应的select是包含在 select 中的子查询（不在 from 子句中）</p>
+<p>4）derived：表明当前行对应的select是包含在 from 子句中的子查询。</p>
+<p>MySQL会创建一个临时表来存放子查询的查询结果。用如下的语句示例说明：</p>
+<p>explain select (select 1 fromt_user where user_id&#x3D;1) from (select * from t_group where group_id&#x3D;1) tmp;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/jnhs4w4jtv.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>*注意，在资料收集过程中，发现不同版本的MySQL表现不一致，经反复对比，5.7及以后版本的输出如下：</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/dnwf8pmmnn.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>很显然，MySQL在这方面进行了优化.</p>
+<p>*注意，MySQL不同版本Explain表现差异很大，有些场景，从语句层面看，是要使用到索引，但经过优化器分析，结合表中现有数据，如果MySQL认为全表扫描性能更优，则会使用全表扫描。</p>
+<p>5）union：表明当前行对应的select是在 union 中的第二个和随后的 select</p>
+<p>6）union result：表明当前行对应的select是从 union 临时表检索结果的 select</p>
+<p>explain select 1 union all select 2 fromdual;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/3q5fc14tlm.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>​       MySQL5.7及以后同样做了优化</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/rftygcit03.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="【table列】"><a href="#【table列】" class="headerlink" title="【table列】"></a>【table列】</h4><p>table列的结果表明当前行对应的select正在访问哪个表。当查询的<from>子句中有子查询时，table列是 <derivedN> 格式，表示当前的select依赖 id&#x3D;N结果行对应的查询，要先执行 id序号&#x3D;N 的查询。当存在 union 时，UNION RESULT 的 table 列的值为&lt;unionN1,N2&gt;，N1和N2表示参与 union 的select 行的id序号。</p>
+<h4 id="-3"><a href="#-3" class="headerlink" title=""></a></h4><h4 id="【type列】"><a href="#【type列】" class="headerlink" title="【type列】"></a>【type列】</h4><p>type列的结果表明当前行对应的select的关联类型或访问类型，也就是优化器决定怎么查找数据表中的行，以及查找数据行记录的大概范围。该列的取值优化程度的优劣，从最优到最差依次为：null&gt;system&gt; const &gt; eq_ref &gt; ref &gt; range &gt; index &gt; ALL。一般来说，要保证查询达到range级别，最好达到ref。</p>
+<p>1）null，MySQL优化器在优化阶段分解查询语句，在优化过程中就已经可以得到结果，那么在执行阶段就不用再访问表或索引。</p>
+<p>explain select min(user_id) from t_user;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/14exzh1r44.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这时的函数min，在索引列user_id中选取最小值，可以直接查找索引来完成，不需要执行时再访问数据表。</p>
+<p>2）const和system：const出现在用 primary key（主键） 或 unique key（唯一键） 的所有列与常数比较时，优化器对查询进行优化并将其部分查询转化成一个常量。最多有一个匹配行，读取1次，速度非常快。而system是const的特例，表中数据只有一条匹配时为system。此时可以用explain extended+show warnings查看执行结果。</p>
+<p>explain extended select * from (select * from t_user where user_id &#x3D; 1) tmp;</p>
+<p>show warnings;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/helb7s88v4.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/qe3k3436we.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>MySQL5.7及以后版本优化后：</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/1xhdngwhrd.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/af60wt8gkg.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>3）eq_ref：primary key（主键）或 unique key（唯一键） 索引的所有构成部分被join使用 ，只会返回一条符合条件的数据行。这是仅次于const的连接类型。</p>
+<p>explain select * from t_group_user gu left join t_group g ong.group_id &#x3D; gu.group_id;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/87jy550q6r.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="4">
+<li>ref：与eq_ref相比，ref类型不是使用primary key（主键） 或 unique key（唯一键）等唯一索引，而是使用普通索引或者联合唯一性索引的部分前缀，索引和某个值相比较，可能会找到符合条件的多个数据行。</li>
+<li>如下示例，使用的group_name是普通索引</li>
+</ol>
+<p>explain select * from t_group where group_name&#x3D; ‘group1’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/7f8r20tu9m.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>2.关联表查询</p>
+<p>explain select g.group_id from t_group gleft join t_group_user gu on gu.group_id &#x3D; g.group_id;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/74b0aqxew3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>5）range：出现在 in(),between ,&gt; ,&lt;, &gt;&#x3D; 等操作符中。使用一个索引来查询给定范围的行。</p>
+<p>6）index：扫描全表索引（index是从索引中读取的,所有字段都有索引，而all是从硬盘中读取），比ALL要快。</p>
+<p>explain select * from t_group;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/n3bn9xru0b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>7）all：即全表扫描，需要从头到尾去查找所需要的行。一般这种情况下这需要增加索引来进行查询优化了</p>
+<p>explain select * from t_user;</p>
+<h4 id="-4"><a href="#-4" class="headerlink" title=""></a></h4><p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/cxvutond9k.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="【possible-keys列】"><a href="#【possible-keys列】" class="headerlink" title="【possible_keys列】"></a>【possible_keys列】</h4><p>这一列的结果表明查询可能使用到哪些索引。但有些时候也会出现出现possible_keys 列有结果，而 后面的key列显示 null 的情况，这是因为此时表中数据不多，优化器认为查询索引对查询帮助不大，所以没有走索引查询而是进行了全表扫描。 </p>
+<p>如果possible_keys列的结果是null，则表明没有相关的索引。这时，可以通过优化where子句，增加恰当的索引来提升查询性能。</p>
+<h4 id="-5"><a href="#-5" class="headerlink" title=""></a></h4><h4 id="【key列】"><a href="#【key列】" class="headerlink" title="【key列】"></a>【key列】</h4><p>这一列表明优化器实际采用哪个索引来优化对该表的访问。如果没有使用索引，则该列是 null。</p>
+<h4 id="-6"><a href="#-6" class="headerlink" title=""></a></h4><h4 id="【key-len列】"><a href="#【key-len列】" class="headerlink" title="【key_len列】"></a>【key_len列】</h4><p>这一列表明了在索引里使用的字节数，通过这个值可以大致估算出具体使用了联合索引中的前几个列。 </p>
+<p>key_len计算规则这里不再赘述，不同的数据类型所占的字节数是不一致的。</p>
+<h4 id="-7"><a href="#-7" class="headerlink" title=""></a></h4><h4 id="【ref列】"><a href="#【ref列】" class="headerlink" title="【ref列】"></a>【ref列】</h4><p>这一列表明了在key列记录的索引中，表查找值所用到的列或常量，常见的有：const（常量），字段名，如user.user_id</p>
+<h4 id="-8"><a href="#-8" class="headerlink" title=""></a></h4><h4 id="【rows列】"><a href="#【rows列】" class="headerlink" title="【rows列】"></a>【rows列】</h4><p>这一列表明优化器大概要读取并检测的行数。跟实际的数据行数大部分情况是不一致的。</p>
+<h4 id="-9"><a href="#-9" class="headerlink" title=""></a></h4><h4 id="【Extra列】"><a href="#【Extra列】" class="headerlink" title="【Extra列】"></a>【Extra列】</h4><p>顾名思义，这一列表明的是额外信息,这一列的取值对优化SQL非常有参考意义。常见的重要取值如下： </p>
+<p>1）using index：所有被查询的字段都是索引列(称为覆盖索引),并且where条件是索引的前导列，出现这样的结果，是性能高的表现。</p>
+<p>explainselect group_id,group_name from t_group;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/81qg0hqkd7.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>2）using where：被查询的列未被索引覆盖，where条件也并非索引的前导列，表示 MySQL 执行器从存储引擎接收到查询数据,再进行“后过滤”（Post-filter）。所谓“后过滤”，就是先读取整行数据，再检查此行是否符合 where 句的条件，符合就留下，不符合便丢弃。</p>
+<p>explain select * from t_user whereuser_name&#x3D;’user1’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/r4z7w8fv0k.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>3）using where Using index：被查询的列被索引覆盖，并且where条件是索引列之一但是不是索引的前导列，也就是没有办法直接通过索引来查询到符合条件的数据</p>
+<p>explain select * from t_group where group_name &#x3D; ‘group1’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/awjabktz8t.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>4）null：被查询的列没有被索引覆盖，但where条件是索引的前导列，此时用到了索引，但是部分列未被索引覆盖，必须通过“回表查询”来实现，不是纯粹地用到了索引，也不是完全没用到索引</p>
+<p>explain select * from t_user where user_id&#x3D;’1’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/6o5wctp5qz.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>5）using index condition：与using where类似，查询的列不完全被索引覆盖，where条件中是一个前导列的范围；这种情况未能通过示例显现，可能跟MySQL版本有关系。</p>
+<p>6） using temporary：这表明需要通过创建临时表来处理查询。出现这种情况一般是要进行优化的，用索引来优化。创建临时表的情况：distinct，group by，orderby，子查询等</p>
+<p>explain select distinct user_name from t_user;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/cd2lutr42k.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>explain select distinct group_name fromt_group; –group_name是索引列</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/3mksqvie9d.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="7">
+<li>usingfilesort：在使用order by的情况下出现，mysql会对结果使用一个外部索引排序，而不是按索引次序从表里读取行。此时mysql会根据联接类型浏览所有符合条件的记录，并保存排序关键字和行指针，然后排序关键字并按顺序检索行信息。这种情况下要考虑使用索引来优化的。</li>
+</ol>
+<p>explain select * from t_user orderby user_name;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/h4qm7fb8uu.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>explain select * from t_group order bygroup_name;  –group_name是索引列</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/tzd0yh021o.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="查询优化建议"><a href="#查询优化建议" class="headerlink" title="查询优化建议"></a><strong>查询优化建议</strong></h2><p>结合前面的描述，首先看 type列的结果，如果有类型是 all 时，表示预计会进行全表扫描（fulltable scan）。通常全表扫描的代价是比较大的，建议创建适当的索引，通过索引检索避免全表扫描。</p>
+<p>再来看下 Extra 列的结果，如果有出现 Using temporary 或者 Using filesort 则要多加关注：</p>
+<p><strong>Using temporary</strong>，表示需要创建临时表以满足需求，通常是因为GROUP BY的列没有索引，或者GROUP BY和ORDER BY的列不一样，也需要创建临时表，建议添加适当的索引。</p>
+<p><strong>Using filesort</strong>，表示无法利用索引完成排序，也有可能是因为多表连接时，排序字段不是驱动表中的字段，因此也没办法利用索引完成排序，建议添加适当的索引。</p>
+<p><strong>Using where</strong>，通常是因为全表扫描或全索引扫描时（type 列显示为 ALL 或index），又加上了WHERE条件，建议添加适当的索引。</p>
+<h2 id="索引使用情况分析"><a href="#索引使用情况分析" class="headerlink" title="索引使用情况分析"></a><strong>索引使用情况分析</strong></h2><h3 id="-10"><a href="#-10" class="headerlink" title=""></a></h3><h3 id="数据库表"><a href="#数据库表" class="headerlink" title="数据库表"></a><strong>数据库表</strong></h3><p>主键索引：demo_id</p>
+<p>联合索引：c1,c2,c3</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/wadpd72z9.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="实例说明"><a href="#实例说明" class="headerlink" title="实例说明"></a><strong>实例说明</strong></h3><h4 id="-11"><a href="#-11" class="headerlink" title=""></a></h4><h4 id="实例一："><a href="#实例一：" class="headerlink" title="实例一："></a>实例一：</h4><p>explain select * from t_demo where c1&#x3D;’d1’and c2&#x3D;’d2’ and c3&#x3D;’d3’;</p>
+<p>explain select * from t_demo where c2&#x3D;’d2’and c1&#x3D;’d1’ and c3&#x3D;’d3’;</p>
+<p>explain select * from t_demo where c3&#x3D;’d3’and c1&#x3D;’d1’ and c2&#x3D;’d3’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/uogief1hus.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>几个Sql表现一致</p>
+<p>type&#x3D;ref,ref&#x3D;const,const,const</p>
+<p>执行常量等值查询时，改变索引列的顺序并不会更改explain的执行结果，优化器会进行优化，推荐按照索引顺序列编写sql语句。</p>
+<p>实列二：</p>
+<p>explain select * from t_demo where c1&#x3D;’d1’and c2&gt;’d2’ and c3&#x3D;’d3’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/5zipgrfk3u.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>explain select * from t_demo where c1&#x3D;’d1’and c3&gt;’d3’ and c2&#x3D;’d2’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/efcs1hhzjt.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>第一个例子范围右侧索引失效，使用到了两个索引。</p>
+<p>第二个例子，由于优化器优化的原因，使用到了全部的三个索引。</p>
+<h4 id="-12"><a href="#-12" class="headerlink" title=""></a></h4><h4 id="实例三："><a href="#实例三：" class="headerlink" title="实例三："></a>实例三：</h4><p>explain select * from t_demo wherec1&gt;’c’ and c2&#x3D;’d2’ and c3&#x3D;’d3’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/9ziqzl1pm5.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>explain select * from t_demo wherec1&gt;’e’ and c2&#x3D;’d2’ and c3&#x3D;’d3’;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/p310pemgd4.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>从上面两个实例可以发现，同样使用最左的索引列范围查询，有些情况未用到索引，做了全表扫描（第一个例子）；有些情况使用到了索引（第二个例子）。</p>
+<p>经反复验证，发现如下规律（不一定可靠），也可能与数据的第一行或最小值相关。</p>
+<ol>
+<li>跟存储的数据有关</li>
+<li>在大于条件下，如果条件数据小于列数据，则索引无效；如果条件数据大于列数据，则索引有效；</li>
+</ol>
+<p>在设计查询条件时，请注意规避。</p>
+<p>针对第一个例子，可以采用覆盖索引的方式优化。</p>
+<h4 id="-13"><a href="#-13" class="headerlink" title=""></a></h4><h4 id="实例四："><a href="#实例四：" class="headerlink" title="实例四："></a>实例四：</h4><p>explain select * from t_demo where c1&#x3D;’d1’and c2&#x3D;’d2’ order by c3;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/1wfooaxv3p.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>explain select * from t_demo where c1&#x3D;’d1’order by c3;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/wwbdenqasj.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>explain select * from t_demo where c1&#x3D;’d1’and c3&#x3D;’d3’ order by c2;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/9zup77hteb.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>order by排序使用到索引和没使用到索引的情况</p>
+<h4 id="-14"><a href="#-14" class="headerlink" title=""></a></h4><h4 id="实例五："><a href="#实例五：" class="headerlink" title="实例五："></a>实例五：</h4><p>explain select * from t_demo where c1&#x3D;’d1’and c4&#x3D;’d4’ order by c1,c2;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/b1mgv7e4ic.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>条件列包含没有索引的列，出现了Using filesort</p>
+<h4 id="-15"><a href="#-15" class="headerlink" title=""></a></h4><h4 id="实例六："><a href="#实例六：" class="headerlink" title="实例六："></a>实例六：</h4><p>explain select * from t_demo where c1&#x3D;’d1’and c4&#x3D;’d4’ group by c1,c2;</p>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2107114/zssnv7og39.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>性能非常差的场景，同时出现了Using temporary和Using filesort</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><ol>
+<li>两种方式的排序filesort和index，Usingindex是指MySQL扫描索引本身完成排序。index效率高，filesort效率低。</li>
+<li>order by满足两种情况会使用Using index。</li>
+</ol>
+<p>1）order by语句使用索引最左前列。</p>
+<p>2）使用where子句与order by子句条件列组合满足索引最左前列。</p>
+<ol start="3">
+<li>尽量在索引列上完成排序，遵循索引建立（索引创建的顺序）时的最佳左前缀法则。</li>
+<li>group by与order by很类似，都是先排序后分组，遵照索引创建顺序的最佳左前缀法则。</li>
+</ol>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/mysql/" class="category-chain-item">mysql</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/mysql/">#mysql</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>mysql关键字explain解析</div>
+      <div>http://example.com/2025/07/25/mysql关键字explain解析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>汪广平</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月25日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/29/curl%E8%AF%A6%E8%A7%A3/" title="curl详解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">curl详解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/16/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" title="docker安装及使用">
+                        <span class="hidden-mobile">docker安装及使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
