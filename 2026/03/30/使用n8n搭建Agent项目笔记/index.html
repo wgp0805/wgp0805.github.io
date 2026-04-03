@@ -16,20 +16,22 @@
   <meta name="author" content="汪广平">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="docker安装及使用">
-<meta property="og:url" content="http://example.com/2025/07/16/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/index.html">
+    <meta name="description" content="使用n8n搭建Agent项目笔记什么是AgentAI Agent（人工智能代理）是一种能够感知环境、自主决策并执行动作的智能实体。与传统AI系统不同，Agent不仅能回答问题，还能主动完成一系列复杂任务。 简单来说，如果把大语言模型（LLM）比作一个”超级大脑”，那么AI Agent就是给这个大脑装上了”手脚”和”工具”，让它能够像人类一样主动行动，而不仅仅是被动回答问题。 Agent的本质就是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用n8n搭建Agent项目笔记">
+<meta property="og:url" content="http://example.com/2026/03/30/%E4%BD%BF%E7%94%A8n8n%E6%90%AD%E5%BB%BAAgent%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="使用n8n搭建Agent项目笔记什么是AgentAI Agent（人工智能代理）是一种能够感知环境、自主决策并执行动作的智能实体。与传统AI系统不同，Agent不仅能回答问题，还能主动完成一系列复杂任务。 简单来说，如果把大语言模型（LLM）比作一个”超级大脑”，那么AI Agent就是给这个大脑装上了”手脚”和”工具”，让它能够像人类一样主动行动，而不仅仅是被动回答问题。 Agent的本质就是">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-07-16T06:25:21.000Z">
-<meta property="article:modified_time" content="2025-07-16T06:25:21.631Z">
+<meta property="article:published_time" content="2026-03-30T02:13:58.000Z">
+<meta property="article:modified_time" content="2026-03-30T06:07:32.559Z">
 <meta property="article:author" content="汪广平">
-<meta property="article:tag" content="标签">
+<meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>docker安装及使用 - WgpBlog</title>
+  <title>使用n8n搭建Agent项目笔记 - WgpBlog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -192,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="docker安装及使用"></span>
+            <span id="subtitle" data-typed-text="使用n8n搭建Agent项目笔记"></span>
           
         </div>
 
@@ -203,8 +205,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-16 14:25" pubdate>
-          2025年7月16日 下午
+        <time datetime="2026-03-30 10:13" pubdate>
+          2026年3月30日 上午
         </time>
       </span>
     
@@ -215,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          1.3k 字
         
       </span>
     
@@ -226,7 +228,7 @@
         
         
         
-          1 分钟
+          12 分钟
         
       </span>
     
@@ -264,11 +266,89 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">docker安装及使用</h1>
+            <h1 style="display: none">使用n8n搭建Agent项目笔记</h1>
             
             <div class="markdown-body">
               
-              
+              <h1 id="使用n8n搭建Agent项目笔记"><a href="#使用n8n搭建Agent项目笔记" class="headerlink" title="使用n8n搭建Agent项目笔记"></a>使用n8n搭建Agent项目笔记</h1><h2 id="什么是Agent"><a href="#什么是Agent" class="headerlink" title="什么是Agent"></a>什么是Agent</h2><p>AI Agent（人工智能代理）是一种能够感知环境、自主决策并执行动作的智能实体。与传统AI系统不同，Agent不仅能回答问题，还能主动完成一系列复杂任务。</p>
+<p>简单来说，如果把大语言模型（LLM）比作一个”超级大脑”，那么AI Agent就是给这个大脑装上了”手脚”和”工具”，让它能够像人类一样主动行动，而不仅仅是被动回答问题。</p>
+<p><code>Agent</code>的本质就是</p>
+<blockquote>
+<p>Agent &#x3D; LLM + 记忆 + 规划技能 + 工具使用</p>
+</blockquote>
+<h2 id="与自动话工作流的区别"><a href="#与自动话工作流的区别" class="headerlink" title="与自动话工作流的区别"></a>与自动话工作流的区别</h2><p>自动化工作流：预先定义的固定步骤</p>
+<p>Agent ：动态的，灵活的，有自主推理能力的</p>
+<h2 id="为啥选用n8n，而不是coze或者是dify，他们的区别是什么"><a href="#为啥选用n8n，而不是coze或者是dify，他们的区别是什么" class="headerlink" title="为啥选用n8n，而不是coze或者是dify，他们的区别是什么"></a>为啥选用n8n，而不是coze或者是dify，他们的区别是什么</h2><h3 id="‌一、核心定位不同‌"><a href="#‌一、核心定位不同‌" class="headerlink" title="‌一、核心定位不同‌"></a>‌<strong>一、核心定位不同</strong>‌</h3><ul>
+<li>‌<strong>n8n</strong>‌：<br>‌<strong>通用自动化工作流引擎</strong>‌，主打“连接一切”。本质是 Zapier 替代品，通过节点式编排实现跨系统自动化，AI 能力需手动集成 ‌27。</li>
+<li>‌<strong>Coze</strong>‌：<br>‌<strong>零代码 AI 聊天机器人（Bot）快速生成器</strong>‌，由字节跳动推出，聚焦对话式 AI 应用，适合非技术人员快速发布智能客服、营销助手等 ‌38。</li>
+<li>‌<strong>Dify</strong>‌：<br>‌<strong>企业级 AI 应用开发平台</strong>‌，面向开发者，支持私有化部署、RAG（检索增强生成）、Agent 编排和多模型管理，用于构建深度定制的 AI 产品 ‌1</li>
+</ul>
+<h3 id="‌二、关键维度对比‌"><a href="#‌二、关键维度对比‌" class="headerlink" title="‌二、关键维度对比‌"></a>‌<strong>二、关键维度对比</strong>‌</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>‌<strong>n8n</strong>‌</th>
+<th>‌<strong>Coze</strong>‌</th>
+<th>‌<strong>Dify</strong>‌</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‌<strong>开源</strong>‌</td>
+<td>✅ 完全开源（Node.js）</td>
+<td>❌ 闭源（字节云服务）</td>
+<td>✅ 开源（Apache 2.0）</td>
+</tr>
+<tr>
+<td>‌<strong>部署方式</strong>‌</td>
+<td>支持自托管&#x2F;私有部署</td>
+<td>仅 SaaS（依赖字节生态）</td>
+<td>支持私有化部署（Docker&#x2F;K8s）</td>
+</tr>
+<tr>
+<td>‌<strong>技术门槛</strong>‌</td>
+<td>高（需 API&#x2F;编程基础）</td>
+<td>极低（拖拽式操作）</td>
+<td>中高（需理解 LLM、RAG 概念）</td>
+</tr>
+<tr>
+<td>‌<strong>LLM 集成</strong>‌</td>
+<td>需手动调用（HTTP 节点 + API Key）</td>
+<td>内置豆包、DeepSeek 等模型，开箱即用</td>
+<td>支持多模型（OpenAI、国产、本地 Ollama 等）</td>
+</tr>
+<tr>
+<td>‌<strong>自动化能力</strong>‌</td>
+<td>⭐⭐⭐⭐⭐（500+ 节点，复杂流程强）</td>
+<td>⭐⭐（有限工作流，侧重对话）</td>
+<td>⭐⭐⭐⭐（支持条件分支、循环等）</td>
+</tr>
+<tr>
+<td>‌<strong>知识库&#x2F;RAG</strong>‌</td>
+<td>❌ 需外接（如通过 Dify API）</td>
+<td>✅ 内置（上传文档即可问答）</td>
+<td>✅ 强大（支持高级分段、召回优化）</td>
+</tr>
+<tr>
+<td>‌<strong>适用人群</strong>‌</td>
+<td>开发者、IT 自动化工程师</td>
+<td>运营、产品经理、内容创作者</td>
+<td>企业 AI 团队、技术架构师</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="‌三、典型使用场景‌"><a href="#‌三、典型使用场景‌" class="headerlink" title="‌三、典型使用场景‌"></a>‌<strong>三、典型使用场景</strong>‌</h3><ul>
+<li>‌<strong>选 n8n 如果</strong>‌：<br>需要自动化跨系统任务（如“收到邮件 → 更新 CRM → 发 Slack 通知”），且已有技术能力 ‌23。</li>
+<li>‌<strong>选 Coze 如果</strong>‌：<br>想快速做一个 AI 客服、FAQ 机器人，并发布到飞书、微信等平台，无技术背景 ‌13。</li>
+<li>‌<strong>选 Dify 如果</strong>‌：<br>需构建私有化、数据敏感的 AI 应用（如内部知识库、合规问答），并希望深度控制模型与流程 ‌14。</li>
+</ul>
+<hr>
+<h3 id="‌四、一句话总结‌"><a href="#‌四、一句话总结‌" class="headerlink" title="‌四、一句话总结‌"></a>‌<strong>四、一句话总结</strong>‌</h3><blockquote>
+<p>‌<strong>要自动化流程 → 选 n8n；要快速做聊天机器人 → 选 Coze；要做企业级 AI 应用 → 选 Dify</strong>‌ ‌37。</p>
+</blockquote>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>docker安装</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">docker volume create n8n<br>docker run -d --name n8n --restart unless-<span class="hljs-literal">stopped</span> -p <span class="hljs-number">5678</span>:<span class="hljs-number">5678</span> -v n8n_data:/home/<span class="hljs-keyword">node</span><span class="hljs-title">/.n8n</span> docker.n8n.io/n8nio/n8n<br>关闭n8n命令<br>docker <span class="hljs-literal">stop</span> n8n<br>再次启动<br>docker <span class="hljs-literal">start</span> n8n<br></code></pre></td></tr></table></figure>
+
+
               
             </div>
             <hr/>
@@ -285,7 +365,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%88%86%E7%B1%BB/" class="category-chain-item">分类</a>
+  <a href="/categories/Agent/" class="category-chain-item">Agent</a>
   
   
 
@@ -300,7 +380,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%A0%87%E7%AD%BE/">#标签</a>
+        <a href="/tags/AI/">#AI</a>
       
     </div>
   
@@ -312,8 +392,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>docker安装及使用</div>
-      <div>http://example.com/2025/07/16/docker安装及使用/</div>
+      <div>使用n8n搭建Agent项目笔记</div>
+      <div>http://example.com/2026/03/30/使用n8n搭建Agent项目笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -325,7 +405,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月16日</div>
+          <div>2026年3月30日</div>
         </div>
       
       
@@ -355,9 +435,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/25/mysql%E5%85%B3%E9%94%AE%E5%AD%97explain%E8%A7%A3%E6%9E%90/" title="mysql关键字explain解析">
+                      <a href="/2026/03/31/pmhub%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/" title="pmhub微服务学习">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">mysql关键字explain解析</span>
+                        <span class="hidden-mobile">pmhub微服务学习</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -365,8 +445,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/16/VMware17-%E5%AE%89%E8%A3%85ubuntu/" title="VMware17 安装ubuntu">
-                        <span class="hidden-mobile">VMware17 安装ubuntu</span>
+                      <a href="/2025/11/20/Docker-window%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%83%A8%E7%BD%B2RocketMq/" title="Docker-window环境下部署RocketMq">
+                        <span class="hidden-mobile">Docker-window环境下部署RocketMq</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

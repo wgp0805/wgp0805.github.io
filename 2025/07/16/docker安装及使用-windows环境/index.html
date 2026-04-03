@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="汪广平">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、环境准备 windows 10以上 CPU支持虚拟化技术  二、安装docker1、访问docker官网下载docker安装器 点击下载即可  2、安装前准备因为docker desktop 是可以部署在windows 上来运行docker的应用服务的，其基于windows 的 Hyper-V服务和WSL2内核的Windows上创建一个子系统（linux）,从而实现其在windows上运行do">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker安装及使用-window环境">
+<meta property="og:url" content="http://example.com/2025/07/16/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="WgpBlog">
+<meta property="og:description" content="一、环境准备 windows 10以上 CPU支持虚拟化技术  二、安装docker1、访问docker官网下载docker安装器 点击下载即可  2、安装前准备因为docker desktop 是可以部署在windows 上来运行docker的应用服务的，其基于windows 的 Hyper-V服务和WSL2内核的Windows上创建一个子系统（linux）,从而实现其在windows上运行do">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/image-20251120110850253.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/c9d6d38e740a0367b1d3e992e334e5f9.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/1461d89e473a5c5f4869b9b57edc281e.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/image-20251120111047829-1763608858411-5.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/13cd908219a63e78ca93c6cd0a7b8eb7.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/c192af8d783b63762482027ffdc7b544.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/e8e6f195b3d54b59e4f3473d2bf38940.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/7dcfc4c8dd59ff20760a2ada4ca3a112.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/a4cf50c24bf63573186e24f86cb22339.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/5398452d68c5c382abd3e1e49ecdc36f.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/5eb134ce70462d1a4d004cc7b21b948b.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/f4690b6b31b02fbe6a9a447d7e842ced.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/0fd74e61c0e17f55c6445645ec4359a2.png">
+<meta property="og:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/5e4653a1d4720be9a56af5cde982f731.png">
+<meta property="article:published_time" content="2025-07-16T06:25:21.000Z">
+<meta property="article:modified_time" content="2025-11-20T03:23:02.381Z">
+<meta property="article:author" content="汪广平">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/image-20251120110850253.png">
+  
+  
+  
+  <title>docker安装及使用-window环境 - WgpBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>WGP</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="docker安装及使用-window环境"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-16 14:25" pubdate>
+          2025年7月16日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">docker安装及使用-window环境</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h1><ol>
+<li>windows 10以上</li>
+<li>CPU支持虚拟化技术</li>
+</ol>
+<h1 id="二、安装docker"><a href="#二、安装docker" class="headerlink" title="二、安装docker"></a>二、安装docker</h1><h2 id="1、访问docker官网下载docker安装器"><a href="#1、访问docker官网下载docker安装器" class="headerlink" title="1、访问docker官网下载docker安装器"></a>1、访问docker官网下载docker安装器</h2><p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/image-20251120110850253.png" srcset="/img/loading.gif" lazyload alt="image-20251120110850253"></p>
+<p>点击下载即可</p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/c9d6d38e740a0367b1d3e992e334e5f9.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h2 id="2、安装前准备"><a href="#2、安装前准备" class="headerlink" title="2、安装前准备"></a>2、安装前准备</h2><p>因为docker desktop 是可以部署在windows 上来运行docker的应用服务的，其基于windows 的 Hyper-V服务和WSL2内核的Windows上创建一个子系统（linux）,从而实现其在windows上运行docker。所以电脑上需要<strong>开启Hyper-V</strong>服务和安装<strong>WSL2</strong>。</p>
+<p>在系统中搜索控制面板，打开程序，点击启用或关闭windows功能，开启<code>Hyper-V</code>,<code>windows虚拟机监控程序平台</code>，<code>适用于Liunx的windows的子系统</code></p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/1461d89e473a5c5f4869b9b57edc281e.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/image-20251120111047829-1763608858411-5.png" srcset="/img/loading.gif" lazyload alt="image-20251120111047829"></p>
+<p>配置完毕后，重启电脑</p>
+<p><strong>备注：</strong></p>
+<blockquote>
+<p>由于 Windows 家庭版没有 Hyper-V，因此必须先安装它。</p>
+</blockquote>
+<p>如下所示，没有Hyper-V选项</p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/13cd908219a63e78ca93c6cd0a7b8eb7.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>Windows 11 家庭版，请按照以下步骤安装 Hyper-V：</p>
+<p>复制以下批处理代码，新建空白文本后保存，保存更改文本 .txt 后缀为 .bat 格式，这样就能变为批处理脚本。右键以管理员身份运行即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">pushd</span> <span class="hljs-string">&quot;%~dp0&quot;</span><br><span class="hljs-built_in">dir</span> /b %SystemRoot%\servicing\Packages\*Hyper-V*.mum &gt;hyper-v.txt<br><span class="hljs-keyword">for</span> /f %%i <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;findstr /i . hyper-v.txt 2^&gt;nul&#x27;</span>) <span class="hljs-keyword">do</span> dism /online /norestart /add-package:<span class="hljs-string">&quot;%SystemRoot%\servicing\Packages\%%i&quot;</span><br>del hyper-v.txt<br>Dism /online /enable-feature /featurename:Microsoft-Hyper-V -All /LimitAccess /ALL<br>pause<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/c192af8d783b63762482027ffdc7b544.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/e8e6f195b3d54b59e4f3473d2bf38940.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/7dcfc4c8dd59ff20760a2ada4ca3a112.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>重新启动后，Hyper-V 将在您的 Windows 上安装并自动启用，如下所示：</p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/a4cf50c24bf63573186e24f86cb22339.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h2 id="3、安装DockerDesktop"><a href="#3、安装DockerDesktop" class="headerlink" title="3、安装DockerDesktop"></a>3、安装DockerDesktop</h2><p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/5398452d68c5c382abd3e1e49ecdc36f.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/5eb134ce70462d1a4d004cc7b21b948b.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/f4690b6b31b02fbe6a9a447d7e842ced.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>安装完成</p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/0fd74e61c0e17f55c6445645ec4359a2.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/img/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8-windows%E7%8E%AF%E5%A2%83/5e4653a1d4720be9a56af5cde982f731.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h2 id="4、总结"><a href="#4、总结" class="headerlink" title="4、总结"></a>4、总结</h2><ol>
+<li>我这里安装的Docker，即使配置了国内镜像，如果想要搜索及必须要登录，想登录就必须要魔法上网，不登录就不能搜索，然后我配置的国内镜像也没生效，不知道为啥</li>
+<li>一些简单的应用直接在dockerdesktop上直接操作就可以，但是一些比较复杂的还是命令比面板好使，面板上总会出现各种问题，例如部署RocketMQ的时候面板部署就起不来，命令就可以，还是多学命令吧</li>
+</ol>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Docker/">#Docker</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>docker安装及使用-window环境</div>
+      <div>http://example.com/2025/07/16/docker安装及使用-windows环境/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>汪广平</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/25/mysql%E5%85%B3%E9%94%AE%E5%AD%97explain%E8%A7%A3%E6%9E%90/" title="mysql关键字explain解析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">mysql关键字explain解析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/16/VMware17-%E5%AE%89%E8%A3%85ubuntu/" title="VMware17 安装ubuntu">
+                        <span class="hidden-mobile">VMware17 安装ubuntu</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
